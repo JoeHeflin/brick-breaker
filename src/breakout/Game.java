@@ -1,5 +1,7 @@
 package breakout;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Paint;
@@ -7,44 +9,54 @@ import javafx.stage.Stage;
 import javafx.application.Application;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 
-
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.IOException;
 
 public class Game extends Application {
 
-    private static final String LEVEL1_LAYOUT = "levelFormats/level1.txt";
-    private static final String TITLE = "New Game";
-    private static final int BRICK_WIDTH = 36;
-    private static final int BRICK_HEIGHT = 10;
-    private static final int STAGE_WIDTH = 10*BRICK_WIDTH;
-    private static final int STAGE_HEIGHT = 400;
-    private static final Paint BRICK_COLOR = Color.RED;
-    private static final int BRICK_SPACE = 2;
+    public static final String LEVEL1_LAYOUT = "levelFormats/level1.txt";
+    public static final String TITLE = "New Game";
+    public static final int FRAMES_PER_SECOND = 60;
+    public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+    public static final int BRICK_WIDTH = 36;
+    public static final int BRICK_HEIGHT = 10;
+    public static final int STAGE_WIDTH = 10*BRICK_WIDTH;
+    public static final int STAGE_HEIGHT = 400;
+    public static final Paint BRICK_COLOR = Color.RED;
+    public static final int BRICK_SPACE = 2;
 
     private Scene myScene;
+    private int total = 0;
 
     @Override
     public void start(Stage stage) throws Exception {
-        //Group root = new Group();
+
         myScene = setUpScene(LEVEL1_LAYOUT);
         stage.setScene(myScene);
         stage.setTitle(TITLE);
         stage.show();
+
+//        KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step(SECOND_DELAY));
+//        Timeline animation = new Timeline();
+//        animation.setCycleCount(Timeline.INDEFINITE);
+//        animation.getKeyFrames().add(frame);
+//        animation.play();
     }
 
-    Scene setUpScene (String layoutFileName) throws Exception {
+    Scene setUpScene (String layoutFileName) throws IOException {
         Group root = new Group();
 
         File localStream = new File(layoutFileName);
+
         BufferedReader br = new BufferedReader(new FileReader(localStream));
 
-        String line;
         int row = 0;
         int col = 0;
+        String line;
         while ((line = br.readLine()) != null) {
             String[] brickSymbols = line.split(" ");
             for (String symbol : brickSymbols) {
@@ -64,6 +76,13 @@ public class Game extends Application {
         Scene scene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
 
         return scene;
+    }
+
+    private void step(double ellapsedTime) {
+//        Ball.updatePosition(ellapsedTime);
+//        Ball.checkPaddleCollision();
+//        Ball.checkBlockCollision();
+//        Ball.checkBoundary();
     }
 
     /**
