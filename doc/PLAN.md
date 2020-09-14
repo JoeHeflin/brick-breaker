@@ -58,20 +58,25 @@
 #### Level Descriptions
 
  * Level 1
-   * Block Configuration
+   * Block Configuration - A few rows of blocks near the top of the screen, rows are spaced out
 
-   * Variation features
+   * Variation features - single damage, layered, no special features
 
  * Level 2
-   * Block Configuration
+   * Block Configuration - Concentirc squares in the center of the screen
 
-   * Variation features
+   * Variation features - paddle size power up, variable hits block
 
  * Level 3
-   * Block Configuration
+   * Block Configuration - Blocks are closer to the bottom of the screen, closer to the paddle
 
-   * Variation features
+   * Variation features - double damage power up, speed change
+   
+ * Level 4
+   * Block Configuration - Inside out: use protected blocks to make it so you have to destroy formation from the inside 
+   out. Maybe some polygon in the center.
 
+   * Variation features - protected blocks, extra ball power up, explosive blocks
 
 ### Possible Classes
 
