@@ -6,27 +6,40 @@
 
 ### Interesting Existing Game Variations
 
- * Game 1
+ * Ballz - This variant involves the player picking the direction at which to release a series of "balls" at blocks from
+ the bottom of the screen. These randomly spaced blocks and have different values indicating how many times a ball
+ must collide with it before it disappears. Each iteration the blocks move down further towards the bottom of the screen.
+ The player loses when a block hits the bottom of the screen without being destroyed.
 
- * Game 2
+ * Vortex - This variant is interesting because it takes normal brick breaker and warps the stage so that the paddle
+ rotates around layers of concentric brick rings. The color and appearance of each brick indicates how many more hits it
+ takes to destroy it. Another interesting geometric feature of vortex is that it appears three dimensional, with bricks
+ of higher levels partially covering those beneath them. The game also gives the impression that the ball is falling 
+ downward towards the bricks. 
 
 
 #### Block Ideas
 
- * Block 1
+ * Variable hits - certain blocks require more collisions for the ball to destroy them
 
- * Block 2
+ * Explosive - if destroyed, does damage to blocks within a certain radius
 
- * Block 3
+ * Protected - A certain side of the brick is 
+ 
+ * Speed change - increases or decreases the speed at which the ball travels
+ 
+ * Bounce tweaker - changes the physics of how the ball bounces off of blocks/walls/paddles
+
+ * Paddle size - shrinks paddle
 
 
 #### Power Up Ideas
 
- * Power Up 1
+ * Paddle size - Increases paddle size
 
- * Power Up 2
+ * Extra ball - adds an extra ball that the paddle can launch
 
- * Power Up 3
+ * Double damage - each collision of the ball causes twice the damage to a brick as before.
 
 
 #### Cheat Key Ideas
