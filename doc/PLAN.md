@@ -39,18 +39,20 @@
 
  * Extra ball - adds an extra ball that the paddle can launch
 
- * Double damage - each collision of the ball causes twice the damage to a brick as before.
+ * Double damage - each collision of the ball causes twice the damage to a brick as before
+ 
+ * Slow motion - slows down the speed of the ball
 
 
 #### Cheat Key Ideas
 
- * Cheat Key 1
+ * Can't Lose - the ball bounces off of every side of the screen
 
- * Cheat Key 2
+ * Freeze Bricks - the bricks stop moving down the screen
 
- * Cheat Key 3
+ * Skip to Level - skip to a desired level without playing prior ones
 
- * Cheat Key 4
+ * Slow motion - slows down the speed of the ball
 
 
 #### Level Descriptions
