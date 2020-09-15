@@ -1,8 +1,11 @@
 package breakout;
 
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 public class Ball extends Circle{
 
@@ -64,7 +67,7 @@ public class Ball extends Circle{
             bounce(false);
             setCenterY(0 + getRadius());
         }
-        if(down > Game.STAGE_HEIGHT){
+        if(down > Game.STAGE_HEIGHT){ //TODO Need to reset ball  position at the top of the paddle
             bounce(false);
             setCenterY(Game.STAGE_HEIGHT - getRadius());
         }
@@ -73,8 +76,20 @@ public class Ball extends Circle{
             bounce(false);
             this.setCenterY(paddle.getY() - this.getRadius());
         }
-        updateBoundaries();
+        //updateBoundaries(); TODO: Why necessary?
 
+    }
+
+    void detectBrick(Group bricks) {
+        for (Node brick : bricks.getChildren()) {
+            if (this.getBoundsInParent().intersects(brick.getBoundsInParent())) {
+                bounce(false);
+                //bounce(true); TODO: decide  how to have ball bounce
+                // remove brick
+                bricks.getChildren().remove(brick);
+                //this.setCenterY(thisY() - this.getRadius());
+            }
+        }
     }
 
     void bounce(Boolean xOtherwiseY){
