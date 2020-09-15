@@ -1,9 +1,8 @@
 package breakout;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 
-public class Brick extends Rectangle {
+public class Brick {
 
     int xPos;
     int yPos;
@@ -21,14 +20,14 @@ public class Brick extends Rectangle {
         this.yPos = y;
         this.type = type;
         alive = true;
-        sizeX = Game.BRICK_WIDTH;
-        sizeY = Game.BRICK_HEIGHT;
+        sizeX = 100; //to be filled in
+        sizeY = 50; //to be filled in
     }
 
     //makes brick based off of 'type'
     //types: b = basic,
     void init(){
-        if(type.equals("1")){
+        if(type.equals("b")){
             health = 1;
             actOnDeath = "";
             getColor();
@@ -39,7 +38,6 @@ public class Brick extends Rectangle {
         if(health == 1){
             color = Color.RED;
         }
-        this.setFill(color);
     }
 
     void takeDamage(Ball ball){
@@ -57,6 +55,8 @@ public class Brick extends Rectangle {
             alive = true;
         }
     }
+
+
 
 
 }
