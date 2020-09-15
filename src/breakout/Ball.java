@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
-public class Ball {
+public class Ball extends Circle{
 
     int radius;
     float xPos;
@@ -61,8 +61,8 @@ public class Ball {
             yPos = 0;
         }
 
-        xPos += xVel;
-        yPos += yVel;
+        xPos += xVel * (float)(1/Game.FRAMES_PER_SECOND);
+        yPos += yVel * (float)(1/Game.FRAMES_PER_SECOND);
     }
 
     void bounce(Boolean xOtherwiseY){
