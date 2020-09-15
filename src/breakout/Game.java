@@ -63,7 +63,7 @@ public class Game extends Application {
                 int x = col % STAGE_WIDTH;// + BRICK_SPACE/2; TODO
                 int y = row;// + BRICK_SPACE/2; TODO
                 if (symbol.compareTo("0") != 0) {
-//                    Brick newBrick = new Brick(root, x, y, symbol); TODO
+//                    Brick newBrick = new Brick(root, x, y, symbol); //TODO
 
                     Rectangle newBrick = new Rectangle(x, y, BRICK_WIDTH - BRICK_SPACE/2, BRICK_HEIGHT - BRICK_SPACE/2);
                     newBrick.setFill(BRICK_COLOR);
