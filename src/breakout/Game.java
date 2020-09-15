@@ -22,7 +22,7 @@ public class Game extends Application {
 
     public static final String LEVEL1_LAYOUT = "levelFormats/level1.txt";
     public static final String TITLE = "New Game";
-    public static final int FRAMES_PER_SECOND = 60;
+    public static final int FRAMES_PER_SECOND = 60;//TODO
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     public static final int BRICK_WIDTH = 36;
     public static final int BRICK_HEIGHT = 10;
@@ -33,12 +33,18 @@ public class Game extends Application {
     public static final int PADDLE_WIDTH = STAGE_WIDTH/4;
     public static final int PADDLE_HEIGHT = 10;
     public static final Color PADDLE_COLOR = Color.BEIGE;
+    public static final String BLANK_SYMBOL = "0";
+    public static final double INITIAL_BALL_SPEED = 130;
+    public static final int BALL_RADIUS = 5;
+    private static final double INITIAL_PADDLE_SPEED = 10;
+
 
     private Scene myScene;
     private Ball myBall;
-//    private Paddle myPaddle; TODO
+    private Paddle myPaddle;
     private int total = 0;
     private boolean activeRound = false;
+    private int paddleSpeed;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -48,11 +54,16 @@ public class Game extends Application {
         stage.setTitle(TITLE);
         stage.show();
 
-//        KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step(SECOND_DELAY));
-//        Timeline animation = new Timeline();
-//        animation.setCycleCount(Timeline.INDEFINITE);
-//        animation.getKeyFrames().add(frame);
-//        animation.play();
+        myBall.start(90);
+
+//        while (true) {
+//            step(SECOND_DELAY);
+//        }
+        KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step(SECOND_DELAY));
+        Timeline animation = new Timeline();
+        animation.setCycleCount(Timeline.INDEFINITE);
+        animation.getKeyFrames().add(frame);
+        animation.play();
     }
 //TODO: Level Select class, confirming when blocks are broken / level is beaten
     Scene setUpScene (String layoutFileName) throws IOException {
@@ -75,14 +86,15 @@ public class Game extends Application {
                     newBrick.init();
                     root.getChildren().add(newBrick);
 
-                    Ball newBall = new Ball(STAGE_WIDTH/2,STAGE_HEIGHT,BALL_SPEED,BALL_RADIUS);
+                    Ball newBall = new Ball(STAGE_WIDTH/2,STAGE_HEIGHT,INITIAL_BALL_SPEED,BALL_RADIUS);
                     myBall = newBall;
                     myBall.setId("Ball");
                     root.getChildren().add(newBall);
 
-//                    Paddle newPaddle = new Paddle(PADDLE_INIT_X, PADDLE_INIT_Y, ); TODO
-//                    myPaddle.setId("Ball"); TODO
-//                    root.getChildren().add(newPaddle); TODO
+                    Paddle newPaddle = new Paddle(INITIAL_PADDLE_SPEED);
+                    myPaddle = newPaddle;
+                    myPaddle.setId("Paddle");
+                    root.getChildren().add(newPaddle);
                 }
                 col += BRICK_WIDTH;
             }
@@ -107,8 +119,8 @@ public class Game extends Application {
  */
 
     private void step(double ellapsedTime) {
-//        Ball.updatePosition(ellapsedTime);
-//        Ball.checkPaddleCollision();
+        myBall.updatePosition(ellapsedTime);
+        myBall.detectStageAndPaddle(myPaddle);
 //        Ball.checkBlockCollision();
 //        Ball.checkBoundary();
     }
