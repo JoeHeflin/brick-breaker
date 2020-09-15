@@ -46,24 +46,33 @@ public class Ball extends Circle{
             this.yVel = 0;
         }
     }
-
-    void moveAndDetectStage(){
-
+    void updateBoundaries(){
+        this.up = y + radius;
+        this.down = y - radius;
+        this.left = x - radius;
+        this.right = x + radius;
+    }
+    void detectStageAndPaddle(Paddle paddle){
+        updateBoundaries();
         if(left < 0){
             bounce(true);
-            x = 0;
+            x = 0+radius;
         }
         if(right > Game.STAGE_WIDTH){
             bounce(true);
-            x = Game.STAGE_WIDTH;
+            x = Game.STAGE_WIDTH-radius;
         }
         if(up < 0){
             bounce(false);
-            y = 0;
+            y = 0+radius;
         }
+        //Checks if touching paddle and midpoint of the ball isn't beneath the top of the paddle
+        if(this.getBoundsInParent().intersects(paddle.getBoundsInParent()) && this.y > paddle.y){
+            bounce(false);
+            this.y = paddle.y;
+        }
+        updateBoundaries();
 
-        x += xVel * (double)(1/Game.FRAMES_PER_SECOND);
-        y += yVel * (double)(1/Game.FRAMES_PER_SECOND);
     }
 
     void bounce(Boolean xOtherwiseY){
