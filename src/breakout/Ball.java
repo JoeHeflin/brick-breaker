@@ -4,7 +4,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 
-public class Ball {
+public class Ball extends Circle{
 
     int radius;
     float xPos;
@@ -37,8 +37,8 @@ public class Ball {
     //Makes the ball start moving // stop moving
     void startStop(boolean go, float launchAngle){
         if(go){
-            this.xVel = (speed * Math.cos(Math.toRadians(launchAngle));
-            this.yVel = (speed * Math.sin(Math.toRadians((launchAngle)));
+            this.xVel = (float) (speed * Math.cos(Math.toRadians(launchAngle)));
+            this.yVel = (float) (speed * Math.sin(Math.toRadians((launchAngle))));
         }
         else{
             this.xVel = 0;
@@ -46,23 +46,23 @@ public class Ball {
         }
     }
 
-    void moveAndDetectStage(Stage stage){
+    void moveAndDetectStage(){
 
         if(left < 0){
             bounce(true);
             xPos = 0;
         }
-        if(right > stage.sizeX){
+        if(right > Game.STAGE_WIDTH){
             bounce(true);
-            xPos = stage.sizeX;
+            xPos = Game.STAGE_WIDTH;
         }
         if(up < 0){
             bounce(false);
             yPos = 0;
         }
 
-        xPos += xVel;
-        yPos += yVel;
+        xPos += xVel * (float)(1/Game.FRAMES_PER_SECOND);
+        yPos += yVel * (float)(1/Game.FRAMES_PER_SECOND);
     }
 
     void bounce(Boolean xOtherwiseY){
