@@ -8,9 +8,6 @@ public class Ball extends Circle{
 
 
     private static final Color BALL_COLOR = Color.BLUE;
-    int radius;
-    double x;
-    double y;
 
     double up;
     double down;
@@ -22,11 +19,8 @@ public class Ball extends Circle{
     int damage;
 
 
-    public Ball(double startingX, double startingY, double spd, int r){
-        super(startingX, startingY, r);
-        this.radius = r;
-        this.x = startingX;
-        this.y = startingY;
+    public Ball(double x, double y, double spd, int radius){
+        super(x, y, radius);
         this.up = y + radius;
         this.down = y - radius;
         this.left = x - radius;
@@ -50,30 +44,34 @@ public class Ball extends Circle{
     }
 
     void updateBoundaries(){
-        this.up = y + radius;
-        this.down = y - radius;
-        this.left = x - radius;
-        this.right = x + radius;
+        this.up = getCenterY() - getRadius();
+        this.down = getCenterY() + getRadius();
+        this.left = getCenterX() - getRadius();
+        this.right = getCenterX() + getRadius();
     }
 
     void detectStageAndPaddle(Paddle paddle){
         updateBoundaries();
         if(left < 0){
             bounce(true);
-            x = 0 + radius;
+            setCenterX(0 + getRadius());
         }
         if(right > Game.STAGE_WIDTH){
             bounce(true);
-            x = Game.STAGE_WIDTH-radius;
+            setCenterX(Game.STAGE_WIDTH-getRadius());
         }
         if(up < 0){
             bounce(false);
-            y = 0 + radius;
+            setCenterY(0 + getRadius());
+        }
+        if(down > Game.STAGE_HEIGHT){
+            bounce(false);
+            setCenterY(Game.STAGE_HEIGHT - getRadius());
         }
         //Checks if touching paddle and midpoint of the ball isn't beneath the top of the paddle
-        if(this.getBoundsInParent().intersects(paddle.getBoundsInParent()) && this.y > paddle.y){
+        if(this.getBoundsInParent().intersects(paddle.getBoundsInParent()) && this.getCenterY() > paddle.getY()){
             bounce(false);
-            this.y = paddle.y;
+            this.setCenterY(paddle.getY());
         }
         updateBoundaries();
 
@@ -88,9 +86,10 @@ public class Ball extends Circle{
         }
     }
 
-    void updatePosition(double ellapsedTime) {
-        this.setCenterX(this.getCenterX() + this.xVel * ellapsedTime);
-        this.setCenterY(this.getCenterY() + this.yVel * ellapsedTime);
+    void updatePosition(double elapsedTime) {
+        setCenterX(getCenterX() + this.xVel * speed * elapsedTime);
+        setCenterY(getCenterY() + this.yVel * speed * elapsedTime);
+        System.out.println("Radius: " + getRadius() + " XPos: " + getCenterX() + "xVel: " + xVel + "yPos: " + getCenterY() + "yVel: " + yVel);
     }
 
 }

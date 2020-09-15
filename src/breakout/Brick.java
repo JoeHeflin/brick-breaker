@@ -15,7 +15,8 @@ public class Brick extends Rectangle {
     Color color;
     boolean alive;
 
-
+    //TODO: Make the bricks look distinct
+    //TODO: Add more types of bricks
     //Constructor
     Brick(double x, double y, String type){
         super(x, y, Game.BRICK_WIDTH, Game.BRICK_HEIGHT);

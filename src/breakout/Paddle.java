@@ -13,7 +13,7 @@ public class Paddle extends Rectangle {
     double speed;
 
     Paddle(double spd){
-        super(Game.STAGE_WIDTH/2, Game.STAGE_HEIGHT + 5, Game.PADDLE_WIDTH, Game.PADDLE_HEIGHT);
+        super(Game.STAGE_WIDTH/2, Game.STAGE_HEIGHT - 15, Game.PADDLE_WIDTH, Game.PADDLE_HEIGHT);
         this.x = super.getX();
         this.y = super.getY();
         width = Game.PADDLE_WIDTH;
@@ -24,7 +24,7 @@ public class Paddle extends Rectangle {
     }
 
 
-    private void handleHorizontalMovement (KeyCode code) {
+    void handleHorizontalMovement (KeyCode code) {
         switch (code) {
             case LEFT -> {
                 if(x > 0){x = x - speed;}
