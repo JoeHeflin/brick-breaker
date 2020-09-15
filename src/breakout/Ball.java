@@ -6,22 +6,32 @@ import javafx.scene.shape.Circle;
 
 public class Ball {
 
+    int radius;
     float xPos;
     float yPos;
+
+    float up;
+    float down;
+    float left;
+    float right;
+    float speed;
     float xVel;
     float yVel;
-    float speed;
-    int radius;
-    private Circle myBall;
+    int damage;
+
 
     public Ball(float startingX, float startingY, float spd, int r){
-        radius = r;
-        xPos = startingX;
-        yPos = startingY;
-        myBall = new Circle(xPos, yPos, radius);
-        speed = spd;
-        xVel = 0;
-        yVel = 0;
+        this.radius = r;
+        this.xPos = startingX;
+        this.yPos = startingY;
+        this.up = yPos + radius;
+        this.down = yPos - radius;
+        this.left = xPos - radius;
+        this.right = xPos + radius;
+        this.xVel = 0;
+        this.yVel = 0;
+        this.speed = spd;
+        this.damage = 1;
     }
 
     //Makes the ball start moving // stop moving
@@ -37,10 +47,6 @@ public class Ball {
     }
 
     void moveAndDetectStage(Stage stage){
-        float up = yPos + radius;
-        float down = yPos - radius;
-        float left = xPos - radius;
-        float right = xPos + radius;
 
         if(left < 0){
             bounce(true);
