@@ -50,13 +50,17 @@ public class Game extends Application {
     private boolean activeRound = false;
     private int paddleSpeed;
     private LevelBuilder bricks = new LevelBuilder();
+
+    public Paddle getPaddle() {
+        return myPaddle;
+    }
     //private Group bricks = new Group();
 
     @Override
     public void start(Stage stage) throws Exception {
 
         myScene = setUpScene(LEVEL1_LAYOUT);
-        myBall.resetBall(myScene);
+        reset();//myPaddle, myBall);
         stage.setScene(myScene);
         stage.setTitle(TITLE);
         stage.show();
@@ -67,6 +71,11 @@ public class Game extends Application {
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
         animation.play();
+    }
+
+    public void reset() {//Paddle paddle, Ball ball) {
+        myBall.resetBall(myScene, myPaddle);
+        myScene.setOnMouseClicked(e -> myBall.start(INITIAL_LAUNCH_ANGLE, myPaddle));
     }
 
     Scene setUpScene (String layoutFileName) throws IOException {

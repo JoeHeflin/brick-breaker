@@ -37,10 +37,11 @@ public class Ball extends Circle{
     //Makes the ball start moving // stop moving
     //void startStop(boolean go, double launchAngle){
 
-    void start(double launchAngle) {
+    void start(double launchAngle, Paddle paddle) {
         ballInMotion = true;
         this.xVel = (double) (speed * Math.cos(Math.toRadians(launchAngle)));
         this.yVel = (double) (-1 * speed * Math.sin(Math.toRadians((launchAngle))));
+        paddle.unfreeze();
     }
     void stop() {
         ballInMotion = false;
@@ -72,7 +73,8 @@ public class Ball extends Circle{
         if(down > Game.STAGE_HEIGHT){
 //            bounce(false);
 //            setCenterY(Game.STAGE_HEIGHT - getRadius());
-            this.resetBall(scene);
+//            this.resetBall(scene);
+            resetBall(scene, paddle);
             //TODO decrement lives
         }
         //Checks if touching paddle and midpoint of the ball isn't beneath the top of the paddle
@@ -136,10 +138,12 @@ public class Ball extends Circle{
         setCenterY(Game.STAGE_HEIGHT - Game.PADDLE_HEIGHT);
     }
 
-    public void resetBall(Scene scene) {
+    public void resetBall(Scene scene, Paddle paddle) {
         this.stop();
         this.setInitialPosition();
-        scene.setOnMouseClicked(e -> this.start(Game.INITIAL_LAUNCH_ANGLE));
+        paddle.resetPaddle(scene);
+
+//        scene.setOnMouseClicked(e -> this.start(Game.INITIAL_LAUNCH_ANGLE));
     }
 
     public boolean isBallInMotion() { return ballInMotion;}

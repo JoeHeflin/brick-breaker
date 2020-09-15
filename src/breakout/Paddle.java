@@ -11,7 +11,7 @@ public class Paddle extends Rectangle {
     int width;
     int height;
     double speed;
-    boolean ableToMove;
+    boolean ableToMove = true;
 
     Paddle(double spd){
         super(Game.STAGE_WIDTH/2 - Game.PADDLE_WIDTH/2, Game.STAGE_HEIGHT - 15, Game.PADDLE_WIDTH, Game.PADDLE_HEIGHT);
@@ -46,7 +46,7 @@ public class Paddle extends Rectangle {
     public void resetPaddle(Scene scene) {
         this.freeze();
         this.setInitialPosition();
-        scene.setOnMouseClicked(e -> this.unfreeze());
+//        scene.setOnMouseClicked(e -> this.unfreeze());
     }
     public void freeze() {
         ableToMove = false;
