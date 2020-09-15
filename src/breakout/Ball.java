@@ -38,27 +38,29 @@ public class Ball extends Circle{
     }
 
     //Makes the ball start moving // stop moving
-    void startStop(boolean go, double launchAngle){
-        if(go){
-            this.xVel = (double) (speed * Math.cos(Math.toRadians(launchAngle)));
-            this.yVel = (double) (speed * Math.sin(Math.toRadians((launchAngle))));
-        }
-        else{
-            this.xVel = 0;
-            this.yVel = 0;
-        }
+    //void startStop(boolean go, double launchAngle){
+
+    void start(double launchAngle) {
+        this.xVel = (double) (speed * Math.cos(Math.toRadians(launchAngle)));
+        this.yVel = (double) (-1 * speed * Math.sin(Math.toRadians((launchAngle))));
     }
+    void stop() {
+        this.xVel = 0;
+        this.yVel = 0;
+    }
+
     void updateBoundaries(){
         this.up = y + radius;
         this.down = y - radius;
         this.left = x - radius;
         this.right = x + radius;
     }
+
     void detectStageAndPaddle(Paddle paddle){
         updateBoundaries();
         if(left < 0){
             bounce(true);
-            x = 0+radius;
+            x = 0 + radius;
         }
         if(right > Game.STAGE_WIDTH){
             bounce(true);
@@ -66,7 +68,7 @@ public class Ball extends Circle{
         }
         if(up < 0){
             bounce(false);
-            y = 0+radius;
+            y = 0 + radius;
         }
         //Checks if touching paddle and midpoint of the ball isn't beneath the top of the paddle
         if(this.getBoundsInParent().intersects(paddle.getBoundsInParent()) && this.y > paddle.y){
@@ -86,5 +88,9 @@ public class Ball extends Circle{
         }
     }
 
+    void updatePosition(double ellapsedTime) {
+        this.setCenterX(this.getCenterX() + this.xVel * ellapsedTime);
+        this.setCenterY(this.getCenterY() + this.yVel * ellapsedTime);
+    }
 
 }
