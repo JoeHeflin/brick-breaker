@@ -69,9 +69,9 @@ public class Ball extends Circle{
             setCenterY(Game.STAGE_HEIGHT - getRadius());
         }
         //Checks if touching paddle and midpoint of the ball isn't beneath the top of the paddle
-        if(this.getBoundsInParent().intersects(paddle.getBoundsInParent()) && this.getCenterY() > paddle.getY()){
+        if(this.getBoundsInParent().intersects(paddle.getBoundsInParent()) && this.down > paddle.getY()){
             bounce(false);
-            this.setCenterY(paddle.getY());
+            this.setCenterY(paddle.getY() - this.getRadius());
         }
         updateBoundaries();
 

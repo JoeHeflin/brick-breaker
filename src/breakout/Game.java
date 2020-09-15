@@ -30,11 +30,11 @@ public class Game extends Application {
     public static final int BRICK_SPACE = 2;
     public static final int PADDLE_WIDTH = STAGE_WIDTH/6;
     public static final int PADDLE_HEIGHT = 10;
-    public static final Color PADDLE_COLOR = Color.BEIGE;
+    public static final Color PADDLE_COLOR = Color.BROWN;
     public static final String BLANK_SYMBOL = "0";
-    public static final double INITIAL_BALL_SPEED = 10;
+    public static final double INITIAL_BALL_SPEED = 15;
     public static final int BALL_RADIUS = 5;
-    private static final double INITIAL_PADDLE_SPEED = 10;
+    private static final double INITIAL_PADDLE_SPEED = 300; //TODO: Find a way to make paddle movement less jittery
 
     //TODO: Level Select class, confirming when blocks are broken / level is beaten -> loading to next level
     //TODO: Restructure level reading to be a matrix that stores Bricks, so we can keep track of them
@@ -95,7 +95,7 @@ public class Game extends Application {
         root.getChildren().add(myPaddle);
 
         Scene scene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
-        scene.setOnKeyPressed(e -> myPaddle.handleHorizontalMovement(e.getCode()));
+        scene.setOnKeyPressed(e -> myPaddle.handleHorizontalMovement(e.getCode(), SECOND_DELAY));
         myBall.start(60);
         //scene.setOnMouseClicked(e -> handleLaunch(e.getX(), e.getY()));
 
