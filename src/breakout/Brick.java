@@ -31,6 +31,11 @@ public class Brick extends Rectangle {
     //makes brick based off of 'type'
     //types: b = basic,
     void init(){
+        if(type.equals("0")){
+            health = 0;
+            actOnDeath = "";
+            alive = false;
+        }
         if(type.equals("1")){
             health = 1;
             actOnDeath = "";
@@ -49,6 +54,7 @@ public class Brick extends Rectangle {
     void takeDamage(Ball ball){
         health = health - ball.damage;
         checkIfAlive();
+        getColor();
 
     }
 
