@@ -37,8 +37,8 @@ public class Ball {
     //Makes the ball start moving // stop moving
     void startStop(boolean go, float launchAngle){
         if(go){
-            this.xVel = (speed * Math.cos(Math.toRadians(launchAngle));
-            this.yVel = (speed * Math.sin(Math.toRadians((launchAngle)));
+            this.xVel = (float) (speed * Math.cos(Math.toRadians(launchAngle)));
+            this.yVel = (float) (speed * Math.sin(Math.toRadians((launchAngle))));
         }
         else{
             this.xVel = 0;
@@ -46,15 +46,15 @@ public class Ball {
         }
     }
 
-    void moveAndDetectStage(Stage stage){
+    void moveAndDetectStage(){
 
         if(left < 0){
             bounce(true);
             xPos = 0;
         }
-        if(right > stage.sizeX){
+        if(right > Game.STAGE_WIDTH){
             bounce(true);
-            xPos = stage.sizeX;
+            xPos = Game.STAGE_WIDTH;
         }
         if(up < 0){
             bounce(false);
