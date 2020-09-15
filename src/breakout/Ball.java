@@ -6,6 +6,8 @@ import javafx.scene.shape.Circle;
 
 public class Ball extends Circle{
 
+
+    private static final Color BALL_COLOR = Color.BLUE;
     int radius;
     float xPos;
     float yPos;
@@ -20,7 +22,8 @@ public class Ball extends Circle{
     int damage;
 
 
-    public Ball(float startingX, float startingY, float spd, int r){
+    public Ball(float startingX, float startingY, float spd, int r) {
+        super(startingX,startingY,r,BALL_COLOR);
         this.radius = r;
         this.xPos = startingX;
         this.yPos = startingY;

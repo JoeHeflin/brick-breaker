@@ -18,7 +18,7 @@ public class Brick extends Rectangle {
 
     //Constructor
     Brick(int x, int y, String type){
-        super(x, y, Game.BRICK_WIDTH, Game.BRICK_HEIGHT);
+        super(x, y, Game.BRICK_WIDTH - 2, Game.BRICK_HEIGHT - 2);
         this.xPos = x;
         this.yPos = y;
         this.type = type;
