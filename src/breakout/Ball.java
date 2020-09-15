@@ -9,28 +9,28 @@ public class Ball extends Circle{
 
     private static final Color BALL_COLOR = Color.BLUE;
     int radius;
-    float xPos;
-    float yPos;
+    double x;
+    double y;
 
-    float up;
-    float down;
-    float left;
-    float right;
-    float speed;
-    float xVel;
-    float yVel;
+    double up;
+    double down;
+    double left;
+    double right;
+    double speed;
+    double xVel;
+    double yVel;
     int damage;
 
 
-    public Ball(float startingX, float startingY, float spd, int r) {
-        super(startingX,startingY,r,BALL_COLOR);
+    public Ball(double startingX, double startingY, double spd, int r){
+        super(startingX, startingY, r);
         this.radius = r;
-        this.xPos = startingX;
-        this.yPos = startingY;
-        this.up = yPos + radius;
-        this.down = yPos - radius;
-        this.left = xPos - radius;
-        this.right = xPos + radius;
+        this.x = startingX;
+        this.y = startingY;
+        this.up = y + radius;
+        this.down = y - radius;
+        this.left = x - radius;
+        this.right = x + radius;
         this.xVel = 0;
         this.yVel = 0;
         this.speed = spd;
@@ -38,34 +38,43 @@ public class Ball extends Circle{
     }
 
     //Makes the ball start moving // stop moving
-    void startStop(boolean go, float launchAngle){
+    void startStop(boolean go, double launchAngle){
         if(go){
-            this.xVel = (float) (speed * Math.cos(Math.toRadians(launchAngle)));
-            this.yVel = (float) (speed * Math.sin(Math.toRadians((launchAngle))));
+            this.xVel = (double) (speed * Math.cos(Math.toRadians(launchAngle)));
+            this.yVel = (double) (speed * Math.sin(Math.toRadians((launchAngle))));
         }
         else{
             this.xVel = 0;
             this.yVel = 0;
         }
     }
-
-    void moveAndDetectStage(){
-
+    void updateBoundaries(){
+        this.up = y + radius;
+        this.down = y - radius;
+        this.left = x - radius;
+        this.right = x + radius;
+    }
+    void detectStageAndPaddle(Paddle paddle){
+        updateBoundaries();
         if(left < 0){
             bounce(true);
-            xPos = 0;
+            x = 0+radius;
         }
         if(right > Game.STAGE_WIDTH){
             bounce(true);
-            xPos = Game.STAGE_WIDTH;
+            x = Game.STAGE_WIDTH-radius;
         }
         if(up < 0){
             bounce(false);
-            yPos = 0;
+            y = 0+radius;
         }
+        //Checks if touching paddle and midpoint of the ball isn't beneath the top of the paddle
+        if(this.getBoundsInParent().intersects(paddle.getBoundsInParent()) && this.y > paddle.y){
+            bounce(false);
+            this.y = paddle.y;
+        }
+        updateBoundaries();
 
-        xPos += xVel * (float)(1/Game.FRAMES_PER_SECOND);
-        yPos += yVel * (float)(1/Game.FRAMES_PER_SECOND);
     }
 
     void bounce(Boolean xOtherwiseY){

@@ -5,11 +5,11 @@ import javafx.scene.shape.Rectangle;
 
 public class Brick extends Rectangle {
 
-    int xPos;
-    int yPos;
+    double x;
+    double y;
     int health;
-    int sizeX;
-    int sizeY;
+    int width;
+    int height;
     String type;
     String actOnDeath;
     Color color;
@@ -17,14 +17,14 @@ public class Brick extends Rectangle {
 
 
     //Constructor
-    Brick(int x, int y, String type){
-        super(x, y, Game.BRICK_WIDTH - 2, Game.BRICK_HEIGHT - 2);
-        this.xPos = x;
-        this.yPos = y;
+    Brick(double x, double y, String type){
+        super(x, y, Game.BRICK_WIDTH, Game.BRICK_HEIGHT);
+        this.x = x;
+        this.y = y;
         this.type = type;
         alive = true;
-        sizeX = Game.BRICK_WIDTH;
-        sizeY = Game.BRICK_HEIGHT;
+        width = Game.BRICK_WIDTH;
+        height = Game.BRICK_HEIGHT;
     }
 
     //makes brick based off of 'type'
