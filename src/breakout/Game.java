@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.application.Application;
@@ -34,6 +35,7 @@ public class Game extends Application {
 
     private Scene myScene;
     private int total = 0;
+    private boolean activeRound = false;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -49,7 +51,7 @@ public class Game extends Application {
 //        animation.getKeyFrames().add(frame);
 //        animation.play();
     }
-
+//TODO: Level Select class, confirming when blocks are broken / level is beaten
     Scene setUpScene (String layoutFileName) throws IOException {
         Group root = new Group();
 
@@ -78,6 +80,19 @@ public class Game extends Application {
 
         return scene;
     }
+/** TODO: Add a line to show the angle the ball will be launched at
+    private void handleLaunch (KeyCode code) {
+        double angle = 90;
+        switch (code) {
+            case UP ->
+            case DOWN ->
+            case SPACE -> {
+                activeRound = true;
+                myBall.startStop(activeRound, angle);
+            }
+        }
+    }
+ */
 
     private void step(double ellapsedTime) {
 //        Ball.updatePosition(ellapsedTime);
