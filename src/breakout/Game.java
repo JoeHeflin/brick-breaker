@@ -16,11 +16,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import static java.lang.Thread.sleep;
+
 public class Game extends Application {
 
     public static final String LEVEL1_LAYOUT = "levelFormats/level1.txt";
     public static final String TITLE = "New Game";
-    public static final int FRAMES_PER_SECOND = 60;
+    public static final int FRAMES_PER_SECOND = 60;// TODO Experiment: Ball freezes at high fps
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     public static final int BRICK_WIDTH = 36;
     public static final int BRICK_HEIGHT = 10;
@@ -34,7 +36,8 @@ public class Game extends Application {
     public static final String BLANK_SYMBOL = "0";
     public static final double INITIAL_BALL_SPEED = 15;
     public static final int BALL_RADIUS = 5;
-    private static final double INITIAL_PADDLE_SPEED = 300; //TODO: Find a way to make paddle movement less jittery
+    private static final double INITIAL_PADDLE_SPEED = 15;//2000;//10;//300; //TODO: Find a way to make paddle movement less jittery
+    private static final double INITIAL_LAUNCH_ANGLE = 60;
 
     //TODO: Level Select class, confirming when blocks are broken / level is beaten -> loading to next level
     //TODO: Restructure level reading to be a matrix that stores Bricks, so we can keep track of them
@@ -45,6 +48,7 @@ public class Game extends Application {
     private int total = 0;
     private boolean activeRound = false;
     private int paddleSpeed;
+    private Group bricks = new Group();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -64,6 +68,7 @@ public class Game extends Application {
 
     Scene setUpScene (String layoutFileName) throws IOException {
         Group root = new Group();
+        //Group bricks = new Group();
 
         File localStream = new File(layoutFileName);
 
@@ -80,9 +85,7 @@ public class Game extends Application {
                 if (symbol.compareTo(BLANK_SYMBOL) != 0) {
                     Brick newBrick = new Brick(x, y, symbol);
                     newBrick.init();
-                    root.getChildren().add(newBrick);
-
-
+                    bricks.getChildren().add(newBrick);
                 }
                 col += BRICK_WIDTH;
             }
@@ -94,11 +97,13 @@ public class Game extends Application {
         myPaddle = new Paddle(INITIAL_PADDLE_SPEED);
         root.getChildren().add(myPaddle);
 
-        Scene scene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
-        scene.setOnKeyPressed(e -> myPaddle.handleHorizontalMovement(e.getCode(), SECOND_DELAY));
-        myBall.start(60);
-        //scene.setOnMouseClicked(e -> handleLaunch(e.getX(), e.getY()));
+        root.getChildren().add(bricks);
 
+        Scene scene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
+        scene.setOnKeyPressed(e -> myPaddle.handleHorizontalMovement(e.getCode(), SECOND_DELAY)); //TODO
+        myBall.start(INITIAL_LAUNCH_ANGLE);
+        //scene.setOnMouseClicked(e -> handleLaunch(e.getX(), e.getY()));
+        System.out.println(root.getChildren());
         return scene;
     }
     /** TODO: Get it working :| */
@@ -119,6 +124,7 @@ public class Game extends Application {
 
     private void step(double elapsedTime) {
         myBall.detectStageAndPaddle(myPaddle);
+        myBall.detectBrick(bricks);
         myBall.updatePosition(elapsedTime);
     }
 
