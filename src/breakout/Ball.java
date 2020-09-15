@@ -6,6 +6,8 @@ import javafx.scene.shape.Circle;
 
 public class Ball extends Circle{
 
+
+    private static final Color BALL_COLOR = Color.BLUE;
     int radius;
     double x;
     double y;
