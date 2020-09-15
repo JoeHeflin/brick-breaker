@@ -28,6 +28,9 @@ public class Game extends Application {
     public static final int STAGE_HEIGHT = 400;
     public static final Paint BRICK_COLOR = Color.RED;
     public static final int BRICK_SPACE = 2;
+    public static final int PADDLE_WIDTH = STAGE_WIDTH/4;
+    public static final int PADDLE_HEIGHT = 10;
+    public static final Color PADDLE_COLOR = Color.BEIGE;
 
     private Scene myScene;
     private int total = 0;
@@ -65,8 +68,6 @@ public class Game extends Application {
                 if (symbol.compareTo("0") != 0) {
                     Brick newBrick = new Brick(x, y, symbol);
                     newBrick.init();
-
-                    newBrick.setFill(BRICK_COLOR);
                     root.getChildren().add(newBrick);
                 }
                 col += BRICK_WIDTH;
