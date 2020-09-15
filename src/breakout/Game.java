@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -29,9 +30,13 @@ public class Game extends Application {
     public static final int STAGE_HEIGHT = 400;
     public static final Paint BRICK_COLOR = Color.RED;
     public static final int BRICK_SPACE = 2;
+    public static final int PADDLE_WIDTH = STAGE_WIDTH/4;
+    public static final int PADDLE_HEIGHT = 10;
+    public static final Color PADDLE_COLOR = Color.BEIGE;
 
     private Scene myScene;
     private int total = 0;
+    private boolean activeRound = false;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -47,7 +52,7 @@ public class Game extends Application {
 //        animation.getKeyFrames().add(frame);
 //        animation.play();
     }
-
+//TODO: Level Select class, confirming when blocks are broken / level is beaten
     Scene setUpScene (String layoutFileName) throws IOException {
         Group root = new Group();
 
@@ -66,8 +71,6 @@ public class Game extends Application {
                 if (symbol.compareTo("0") != 0) {
                     Brick newBrick = new Brick(x, y, symbol);
                     newBrick.init();
-
-                    newBrick.setFill(BRICK_COLOR);
                     root.getChildren().add(newBrick);
                 }
                 col += BRICK_WIDTH;
@@ -78,6 +81,19 @@ public class Game extends Application {
 
         return scene;
     }
+/** TODO: Add a line to show the angle the ball will be launched at
+    private void handleLaunch (KeyCode code) {
+        double angle = 90;
+        switch (code) {
+            case UP ->
+            case DOWN ->
+            case SPACE -> {
+                activeRound = true;
+                myBall.startStop(activeRound, angle);
+            }
+        }
+    }
+ */
 
     private void step(double ellapsedTime) {
 //        Ball.updatePosition(ellapsedTime);
