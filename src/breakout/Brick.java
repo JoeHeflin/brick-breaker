@@ -15,7 +15,8 @@ public class Brick extends Rectangle {
     Color color;
     boolean alive;
 
-
+    //TODO: Make the bricks look distinct
+    //TODO: Add more types of bricks
     //Constructor
     Brick(double x, double y, String type){
         super(x, y, Game.BRICK_WIDTH, Game.BRICK_HEIGHT);
@@ -30,6 +31,11 @@ public class Brick extends Rectangle {
     //makes brick based off of 'type'
     //types: b = basic,
     void init(){
+        if(type.equals("0")){
+            health = 0;
+            actOnDeath = "";
+            alive = false;
+        }
         if(type.equals("1")){
             health = 1;
             actOnDeath = "";
@@ -48,6 +54,7 @@ public class Brick extends Rectangle {
     void takeDamage(Ball ball){
         health = health - ball.damage;
         checkIfAlive();
+        getColor();
 
     }
 
