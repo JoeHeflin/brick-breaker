@@ -15,8 +15,10 @@ public class Brick extends Rectangle {
     Color color;
     boolean alive;
 
+
     //Constructor
     Brick(int x, int y, String type){
+        super(x, y, Game.BRICK_WIDTH, Game.BRICK_HEIGHT);
         this.xPos = x;
         this.yPos = y;
         this.type = type;
@@ -33,6 +35,7 @@ public class Brick extends Rectangle {
             actOnDeath = "";
             getColor();
         }
+
     }
 
     void getColor(){
