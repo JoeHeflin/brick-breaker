@@ -26,7 +26,7 @@ public class Game extends Application {
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     public static final int BRICK_WIDTH = 36;
     public static final int BRICK_HEIGHT = 10;
-    public static final int STAGE_WIDTH = 10*BRICK_WIDTH;
+    public static final int STAGE_WIDTH = 10 * BRICK_WIDTH;
     public static final int STAGE_HEIGHT = 400;
     public static final Paint BRICK_COLOR = Color.RED;
     public static final int BRICK_SPACE = 2;
@@ -35,6 +35,8 @@ public class Game extends Application {
     public static final Color PADDLE_COLOR = Color.BEIGE;
 
     private Scene myScene;
+    private Ball myBall;
+//    private Paddle myPaddle; TODO
     private int total = 0;
     private boolean activeRound = false;
 
@@ -66,12 +68,21 @@ public class Game extends Application {
         while ((line = br.readLine()) != null) {
             String[] brickSymbols = line.split(" ");
             for (String symbol : brickSymbols) {
-                int x = col % STAGE_WIDTH;// + BRICK_SPACE/2; TODO
-                int y = row;// + BRICK_SPACE/2; TODO
-                if (symbol.compareTo("0") != 0) {
+                int x = col % STAGE_WIDTH;// + BRICK_SPACE/2;
+                int y = row;// + BRICK_SPACE/2;
+                if (symbol.compareTo(BLANK_SYMBOL) != 0) {
                     Brick newBrick = new Brick(x, y, symbol);
                     newBrick.init();
                     root.getChildren().add(newBrick);
+
+                    Ball newBall = new Ball(STAGE_WIDTH/2,STAGE_HEIGHT,BALL_SPEED,BALL_RADIUS);
+                    myBall = newBall;
+                    myBall.setId("Ball");
+                    root.getChildren().add(newBall);
+
+//                    Paddle newPaddle = new Paddle(PADDLE_INIT_X, PADDLE_INIT_Y, ); TODO
+//                    myPaddle.setId("Ball"); TODO
+//                    root.getChildren().add(newPaddle); TODO
                 }
                 col += BRICK_WIDTH;
             }
