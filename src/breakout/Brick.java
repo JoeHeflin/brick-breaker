@@ -13,7 +13,8 @@ public class Brick extends Rectangle {
     String type;
     String actOnDeath;
     Color color;
-    boolean alive;
+    //boolean alive;
+    //int lives;
 
     //TODO: Make the bricks look distinct
     //TODO: Add more types of bricks
@@ -23,9 +24,10 @@ public class Brick extends Rectangle {
         this.x = x;
         this.y = y;
         this.type = type;
-        alive = true;
+//        alive = true;
         width = Game.BRICK_WIDTH;
         height = Game.BRICK_HEIGHT;
+
     }
 
     //makes brick based off of 'type'
@@ -34,19 +36,25 @@ public class Brick extends Rectangle {
         if(type.equals("0")){
             health = 0;
             actOnDeath = "";
-            alive = false;
+            //alive = false;
         }
         if(type.equals("1")){
             health = 1;
             actOnDeath = "";
-            getColor();
+            setColor();
         }
+        else {System.out.print("INVALID LEVEL FORMAT ERROR");}
 
     }
 
-    void getColor(){
-        if(health == 1){
-            color = Color.RED;
+    void setColor(){ // TODO CHANGED NAME BC MISLEADING
+//        if(health == 1){
+//            color = Color.RED;
+//        }
+        switch (health) {
+            case 0 -> color = Game.BACKGROUND_COLOR;
+            case 1 -> color = Color.RED;
+            //default -> color =
         }
         this.setFill(color);
     }
@@ -54,18 +62,18 @@ public class Brick extends Rectangle {
     void takeDamage(Ball ball){
         health = health - ball.damage;
         checkIfAlive();
-        getColor();
-
+        setColor();
     }
 
-    void checkIfAlive(){
-        if(health <= 0) {
-            health = 0;
-            alive = false;
+    boolean checkIfAlive(){
+        if(this == null || health <= 0) {
+            return false;
+            //alive = false;
         }
         else{
-            alive = true;
+            return true;
         }
+//        return false;
     }
 
 
