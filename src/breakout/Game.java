@@ -25,7 +25,7 @@ public class Game extends Application {
     public static final int FRAMES_PER_SECOND = 60;// TODO Experiment: Ball freezes at high fps
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     public static final int BRICK_WIDTH = 36;
-    public static final int BRICK_HEIGHT = 10;
+    public static final int BRICK_HEIGHT = 20;
     public static final int STAGE_WIDTH = 10 * BRICK_WIDTH;
     public static final int STAGE_HEIGHT = 400;
     public static final Paint BRICK_COLOR = Color.RED;
@@ -36,7 +36,7 @@ public class Game extends Application {
     public static final String BLANK_SYMBOL = "0";
     public static final double INITIAL_BALL_SPEED = 15;
     public static final int BALL_RADIUS = 5;
-    private static final double INITIAL_PADDLE_SPEED = 15;//2000;//10;//300; //TODO: Find a way to make paddle movement less jittery
+    private static final double INITIAL_PADDLE_SPEED = 300;//2000;//10;//15; //TODO: Find a way to make paddle movement less jittery
     private static final double INITIAL_LAUNCH_ANGLE = 60;
 
     //TODO: Level Select class, confirming when blocks are broken / level is beaten -> loading to next level
