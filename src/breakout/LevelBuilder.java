@@ -19,7 +19,7 @@ public class LevelBuilder {
         brickLayout = new Brick[Game.STAGE_HEIGHT/brickHeight][Game.STAGE_WIDTH/brickWidth];
     }
 
-    void init(String levelName) throws IOException { //TODO Why init?
+    void init(String levelName) throws IOException {
         row = 0;
         col = 0;
         File localStream = new File(levelName);
