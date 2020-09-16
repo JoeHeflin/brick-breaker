@@ -43,11 +43,7 @@ public class Paddle extends Rectangle {
             }
         }
     }
-    public void resetPaddle(Scene scene) {
-        this.freeze();
-        this.setInitialPosition();
-//        scene.setOnMouseClicked(e -> this.unfreeze());
-    }
+
     public void freeze() {
         ableToMove = false;
     }

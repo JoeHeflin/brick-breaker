@@ -1,12 +1,8 @@
 package breakout;
 
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 
 public class Ball extends Circle{
 
@@ -35,7 +31,6 @@ public class Ball extends Circle{
     }
 
     //Makes the ball start moving // stop moving
-    //void startStop(boolean go, double launchAngle){
 
     void start(double launchAngle, Paddle paddle) {
         ballInMotion = true;
@@ -56,49 +51,31 @@ public class Ball extends Circle{
         this.right = getCenterX() + getRadius();
     }
 
-    void detectStageAndPaddle(Paddle paddle, Scene scene){
-        updateBoundaries();
-        if(left < 0){
-            bounce(true);
-            setCenterX(0 + getRadius());
-        }
-        if(right > Game.STAGE_WIDTH){
-            bounce(true);
-            setCenterX(Game.STAGE_WIDTH-getRadius());
-        }
-        if(up < 0){
-            bounce(false);
-            setCenterY(0 + getRadius());
-        }
-        if(down > Game.STAGE_HEIGHT){
-//            bounce(false);
-//            setCenterY(Game.STAGE_HEIGHT - getRadius());
-//            this.resetBall(scene);
-            resetBall(scene, paddle);
-            //TODO decrement lives
-        }
-        //Checks if touching paddle and midpoint of the ball isn't beneath the top of the paddle
-        if(this.getBoundsInParent().intersects(paddle.getBoundsInParent()) && this.down > paddle.getY()){
-            bounce(false);
-            this.setCenterY(paddle.getY() - this.getRadius());
-        }
-        //updateBoundaries(); TODO: Why necessary?
-
-    }
-
-//    void detectBrick(Group bricks) {
-//        for (Node brick : bricks.getChildren()) {
-//            if (this.getBoundsInParent().intersects(brick.getBoundsInParent())) {
-//                if (brick.lives >= 0) {
-//                    brick.lives -= 1;
-//                    bounce(false);
-//                    //bounce(true); TODO: decide  how to have ball bounce
-//                    // remove brick
-//                    bricks.getChildren().remove(brick);
-//                    //this.setCenterY(thisY() - this.getRadius());
-//                }
-//            }
+//    void detectStageAndPaddle (Paddle paddle, Scene scene) {
+//        updateBoundaries();
+//        if(left < 0){
+//            bounce(true);
+//            setCenterX(0 + getRadius());
 //        }
+//        if(right > Game.STAGE_WIDTH){
+//            bounce(true);
+//            setCenterX(Game.STAGE_WIDTH-getRadius());
+//        }
+//        if(up < 0){
+//            bounce(false);
+//            setCenterY(0 + getRadius());
+//        }
+//        if(down > Game.STAGE_HEIGHT){
+//            resetBall(scene, paddle);
+//            //TODO decrement lives
+//        }
+//        //Checks if touching paddle and midpoint of the ball isn't beneath the top of the paddle
+//        if(this.getBoundsInParent().intersects(paddle.getBoundsInParent()) && this.down > paddle.getY()){
+//            bounce(false);
+//            this.setCenterY(paddle.getY() - this.getRadius());
+//        }
+//        //updateBoundaries(); TODO: Why necessary?
+//
 //    }
 
     void detectBrick(Brick[][] brickLayout) {
@@ -108,10 +85,6 @@ public class Ball extends Circle{
                     if (brick.checkIfAlive()) {
                         brick.takeDamage(this);
                         bounce(false);
-                        //bounce(true); TODO: decide  how to have ball bounce
-                        // remove brick
-                        //bricks.getChildren().remove(brick);
-                        //this.setCenterY(thisY() - this.getRadius());
                     }
                 }
             }
@@ -136,14 +109,6 @@ public class Ball extends Circle{
     public void setInitialPosition() {
         setCenterX(Game.STAGE_WIDTH/2);
         setCenterY(Game.STAGE_HEIGHT - Game.PADDLE_HEIGHT - Game.BALL_RADIUS);
-    }
-
-    public void resetBall(Scene scene, Paddle paddle) {
-        this.stop();
-        this.setInitialPosition();
-        paddle.resetPaddle(scene);
-
-//        scene.setOnMouseClicked(e -> this.start(Game.INITIAL_LAUNCH_ANGLE));
     }
 
     public boolean isBallInMotion() { return ballInMotion;}
