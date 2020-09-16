@@ -14,14 +14,14 @@ public class Paddle extends Rectangle {
     boolean ableToMove = true;
 
     Paddle(double spd){
-        super(Game.STAGE_WIDTH/2 - Game.PADDLE_WIDTH/2, Game.STAGE_HEIGHT - 15, Game.PADDLE_WIDTH, Game.PADDLE_HEIGHT);
+        super(Game.STAGE_WIDTH/2 - Game.PADDLE_WIDTH/2, Game.STAGE_HEIGHT - Game.PADDLE_HEIGHT, Game.PADDLE_WIDTH, Game.PADDLE_HEIGHT);
         speed = spd;
         this.setFill(Game.PADDLE_COLOR);
     }
 
     public void setInitialPosition() {
         this.setX(Game.STAGE_WIDTH/2 - Game.PADDLE_WIDTH/2);
-        this.setY(Game.STAGE_HEIGHT - 15);
+        this.setY(Game.STAGE_HEIGHT - Game.PADDLE_HEIGHT);
     }
 
 //    void handleHorizontalMovement (KeyCode code) {

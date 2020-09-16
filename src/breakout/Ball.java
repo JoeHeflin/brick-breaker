@@ -135,7 +135,7 @@ public class Ball extends Circle{
 
     public void setInitialPosition() {
         setCenterX(Game.STAGE_WIDTH/2);
-        setCenterY(Game.STAGE_HEIGHT - Game.PADDLE_HEIGHT);
+        setCenterY(Game.STAGE_HEIGHT - Game.PADDLE_HEIGHT - Game.BALL_RADIUS);
     }
 
     public void resetBall(Scene scene, Paddle paddle) {

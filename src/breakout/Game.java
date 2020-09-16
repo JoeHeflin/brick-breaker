@@ -37,7 +37,7 @@ public class Game extends Application {
     public static final double INITIAL_BALL_SPEED = 15;
     public static final int BALL_RADIUS = 5;
     public static final Color BACKGROUND_COLOR = Color.WHITE;
-    private static final double INITIAL_PADDLE_SPEED = 15;//2000;//10;//300; //TODO: Find a way to make paddle movement less jittery
+    public static final double INITIAL_PADDLE_SPEED = 15;//2000;//10;//300; //TODO: Find a way to make paddle movement less jittery
     public static final double INITIAL_LAUNCH_ANGLE = 60;
 
     //TODO: Level Select class, confirming when blocks are broken / level is beaten -> loading to next level
@@ -65,7 +65,6 @@ public class Game extends Application {
         stage.setTitle(TITLE);
         stage.show();
 
-
         KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step(SECOND_DELAY));
         Timeline animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
@@ -76,6 +75,12 @@ public class Game extends Application {
     public void reset() {//Paddle paddle, Ball ball) {
         myBall.resetBall(myScene, myPaddle);
         myScene.setOnMouseClicked(e -> myBall.start(INITIAL_LAUNCH_ANGLE, myPaddle));
+    }
+
+    //Overload for testing
+    public void reset(Scene scene) {//Paddle paddle, Ball ball) {
+        myBall.resetBall(scene, myPaddle);
+        scene.setOnMouseClicked(e -> myBall.start(INITIAL_LAUNCH_ANGLE, myPaddle));
     }
 
     Scene setUpScene (String layoutFileName) throws IOException {
@@ -104,7 +109,7 @@ public class Game extends Application {
 //            row += BRICK_HEIGHT;
 //        }
 
-        bricks.init(LEVEL1_LAYOUT); //TODO
+        bricks.init(layoutFileName); //TODO
 
         for (Brick[] brickRow : bricks.brickLayout) {
             for (Brick brick : brickRow) {
@@ -114,12 +119,20 @@ public class Game extends Application {
             }
         }
 
+        Brick brick1 = bricks.brickLayout[0][0];
+        brick1.setId("brick1");
+        Brick brick2 = bricks.brickLayout[1][0];
+        brick2.setId("brick2");
+        Brick brick3 = bricks.brickLayout[0][2];
+        brick3.setId("brick3");
 
         myBall = new Ball(STAGE_WIDTH/2,STAGE_HEIGHT/2,INITIAL_BALL_SPEED,BALL_RADIUS);
         root.getChildren().add(myBall);
+        myBall.setId("Ball");
 
         myPaddle = new Paddle(INITIAL_PADDLE_SPEED);
         root.getChildren().add(myPaddle);
+        myPaddle.setId("Paddle");
 
         Scene scene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
         scene.setOnKeyPressed(e -> myPaddle.handleHorizontalMovement(e.getCode(), SECOND_DELAY)); //TODO
@@ -143,6 +156,9 @@ public class Game extends Application {
 //            angle = Math.toDegrees(Math.atan((y - myBall.getCenterY()) / (x - myBall.getCenterX())));
 //        }
 //    }
+    public void testStep() {
+        step(SECOND_DELAY);
+    }
 
 
     private void step(double elapsedTime) {
