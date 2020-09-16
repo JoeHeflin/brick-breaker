@@ -34,8 +34,6 @@ public class Ball extends Circle{
         this.damage = 1;
     }
 
-    //Makes the ball start moving // stop moving
-    //void startStop(boolean go, double launchAngle){
 
     void start(double launchAngle) {
         this.xVel = (double) (speed * Math.cos(Math.toRadians(launchAngle)));
@@ -104,7 +102,6 @@ public class Ball extends Circle{
     void updatePosition(double elapsedTime) {
         setCenterX(getCenterX() + this.xVel * speed * elapsedTime);
         setCenterY(getCenterY() + this.yVel * speed * elapsedTime);
-        System.out.println("Radius: " + getRadius() + " XPos: " + getCenterX() + "xVel: " + xVel + "yPos: " + getCenterY() + "yVel: " + yVel);
     }
 
 }

@@ -35,6 +35,7 @@ public class Brick extends Rectangle {
             health = 0;
             actOnDeath = "";
             alive = false;
+            getColor();
         }
         if(type.equals("1")){
             health = 1;
@@ -53,19 +54,19 @@ public class Brick extends Rectangle {
 
     void takeDamage(Ball ball){
         health = health - ball.damage;
-        checkIfAlive();
+        if(health <= 0){
+            breakBrick();
+            health = 0;
+            alive = false;
+        }
+
         getColor();
 
     }
 
-    void checkIfAlive(){
-        if(health <= 0) {
-            health = 0;
-            alive = false;
-        }
-        else{
-            alive = true;
-        }
+    void breakBrick(){
+        health = 0;
+        alive = false;
     }
 
 
