@@ -12,8 +12,8 @@ public class LevelBuilder {
     Brick[][] brickLayout;
 
     public LevelBuilder(){
-        int brickHeight = Game.BRICK_HEIGHT;
-        int brickWidth = Game.BRICK_WIDTH;
+        brickHeight = Game.BRICK_HEIGHT;
+        brickWidth = Game.BRICK_WIDTH;
         row = 0;
         col = 0;
         brickLayout = new Brick[Game.STAGE_HEIGHT/brickHeight][Game.STAGE_WIDTH/brickWidth];
@@ -28,9 +28,11 @@ public class LevelBuilder {
         while ((line = br.readLine()) != null) {
             String[] brickSymbols = line.split(" ");
             for (String symbol : brickSymbols) {
-                Brick newBrick = new Brick(col*brickWidth, row*brickHeight, symbol);
-                newBrick.init();
-                brickLayout[row][col] = newBrick;
+                if (symbol.compareTo(Game.BLANK_SYMBOL) != 0) {
+                    Brick newBrick = new Brick(col * brickWidth, row * brickHeight, symbol);
+                    newBrick.init();
+                    brickLayout[row][col] = newBrick;
+                }
                 col++;
             }
             col = 0;
