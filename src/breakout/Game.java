@@ -3,8 +3,11 @@ package breakout;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -12,6 +15,7 @@ import javafx.application.Application;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
+//import java.awt.*;
 import java.io.IOException;
 
 import static java.lang.Thread.sleep;
@@ -40,6 +44,13 @@ public class Game extends Application {
     public static final double INITIAL_PADDLE_SPEED = 15;
     public static final double INITIAL_LAUNCH_ANGLE = 60;
     public static final int INITIAL_LIVES_COUNT = 3;
+    private static final int PLAY_AGAIN_LENGTH = 10;
+    private static final int PLAY_AGAIN_HEIGHT = 10;
+    private static final double PLAY_AGAIN_LEFT = STAGE_WIDTH/3;
+    private static final double PLAY_AGAIN_RIGHT = STAGE_WIDTH*2/3;
+    private static final double PLAY_AGAIN_BOTTOM = STAGE_HEIGHT - 50;
+    private static final double PLAY_AGAIN_TOP = PLAY_AGAIN_BOTTOM - 50;
+
 
     //TODO: Level Select class, confirming when blocks are broken / level is beaten -> loading to next level
     //TODO: Restructure level reading to be a matrix that stores Bricks, so we can keep track of them
@@ -182,15 +193,47 @@ public class Game extends Application {
 
     private void gameOver() {
         Group root = new Group();
-        Scene gameOverScene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
-        Text gameOverText = new Text(10, STAGE_HEIGHT/2, "GAME\nOVER");
+        Text gameOverText = new Text(10, STAGE_HEIGHT/3, "GAME\nOVER");
         gameOverText.setFont(new Font("Verdana", 100));
+       // Rectangle buttonGraphic = new Rectangle(PLAY_AGAIN_LEFT, PLAY_AGAIN_TOP,
+//                PLAY_AGAIN_RIGHT - PLAY_AGAIN_LEFT, PLAY_AGAIN_BOTTOM - PLAY_AGAIN_TOP);
+//        Text buttonText = new Text(buttonGraphic.get);
+        //buttonGraphic.setFill(Color.GREEN);
+        Text restartText = new Text(PLAY_AGAIN_LEFT + 8, PLAY_AGAIN_BOTTOM - 15, "Restart");
+        restartText.setFont(new Font("Verdana", 30));
+       // root.getChildren().add(buttonGraphic);
+        root.getChildren().add(restartText);
+//        buttonGraphic.setOnMouseClicked(e -> restartGame());
+        restartText.setOnMouseClicked(e -> restartGame());
+
+//        Button playAgainButton = new Button("Play Again", buttonGraphic);
+//        myScene.setOnMouseClicked(e -> {
+//            try {
+//                handlePlayAgainClick(e.getX(), e.getY());
+//            } catch (Exception exception) {
+//                exception.printStackTrace();
+//            }
+//        });
         gameOverText.setFill(Color.BLACK);
+//        root.getChildren().add(playAgainButton);
         root.getChildren().add(gameOverText);
+        Scene gameOverScene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
         myLevelActive = false;
         myStage.setScene(gameOverScene);
     }
 
+    private void restartGame() {
+        try {
+            start(myStage);
+        } catch (Exception e) {e.printStackTrace();}
+    }
+
+
+    private void handlePlayAgainClick(double x, double y) throws Exception {
+        if ((x > PLAY_AGAIN_LEFT && x < PLAY_AGAIN_RIGHT) || (y < PLAY_AGAIN_BOTTOM && y > PLAY_AGAIN_TOP)) {
+            start(myStage);
+        }
+    }
 
     private void detectCollisions(Ball ball, MenuBar menuBar) {
         myDetector.detectStage(ball);
