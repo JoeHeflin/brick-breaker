@@ -23,7 +23,7 @@ public class Game extends Application {
     public static final int FRAMES_PER_SECOND = 60;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
     public static final int BRICK_WIDTH = 36;
-    public static final int BRICK_HEIGHT = 10;
+    public static final int BRICK_HEIGHT = 20;
     public static final int STAGE_WIDTH = 10 * BRICK_WIDTH;
     public static final int STAGE_HEIGHT = 400;
     public static final int MENU_NUMBER_OF_ROWS = 2;
