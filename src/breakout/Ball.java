@@ -88,8 +88,8 @@ public class Ball extends Circle{
     }
 
     void updatePosition(double elapsedTime) {
-        setCenterX(getCenterX() + this.xVel * speed * elapsedTime);
-        setCenterY(getCenterY() + this.yVel * speed * elapsedTime);
+        setCenterX(getCenterX() + this.xVel * elapsedTime);
+        setCenterY(getCenterY() + this.yVel * elapsedTime);
         //System.out.println("Radius: " + getRadius() + " XPos: " + getCenterX() + "xVel: " + xVel + "yPos: " + getCenterY() + "yVel: " + yVel);
     }
 

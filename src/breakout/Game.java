@@ -38,7 +38,7 @@ public class Game extends Application {
     public static final int PADDLE_HEIGHT = 10;
     public static final Color PADDLE_COLOR = Color.BROWN;
     public static final String BLANK_SYMBOL = "0";
-    public static final double INITIAL_BALL_SPEED = 15;
+    public static final double INITIAL_BALL_SPEED = 150;
     public static final int BALL_RADIUS = 5;
     public static final Color BACKGROUND_COLOR = Color.WHITE;
     public static final double INITIAL_PADDLE_SPEED = 15;
@@ -50,6 +50,8 @@ public class Game extends Application {
     private static final double PLAY_AGAIN_RIGHT = STAGE_WIDTH*2/3;
     private static final double PLAY_AGAIN_BOTTOM = STAGE_HEIGHT - 50;
     private static final double PLAY_AGAIN_TOP = PLAY_AGAIN_BOTTOM - 50;
+    private static final String LOSER_MESSAGE = "YOU\nLOSE";
+    private static final String WINNER_MESSAGE = "YOU\nWIN";
 
 
     //TODO: Level Select class, confirming when blocks are broken / level is beaten -> loading to next level
@@ -182,18 +184,20 @@ public class Game extends Application {
                 nextLevel();
             }
             if (myMenuBar.noMoreLives()) {
-                gameOver();
+                gameOver(LOSER_MESSAGE);
             }
         }
     }
 
     private void nextLevel() {
-
+        if (bricks.getNextLevel() == null) {
+            gameOver(WINNER_MESSAGE); //TODO
+        }
     }
 
-    private void gameOver() {
+    private void gameOver(String message) {
         Group root = new Group();
-        Text gameOverText = new Text(10, STAGE_HEIGHT/3, "GAME\nOVER");
+        Text gameOverText = new Text(10, STAGE_HEIGHT/3, message);
         gameOverText.setFont(new Font("Verdana", 100));
        // Rectangle buttonGraphic = new Rectangle(PLAY_AGAIN_LEFT, PLAY_AGAIN_TOP,
 //                PLAY_AGAIN_RIGHT - PLAY_AGAIN_LEFT, PLAY_AGAIN_BOTTOM - PLAY_AGAIN_TOP);

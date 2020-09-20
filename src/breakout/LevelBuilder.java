@@ -11,6 +11,7 @@ public class LevelBuilder {
     int brickWidth;
     Brick[][] brickLayout;
     int myBrickCount;
+    String nextLevel;
 
     public LevelBuilder(){
         brickHeight = Game.BRICK_HEIGHT;
@@ -58,5 +59,9 @@ public class LevelBuilder {
 
     public boolean noMoreBricks() {
         return myBrickCount == 0;
+    }
+
+    public String getNextLevel() {
+        return nextLevel;
     }
 }
