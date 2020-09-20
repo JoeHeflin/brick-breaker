@@ -39,7 +39,7 @@ public class LevelBuilder {
             row++;
             //ERROR call
             if(row > brickLayout.length){
-                System.out.println("ERROR: Level file has too many rows");
+                System.out.println("ERROR: Level file has too many rows " + row + brickLayout.length);
                 break;
             }
         }

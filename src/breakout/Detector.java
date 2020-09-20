@@ -46,8 +46,6 @@ public class Detector {
         }
         else if (myBottomBallEdge > Game.STAGE_HEIGHT) {
             reset(myScene);
-            //lives --;
-            // Update lives on scene TODO decrement lives
         }
     }
 

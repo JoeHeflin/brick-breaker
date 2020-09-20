@@ -23,7 +23,7 @@ public class MenuBar {
     public void init() {
         // "Lives: " text in menu bar
         // Could reduce duplicated code TODO
-        Text livesText = new Text(Game.STAGE_WIDTH - 80, 15, "Lives: ");
+        Text livesText = new Text(Game.STAGE_WIDTH - 50, 15, "Lives: ");
         livesText.setFont(new Font("Verdana", 10));
         livesText.setFill(Color.BLACK);
         myMenuBarGroup.getChildren().add(livesText);
@@ -34,8 +34,8 @@ public class MenuBar {
         myMenuBarGroup.getChildren().add(myLivesCountText);
         // "Points: " text in menu bar
         Text pointsText = new Text(5, 15, "Points: ");
-        livesText.setFont(new Font("Verdana", 10));
-        livesText.setFill(Color.BLACK);
+        pointsText.setFont(new Font("Verdana", 10));
+        pointsText.setFill(Color.BLACK);
         myMenuBarGroup.getChildren().add(pointsText);
         //
         myPointsText = new Text(50, 15, Integer.toString(myPoints));

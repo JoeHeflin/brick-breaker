@@ -26,7 +26,7 @@ public class Game extends Application {
     public static final int BRICK_HEIGHT = 20;
     public static final int STAGE_WIDTH = 10 * BRICK_WIDTH;
     public static final int STAGE_HEIGHT = 400;
-    public static final int MENU_NUMBER_OF_ROWS = 2;
+    public static final int MENU_NUMBER_OF_ROWS = 1;
     public static final int MENU_BAR_HEIGHT = MENU_NUMBER_OF_ROWS * BRICK_HEIGHT;
     public static final Paint BRICK_COLOR = Color.RED;
     public static final int BRICK_SPACE = 2;
