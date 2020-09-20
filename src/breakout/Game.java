@@ -17,7 +17,7 @@ import java.io.IOException;
 import static java.lang.Thread.sleep;
 
 public class Game extends Application {
-
+    //TODO: place the constants in appropriate classes
     public static final String LEVEL1_LAYOUT = "levelFormats/level1.txt";
     public static final String TITLE = "New Game";
     public static final int FRAMES_PER_SECOND = 60;
@@ -55,6 +55,8 @@ public class Game extends Application {
     private Text myLivesCountText;
     private int myLivesCount;
     private MenuBar myMenuBar;
+    private Stage myStage;
+    private boolean myLevelActive;
 
     public Paddle getPaddle() {
         return myPaddle;
@@ -63,6 +65,7 @@ public class Game extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
+        myStage = stage;
         myScene = setUpScene(LEVEL1_LAYOUT);
         myDetector.reset(myScene);
         stage.setScene(myScene);
@@ -73,6 +76,7 @@ public class Game extends Application {
         Timeline animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(frame);
+        myLevelActive = true;
         animation.play();
     }
 
@@ -156,18 +160,42 @@ public class Game extends Application {
 
     private void step(double elapsedTime) {
         //if (myDetector.getLives() > 0) {
-        detectCollisions(myBall, myMenuBar);
-        myMenuBar.updateText();
-        //myLivesCountText.setText(Integer.toString(myMenuBar.getLives()));
-        if (myBall.isBallInMotion()) {
-            myBall.updatePosition(elapsedTime);
+        if (myLevelActive) {
+            detectCollisions(myBall, myMenuBar);
+            myMenuBar.updateText();
+            //myLivesCountText.setText(Integer.toString(myMenuBar.getLives()));
+            if (myBall.isBallInMotion()) {
+                myBall.updatePosition(elapsedTime);
+            }
+            if (bricks.noMoreBricks()) {
+                nextLevel();
+            }
+            if (myMenuBar.noMoreLives()) {
+                gameOver();
+            }
         }
     }
+
+    private void nextLevel() {
+
+    }
+
+    private void gameOver() {
+        Group root = new Group();
+        Scene gameOverScene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
+        Text gameOverText = new Text(10, STAGE_HEIGHT/2, "GAME\nOVER");
+        gameOverText.setFont(new Font("Verdana", 100));
+        gameOverText.setFill(Color.BLACK);
+        root.getChildren().add(gameOverText);
+        myLevelActive = false;
+        myStage.setScene(gameOverScene);
+    }
+
 
     private void detectCollisions(Ball ball, MenuBar menuBar) {
         myDetector.detectStage(ball);
         myDetector.detectPaddle(ball);
-        myDetector.detectBrick(bricks.brickLayout, ball, menuBar);
+        myDetector.detectBrick(bricks, ball, menuBar);
     }
 
     /**

@@ -59,21 +59,22 @@ public class Brick extends Rectangle {
         this.setFill(color);
     }
 
-    void takeDamage(Ball ball){
+    void takeDamage(Ball ball, MenuBar menuBar){
         health = health - ball.getDamage();
-        checkIfAlive();
+//        checkIfAlive();
         setColor();
+        menuBar.addPoints();
     }
 
     boolean checkIfAlive(){
-        if(this == null || health <= 0) {
-            return false;
-            //alive = false;
-        }
-        else{
-            return true;
-        }
-//        return false;
+//        if (health <= 0) {
+//            return false;
+//            //alive = false;
+//        }
+//        else{
+//            return true;
+//        }
+        return health > 0;
     }
 
 

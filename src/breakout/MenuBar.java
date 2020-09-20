@@ -6,6 +6,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class MenuBar {
+    private static final int POINTS_PER_BRICK = 10;
     private Text myLivesCountText;
     private Group myMenuBarGroup;
     private int myLives;
@@ -60,7 +61,11 @@ public class MenuBar {
     }
 
     public void addPoints() {
-        myPoints += 10;
+        myPoints += POINTS_PER_BRICK;
+    }
+
+    public boolean noMoreLives() {
+        return myLives <= 0;
     }
 
     public void updateText(){

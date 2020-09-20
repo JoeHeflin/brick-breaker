@@ -59,14 +59,17 @@ public class Detector {
 
     }
 
-    void detectBrick(Brick[][] brickLayout, Ball ball, MenuBar menuBar) { //TODO: bounce off edges of brick
-        for (Brick[] brickCol : brickLayout) {
+    void detectBrick(LevelBuilder bricks, Ball ball, MenuBar menuBar) { //TODO: bounce off edges of brick
+        for (Brick[] brickCol : bricks.brickLayout) {
             for (Brick brick : brickCol) {
                 if (brick != null && ball.getBoundsInParent().intersects(brick.getBoundsInParent())) {
                     if (brick.checkIfAlive()) {
-                        brick.takeDamage(ball);
+                        brick.takeDamage(ball, menuBar);
                         ball.bounceY();
-                        menuBar.addPoints();
+                        // Decrement number of active bricks to support game over
+                        if (!brick.checkIfAlive()) {
+                            bricks.removeBrickFromCount();
+                        }
                     }
                 }
             }

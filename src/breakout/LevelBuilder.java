@@ -10,6 +10,7 @@ public class LevelBuilder {
     int brickHeight;
     int brickWidth;
     Brick[][] brickLayout;
+    int myBrickCount;
 
     public LevelBuilder(){
         brickHeight = Game.BRICK_HEIGHT;
@@ -17,6 +18,11 @@ public class LevelBuilder {
         row = 0;
         col = 0;
         brickLayout = new Brick[Game.STAGE_HEIGHT/brickHeight][Game.STAGE_WIDTH/brickWidth];
+        myBrickCount = 0;
+    }
+
+    public void removeBrickFromCount() {
+        myBrickCount --;
     }
 
     void init(String levelName) throws IOException { //TODO Why init?
@@ -32,6 +38,7 @@ public class LevelBuilder {
                     Brick newBrick = new Brick(col * brickWidth, row * brickHeight, symbol);
                     newBrick.init();
                     brickLayout[row][col] = newBrick;
+                    myBrickCount ++;
                 }
                 col++;
             }
@@ -47,5 +54,9 @@ public class LevelBuilder {
 
     Brick[][] getBrickLayout(){
         return brickLayout;
+    }
+
+    public boolean noMoreBricks() {
+        return myBrickCount == 0;
     }
 }
