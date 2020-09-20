@@ -20,7 +20,7 @@ public class LevelBuilder {
     }
 
     void init(String levelName) throws IOException { //TODO Why init?
-        row = 0;
+        row = Game.MENU_NUMBER_OF_ROWS;
         col = 0;
         File localStream = new File(levelName);
         String line;

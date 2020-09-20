@@ -8,15 +8,14 @@ public class Ball extends Circle{
 
     private static final Color BALL_COLOR = Color.BLUE;
     private boolean ballInMotion;
-
-    double up;
-    double down;
-    double left;
-    double right;
-    double speed;
-    double xVel;
-    double yVel;
-    int damage;
+    private double up;
+    private double down;
+    private double left;
+    private double right;
+    private double speed;
+    private double xVel;
+    private double yVel;
+    private int damage;
 
     public Ball(double x, double y, double spd, int radius){
         super(x, y, radius);
@@ -44,12 +43,14 @@ public class Ball extends Circle{
         this.yVel = 0;
     }
 
-    void updateBoundaries(){
-        this.up = getCenterY() - getRadius();
-        this.down = getCenterY() + getRadius();
-        this.left = getCenterX() - getRadius();
-        this.right = getCenterX() + getRadius();
-    }
+//    void updateBoundaries(){
+//        this.up = getCenterY() - getRadius();
+//        this.down = getCenterY() + getRadius();
+//        this.left = getCenterX() - getRadius();
+//        this.right = getCenterX() + getRadius();
+//    }
+
+//    public boolean getUp
 
 //    void detectStageAndPaddle (Paddle paddle, Scene scene) {
 //        updateBoundaries();
@@ -78,26 +79,12 @@ public class Ball extends Circle{
 //
 //    }
 
-    void detectBrick(Brick[][] brickLayout) {
-        for (Brick[] brickCol : brickLayout) {
-            for (Brick brick : brickCol) {
-                if (brick != null && this.getBoundsInParent().intersects(brick.getBoundsInParent())) {
-                    if (brick.checkIfAlive()) {
-                        brick.takeDamage(this);
-                        bounce(false);
-                    }
-                }
-            }
-        }
+    void bounceX() {
+        this.xVel = -this.xVel;
     }
 
-    void bounce(Boolean xOtherwiseY) {
-        if(xOtherwiseY){
-            this.xVel = -this.xVel;
-        }
-        else{
-            this.yVel = -this.yVel;
-        }
+    void bounceY() {
+        this.yVel = -this.yVel;
     }
 
     void updatePosition(double elapsedTime) {
@@ -113,4 +100,15 @@ public class Ball extends Circle{
 
     public boolean isBallInMotion() { return ballInMotion;}
 
+    public double getXVel() {
+        return xVel;
+    }
+
+    public double getYVel() {
+        return yVel;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
 }

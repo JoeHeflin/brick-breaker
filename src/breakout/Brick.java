@@ -60,7 +60,7 @@ public class Brick extends Rectangle {
     }
 
     void takeDamage(Ball ball){
-        health = health - ball.damage;
+        health = health - ball.getDamage();
         checkIfAlive();
         setColor();
     }

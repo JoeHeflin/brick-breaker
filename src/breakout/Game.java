@@ -5,16 +5,14 @@ import javafx.animation.Timeline;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.application.Application;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.sleep;
 
@@ -28,6 +26,8 @@ public class Game extends Application {
     public static final int BRICK_HEIGHT = 10;
     public static final int STAGE_WIDTH = 10 * BRICK_WIDTH;
     public static final int STAGE_HEIGHT = 400;
+    public static final int MENU_NUMBER_OF_ROWS = 2;
+    public static final int MENU_BAR_HEIGHT = MENU_NUMBER_OF_ROWS * BRICK_HEIGHT;
     public static final Paint BRICK_COLOR = Color.RED;
     public static final int BRICK_SPACE = 2;
     public static final int PADDLE_WIDTH = STAGE_WIDTH/6;
@@ -39,6 +39,7 @@ public class Game extends Application {
     public static final Color BACKGROUND_COLOR = Color.WHITE;
     public static final double INITIAL_PADDLE_SPEED = 15;
     public static final double INITIAL_LAUNCH_ANGLE = 60;
+    public static final int INITIAL_LIVES_COUNT = 3;
 
     //TODO: Level Select class, confirming when blocks are broken / level is beaten -> loading to next level
     //TODO: Restructure level reading to be a matrix that stores Bricks, so we can keep track of them
@@ -50,6 +51,10 @@ public class Game extends Application {
     private boolean activeRound = false;
     private int paddleSpeed;
     private LevelBuilder bricks = new LevelBuilder();
+    private Detector myDetector;
+    private Text myLivesCountText;
+    private int myLivesCount;
+    private MenuBar myMenuBar;
 
     public Paddle getPaddle() {
         return myPaddle;
@@ -59,7 +64,7 @@ public class Game extends Application {
     public void start(Stage stage) throws Exception {
 
         myScene = setUpScene(LEVEL1_LAYOUT);
-        reset();
+        myDetector.reset(myScene);
         stage.setScene(myScene);
         stage.setTitle(TITLE);
         stage.show();
@@ -71,13 +76,13 @@ public class Game extends Application {
         animation.play();
     }
 
-    public void reset() {
-        myBall.stop();
-        myBall.setInitialPosition();
-        myPaddle.freeze();
-        myPaddle.setInitialPosition();
-        myScene.setOnMouseClicked(e -> myBall.start(INITIAL_LAUNCH_ANGLE, myPaddle));
-    }
+//    public void reset(Ball ball, Paddle paddle) {
+//        ball.stop();
+//        ball.setInitialPosition();
+//        paddle.freeze();
+//        paddle.setInitialPosition();
+//        myScene.setOnMouseClicked(e -> ball.start(INITIAL_LAUNCH_ANGLE, paddle));
+//    }
 
 //    Overload for testing
     public void reset(Scene scene) {
@@ -101,12 +106,7 @@ public class Game extends Application {
             }
         }
 
-        Brick brick1 = bricks.brickLayout[0][0];
-        brick1.setId("brick1");
-        Brick brick2 = bricks.brickLayout[1][0];
-        brick2.setId("brick2");
-        Brick brick3 = bricks.brickLayout[0][2];
-        brick3.setId("brick3");
+        //setBrickIds();
 
         myBall = new Ball(STAGE_WIDTH/2,STAGE_HEIGHT/2,INITIAL_BALL_SPEED,BALL_RADIUS);
         root.getChildren().add(myBall);
@@ -116,10 +116,25 @@ public class Game extends Application {
         root.getChildren().add(myPaddle);
         myPaddle.setId("Paddle");
 
+        myMenuBar = new MenuBar();
+        root.getChildren().add(myMenuBar.getMenuBar());
+        myMenuBar.init();
+
         Scene scene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
+        myDetector = new Detector(scene, bricks, myBall, myPaddle, myMenuBar);
         scene.setOnKeyPressed(e -> myPaddle.handleHorizontalMovement(e.getCode(), SECOND_DELAY)); //TODO
         return scene;
     }
+
+    private void setBrickIds() {
+        Brick brick1 = bricks.brickLayout[0][0];
+        brick1.setId("brick1");
+        Brick brick2 = bricks.brickLayout[1][0];
+        brick2.setId("brick2");
+        Brick brick3 = bricks.brickLayout[0][2];
+        brick3.setId("brick3");
+    }
+
     /** TODO: Get it working :| */
 //    private void handleLaunch (double x, double y) {
 //        double angle;
@@ -134,17 +149,25 @@ public class Game extends Application {
 //            angle = Math.toDegrees(Math.atan((y - myBall.getCenterY()) / (x - myBall.getCenterX())));
 //        }
 //    }
+
     public void testStep() {
         step(SECOND_DELAY);
     }
 
-
     private void step(double elapsedTime) {
-        detectStageAndPaddle(myBall);
-        myBall.detectBrick(bricks.brickLayout);
+        //if (myDetector.getLives() > 0) {
+        detectCollisions(myBall, myMenuBar);
+        myMenuBar.updateText();
+        //myLivesCountText.setText(Integer.toString(myMenuBar.getLives()));
         if (myBall.isBallInMotion()) {
             myBall.updatePosition(elapsedTime);
         }
+    }
+
+    private void detectCollisions(Ball ball, MenuBar menuBar) {
+        myDetector.detectStage(ball);
+        myDetector.detectPaddle(ball);
+        myDetector.detectBrick(bricks.brickLayout, ball, menuBar);
     }
 
     /**
@@ -152,32 +175,5 @@ public class Game extends Application {
      */
     public static void main (String[] args) {
         launch(args);
-    }
-
-    void detectStageAndPaddle (Ball ball) {
-        ball.updateBoundaries();
-        if(ball.left < 0){
-            ball.bounce(true);
-            ball.setCenterX(0 + ball.getRadius());
-        }
-        if(ball.right > Game.STAGE_WIDTH){
-            ball.bounce(true);
-            ball.setCenterX(Game.STAGE_WIDTH - ball.getRadius());
-        }
-        if(ball.up < 0){
-            ball.bounce(false);
-            ball.setCenterY(0 + ball.getRadius());
-        }
-        if(ball.down > Game.STAGE_HEIGHT){
-            reset();
-            //TODO decrement lives
-        }
-        //Checks if touching paddle and midpoint of the ball isn't beneath the top of the paddle
-        if(ball.getBoundsInParent().intersects(myPaddle.getBoundsInParent()) && ball.down > myPaddle.getY()){
-            ball.bounce(false);
-            ball.setCenterY(myPaddle.getY() - ball.getRadius());
-        }
-        //updateBoundaries(); TODO: Why necessary?
-
     }
 }
