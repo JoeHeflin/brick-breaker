@@ -239,4 +239,31 @@ public class Game extends Application {
     public static void main (String[] args) {
         launch(args);
     }
+
+    void detectStageAndPaddle (Ball ball) {
+        ball.updateBoundaries();
+        if(ball.left < 0){
+            ball.bounce(true);
+            ball.setCenterX(0 + ball.getRadius());
+        }
+        if(ball.right > Game.STAGE_WIDTH){
+            ball.bounce(true);
+            ball.setCenterX(Game.STAGE_WIDTH - ball.getRadius());
+        }
+        if(ball.up < 0){
+            ball.bounce(false);
+            ball.setCenterY(0 + ball.getRadius());
+        }
+        if(ball.down > Game.STAGE_HEIGHT){
+            reset();
+            //TODO decrement lives
+        }
+        //Checks if touching paddle and midpoint of the ball isn't beneath the top of the paddle
+        if(ball.getBoundsInParent().intersects(myPaddle.getBoundsInParent()) && ball.down > myPaddle.getY()){
+            ball.bounce(false);
+            ball.setCenterY(myPaddle.getY() - ball.getRadius());
+        }
+        //updateBoundaries(); TODO: Why necessary?
+
+    }
 }
