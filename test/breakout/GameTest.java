@@ -22,7 +22,7 @@ public class GameTest extends ApplicationTest {
 
     @Override
     public void start (Stage stage) throws IOException {
-            myScene = myGame.setUpScene(Game.LEVEL1_LAYOUT);
+            myScene = myGame.setUpScene();
             myGame.reset(myScene);
             stage.setScene(myScene);
             stage.setTitle(Game.TITLE);
@@ -38,7 +38,7 @@ public class GameTest extends ApplicationTest {
     }
     @Test
     void ballCharacteristics() {
-        assertEquals(0, myBall.xVel);
+        assertEquals(0, myBall.getXVel());
         assertEquals(5, myBall.getRadius());
         assertEquals(180, myBall.getCenterX());
         assertEquals(385, myBall.getCenterY());
@@ -63,7 +63,7 @@ public class GameTest extends ApplicationTest {
     }
 
     @Test
-    void cornerBounce() {
+    void cornerBounce() throws IOException {
         myBall.setCenterX(Game.STAGE_WIDTH - 10);
         myBall.setCenterY(10);
         myBall.start(45, myPaddle);
@@ -72,8 +72,10 @@ public class GameTest extends ApplicationTest {
         }
 
         final double EPSILON = 0.0000000000001;
-        assertTrue(-1 * 15 * Math.sqrt(2) / 2 - EPSILON < myBall.xVel && myBall.xVel < -1 * 15 * Math.sqrt(2) / 2 + EPSILON);
-        assertTrue(-1 * 15 * Math.sqrt(2) / 2 - EPSILON < myBall.yVel && myBall.yVel < -1 * 15 * Math.sqrt(2) / 2 + EPSILON);
+        assertTrue(-1 * 15 * Math.sqrt(2) / 2 - EPSILON < myBall.getXVel() &&
+                myBall.getXVel() < -1 * 15 * Math.sqrt(2) / 2 + EPSILON);
+        assertTrue(-1 * 15 * Math.sqrt(2) / 2 - EPSILON < myBall.getYVel() &&
+                myBall.getYVel() < -1 * 15 * Math.sqrt(2) / 2 + EPSILON);
     }
 //
 //    @Test TODO
