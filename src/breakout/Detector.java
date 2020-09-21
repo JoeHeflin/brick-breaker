@@ -60,7 +60,7 @@ public class Detector {
     }
 
     void detectBrick(LevelBuilder bricks, Ball ball, MenuBar menuBar) { //TODO: bounce off edges of brick
-        for (Brick[] brickCol : bricks.brickLayout) {
+        for (Brick[] brickCol : bricks.getBrickLayout()) {
             for (Brick brick : brickCol) {
                 if (brick != null && ball.getBoundsInParent().intersects(brick.getBoundsInParent())) {
                     if (brick.checkIfAlive()) {

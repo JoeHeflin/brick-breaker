@@ -22,7 +22,7 @@ public class GameTest extends ApplicationTest {
 
     @Override
     public void start (Stage stage) throws IOException {
-            myScene = myGame.setUpScene(Game.LEVEL1_LAYOUT);
+            myScene = myGame.setUpScene();
             myGame.reset(myScene);
             stage.setScene(myScene);
             stage.setTitle(Game.TITLE);
@@ -63,7 +63,7 @@ public class GameTest extends ApplicationTest {
     }
 
     @Test
-    void cornerBounce() {
+    void cornerBounce() throws IOException {
         myBall.setCenterX(Game.STAGE_WIDTH - 10);
         myBall.setCenterY(10);
         myBall.start(45, myPaddle);

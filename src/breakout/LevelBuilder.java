@@ -5,31 +5,33 @@ import java.io.*;
 public class LevelBuilder {
 
     //TODO: Return list of Bricks in the level
-    int row;
-    int col;
-    int brickHeight;
-    int brickWidth;
-    Brick[][] brickLayout;
-    int myBrickCount;
-    String nextLevel;
+    private int row;
+    private int col;
+    private int brickHeight;
+    private int brickWidth;
+    private Brick[][] brickLayout;
+    private int myBrickCount;
+    private String myLevel;
 
-    public LevelBuilder(){
+
+    public LevelBuilder(String level){
         brickHeight = Game.BRICK_HEIGHT;
         brickWidth = Game.BRICK_WIDTH;
         row = 0;
         col = 0;
         brickLayout = new Brick[Game.STAGE_HEIGHT/brickHeight][Game.STAGE_WIDTH/brickWidth];
         myBrickCount = 0;
+        myLevel = level;
     }
 
     public void removeBrickFromCount() {
         myBrickCount --;
     }
 
-    void init(String levelName) throws IOException { //TODO Why init?
+    void init() throws IOException { //TODO Why init?
         row = Game.MENU_NUMBER_OF_ROWS;
         col = 0;
-        File localStream = new File(levelName);
+        File localStream = new File(myLevel);
         String line;
         BufferedReader br = new BufferedReader(new FileReader(localStream));
         while ((line = br.readLine()) != null) {
@@ -61,7 +63,4 @@ public class LevelBuilder {
         return myBrickCount == 0;
     }
 
-    public String getNextLevel() {
-        return nextLevel;
-    }
 }
