@@ -9,23 +9,23 @@ public class LevelBuilder {
     private int col;
     private int brickHeight;
     private int brickWidth;
-    private Brick[][] brickLayout;
     private int myBrickCount;
     private String myLevel;
+    private Brick[][] brickLayout;
 
 
-    public LevelBuilder(String level){
+    public LevelBuilder(String level) {
         brickHeight = Game.BRICK_HEIGHT;
         brickWidth = Game.BRICK_WIDTH;
         row = 0;
         col = 0;
-        brickLayout = new Brick[Game.STAGE_HEIGHT/brickHeight][Game.STAGE_WIDTH/brickWidth];
+        brickLayout = new Brick[Game.STAGE_HEIGHT / brickHeight][Game.STAGE_WIDTH / brickWidth];
         myBrickCount = 0;
         myLevel = level;
     }
 
     public void removeBrickFromCount() {
-        myBrickCount --;
+        myBrickCount--;
     }
 
     void init() throws IOException { //TODO Why init?
@@ -37,30 +37,46 @@ public class LevelBuilder {
         while ((line = br.readLine()) != null) {
             String[] brickSymbols = line.split(" ");
             for (String symbol : brickSymbols) {
-                if (symbol.compareTo(Game.BLANK_SYMBOL) != 0) {
-                    Brick newBrick = new Brick(col * brickWidth, row * brickHeight, symbol);
-                    newBrick.init();
-                    brickLayout[row][col] = newBrick;
-                    myBrickCount ++;
-                }
+                Brick newBrick = buildBrick(col * brickWidth, row * brickHeight, symbol);
+                newBrick.setColor();
+                brickLayout[row][col] = newBrick;
                 col++;
             }
             col = 0;
             row++;
             //ERROR call
-            if(row > brickLayout.length){
+            if (row > brickLayout.length) {
                 System.out.println("ERROR: Level file has too many rows " + row + brickLayout.length);
                 break;
             }
         }
     }
 
-    Brick[][] getBrickLayout(){
+    public Brick[][] getBrickLayout() {
         return brickLayout;
+    }
+
+    public void setBrickLayout(Brick[][] newLayout) {
+        brickLayout = newLayout;
     }
 
     public boolean noMoreBricks() {
         return myBrickCount == 0;
+    }
+
+    public Brick buildBrick(double x, double y, String type) {
+        if (type.equals("1")) {
+            myBrickCount++;
+            return new BaseBrick(x, y);
+        } else if (type.equals("2")) {
+            myBrickCount++;
+            return new DoubleBrick(x, y);
+        } else if (type.equals("3")) {
+            myBrickCount++;
+            return new BombBrick(x, y);
+        } else {
+            return new BrokenBrick(x, y);
+        }
     }
 
 }

@@ -232,6 +232,18 @@ public class Game extends Application {
         myDetector.detectPaddle(ball);
         myDetector.detectBrick(bricks, ball, menuBar);
     }
+/** TODO: Robert - Rewrite PowerUp class (and its extensions), make powerups functional
+    public void powerUpChance(double x, double y) {
+        double spawnChance = Math.random() * 15;
+        Math.floor(spawnChance);
+        if (spawnChance == 1) {
+            PowerUp power = new SlowMotion(x, y);
+        }
+        else if (spawnChance == 2){
+            PowerUp power = new GrowPaddle (x, y);
+        }
+    }
+ */
 
     /**
      * Start of the program.
