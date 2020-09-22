@@ -2,8 +2,10 @@ package breakout;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import org.junit.jupiter.api.MethodOrderer;
 
 import java.awt.*;
+import java.util.Random;
 
 public abstract class Brick extends Rectangle {
 
@@ -54,6 +56,7 @@ public abstract class Brick extends Rectangle {
         color = Game.BACKGROUND_COLOR;
         setColor();
     }
+
 
 
 }

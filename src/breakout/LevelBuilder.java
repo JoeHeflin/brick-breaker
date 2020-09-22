@@ -14,18 +14,18 @@ public class LevelBuilder {
     private Brick[][] brickLayout;
 
 
-    public LevelBuilder(String level){
+    public LevelBuilder(String level) {
         brickHeight = Game.BRICK_HEIGHT;
         brickWidth = Game.BRICK_WIDTH;
         row = 0;
         col = 0;
-        brickLayout = new Brick[Game.STAGE_HEIGHT/brickHeight][Game.STAGE_WIDTH/brickWidth];
+        brickLayout = new Brick[Game.STAGE_HEIGHT / brickHeight][Game.STAGE_WIDTH / brickWidth];
         myBrickCount = 0;
         myLevel = level;
     }
 
     public void removeBrickFromCount() {
-        myBrickCount --;
+        myBrickCount--;
     }
 
     void init() throws IOException { //TODO Why init?
@@ -45,18 +45,18 @@ public class LevelBuilder {
             col = 0;
             row++;
             //ERROR call
-            if(row > brickLayout.length){
+            if (row > brickLayout.length) {
                 System.out.println("ERROR: Level file has too many rows " + row + brickLayout.length);
                 break;
             }
         }
     }
 
-    public Brick[][] getBrickLayout(){
+    public Brick[][] getBrickLayout() {
         return brickLayout;
     }
 
-    public void setBrickLayout(Brick[][] newLayout){
+    public void setBrickLayout(Brick[][] newLayout) {
         brickLayout = newLayout;
     }
 
@@ -64,20 +64,17 @@ public class LevelBuilder {
         return myBrickCount == 0;
     }
 
-    public Brick buildBrick(double x, double y, String type){
-        if(type.equals("1")){
-            myBrickCount ++;
+    public Brick buildBrick(double x, double y, String type) {
+        if (type.equals("1")) {
+            myBrickCount++;
             return new BaseBrick(x, y);
-        }
-        if(type.equals("2")){
-            myBrickCount ++;
+        } else if (type.equals("2")) {
+            myBrickCount++;
             return new DoubleBrick(x, y);
-        }
-        if(type.equals("3")){
-            myBrickCount ++;
+        } else if (type.equals("3")) {
+            myBrickCount++;
             return new BombBrick(x, y);
-        }
-        else{
+        } else {
             return new BrokenBrick(x, y);
         }
     }
