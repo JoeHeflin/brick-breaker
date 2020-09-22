@@ -37,12 +37,9 @@ public class LevelBuilder {
         while ((line = br.readLine()) != null) {
             String[] brickSymbols = line.split(" ");
             for (String symbol : brickSymbols) {
-                if (symbol.compareTo(Game.BLANK_SYMBOL) != 0) {
-                    Brick newBrick = new Brick(col * brickWidth, row * brickHeight, symbol);
-                    newBrick.init();
-                    brickLayout[row][col] = newBrick;
-                    myBrickCount ++;
-                }
+                Brick newBrick = buildBrick(col * brickWidth, row * brickHeight, symbol);
+                newBrick.setColor();
+                brickLayout[row][col] = newBrick;
                 col++;
             }
             col = 0;
@@ -61,6 +58,16 @@ public class LevelBuilder {
 
     public boolean noMoreBricks() {
         return myBrickCount == 0;
+    }
+
+    public Brick buildBrick(double x, double y, String type){
+        if(type.equals("1")){
+            myBrickCount ++;
+            return new BaseBrick(x, y);
+        }
+        else{
+            return new BrokenBrick(x, y);
+        }
     }
 
 }

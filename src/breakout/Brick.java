@@ -3,7 +3,7 @@ package breakout;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class Brick extends Rectangle {
+public abstract class Brick extends Rectangle {
 
     double x;
     double y;
@@ -11,7 +11,6 @@ public class Brick extends Rectangle {
     int width;
     int height;
     String type;
-    String actOnDeath;
     Color color;
     //boolean alive;
     //int lives;
@@ -19,7 +18,7 @@ public class Brick extends Rectangle {
     //TODO: Make the bricks look distinct
     //TODO: Add more types of bricks
     //Constructor
-    Brick(double x, double y, String type){
+    Brick(double x, double y){
         super(x, y, Game.BRICK_WIDTH, Game.BRICK_HEIGHT);
         this.x = x;
         this.y = y;
@@ -30,51 +29,28 @@ public class Brick extends Rectangle {
 
     }
 
-    //makes brick based off of 'type'
-    //types: b = basic,
-    void init(){
-        if(type.equals("0")){
-            health = 0;
-            actOnDeath = "";
-            //alive = false;
-        }
-        if(type.equals("1")){
-            health = 1;
-            actOnDeath = "";
-            setColor();
-        }
-        else {System.out.print("INVALID LEVEL FORMAT ERROR");}
 
-    }
-
-    void setColor(){ // TODO CHANGED NAME BC MISLEADING
-//        if(health == 1){
-//            color = Color.RED;
-//        }
-        switch (health) {
-            case 0 -> color = Game.BACKGROUND_COLOR;
-            case 1 -> color = Color.RED;
-            //default -> color =
-        }
+    void setColor(){
         this.setFill(color);
     }
 
     void takeDamage(Ball ball, MenuBar menuBar){
         health = health - ball.getDamage();
-//        checkIfAlive();
-        setColor();
-        menuBar.addPoints();
+        if(!checkIfAlive()){
+            actOnDeath();
+            menuBar.addPoints();
+        }
     }
 
     boolean checkIfAlive(){
-//        if (health <= 0) {
-//            return false;
-//            //alive = false;
-//        }
-//        else{
-//            return true;
-//        }
         return health > 0;
+    }
+
+
+    void actOnDeath(){
+        health = 0;
+        color = Game.BACKGROUND_COLOR;
+        setColor();
     }
 
 
