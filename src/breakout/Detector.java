@@ -64,12 +64,8 @@ public class Detector {
             for (Brick brick : brickCol) {
                 if (brick != null && ball.getBoundsInParent().intersects(brick.getBoundsInParent())) {
                     if (brick.checkIfAlive()) {
-                        brick.takeDamage(ball, menuBar);
+                        brick.takeDamage(ball, menuBar, bricks);
                         ball.bounceY();
-                        // Decrement number of active bricks to support game over
-                        if (!brick.checkIfAlive()) {
-                            bricks.removeBrickFromCount();
-                        }
                     }
                 }
             }
