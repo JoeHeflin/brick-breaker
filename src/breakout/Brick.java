@@ -3,6 +3,8 @@ package breakout;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+import java.awt.*;
+
 public abstract class Brick extends Rectangle {
 
     double x;
@@ -12,7 +14,6 @@ public abstract class Brick extends Rectangle {
     int height;
     String type;
     Color color;
-    //boolean alive;
     //int lives;
 
     //TODO: Make the bricks look distinct
@@ -34,11 +35,12 @@ public abstract class Brick extends Rectangle {
         this.setFill(color);
     }
 
-    void takeDamage(Ball ball, MenuBar menuBar){
+    void takeDamage(Ball ball, MenuBar menuBar, LevelBuilder layout){
         health = health - ball.getDamage();
         if(!checkIfAlive()){
             actOnDeath();
             menuBar.addPoints();
+            layout.removeBrickFromCount();
         }
     }
 

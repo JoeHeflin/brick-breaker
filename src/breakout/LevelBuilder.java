@@ -9,9 +9,9 @@ public class LevelBuilder {
     private int col;
     private int brickHeight;
     private int brickWidth;
-    private Brick[][] brickLayout;
     private int myBrickCount;
     private String myLevel;
+    private Brick[][] brickLayout;
 
 
     public LevelBuilder(String level){
@@ -52,8 +52,12 @@ public class LevelBuilder {
         }
     }
 
-    Brick[][] getBrickLayout(){
+    public Brick[][] getBrickLayout(){
         return brickLayout;
+    }
+
+    public void setBrickLayout(Brick[][] newLayout){
+        brickLayout = newLayout;
     }
 
     public boolean noMoreBricks() {
@@ -64,6 +68,14 @@ public class LevelBuilder {
         if(type.equals("1")){
             myBrickCount ++;
             return new BaseBrick(x, y);
+        }
+        if(type.equals("2")){
+            myBrickCount ++;
+            return new DoubleBrick(x, y);
+        }
+        if(type.equals("3")){
+            myBrickCount ++;
+            return new BombBrick(x, y);
         }
         else{
             return new BrokenBrick(x, y);

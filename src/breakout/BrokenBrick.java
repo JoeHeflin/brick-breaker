@@ -2,6 +2,8 @@ package breakout;
 
 import javafx.scene.paint.Color;
 
+import java.util.logging.Level;
+
 public class BrokenBrick extends Brick{
     BrokenBrick(double x, double y) {
         super(x, y);
@@ -10,7 +12,7 @@ public class BrokenBrick extends Brick{
     }
 
     @Override
-    void takeDamage(Ball ball, MenuBar menuBar){
+    void takeDamage(Ball ball, MenuBar menuBar, LevelBuilder layout){
 
     }
 

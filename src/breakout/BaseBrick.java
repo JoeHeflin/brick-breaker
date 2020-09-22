@@ -9,9 +9,4 @@ public class BaseBrick extends Brick {
         color = Color.RED;
         health = 1;
     }
-
-    @Override
-    void actOnDeath() {
-        super.actOnDeath();
-    }
 }
