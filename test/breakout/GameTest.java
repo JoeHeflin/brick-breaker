@@ -33,8 +33,6 @@ public class GameTest extends ApplicationTest {
             myBrick1 = lookup("#brick1").query();
             myBrick2 = lookup("#brick2").query();
             myBrick3 = lookup("#brick3").query();
-
-
     }
     @Test
     void ballCharacteristics() {
