@@ -180,7 +180,7 @@ public class Game extends Application {
     private void step(double elapsedTime) throws IOException {
         //if (myDetector.getLives() > 0) {
         if (myLevelActive) {
-            detectCollisions(myBall, myMenuBar);
+            myDetector.detectCollisions(bricks, myBall, myMenuBar);
             myMenuBar.updateText();
             if (myBall.isBallInMotion()) {
                 myBall.updatePosition(elapsedTime);
@@ -227,11 +227,6 @@ public class Game extends Application {
         } catch (Exception e) {e.printStackTrace();}
     }
 
-    private void detectCollisions(Ball ball, MenuBar menuBar) {
-        myDetector.detectStage(ball);
-        myDetector.detectPaddle(ball);
-        myDetector.detectBrick(bricks, ball, menuBar);
-    }
 /** TODO: Robert - Rewrite PowerUp class (and its extensions), make powerups functional
     public void powerUpChance(double x, double y) {
         double spawnChance = Math.random() * 15;
