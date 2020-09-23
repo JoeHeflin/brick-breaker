@@ -57,6 +57,11 @@ public abstract class Brick extends Rectangle {
         setColor();
     }
 
+    double rightEdge() {
+        return this.x + this.width;
+    }
 
-
+    double leftEdge() {
+        return this.x;
+    }
 }

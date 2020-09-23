@@ -65,10 +65,19 @@ public class Detector {
                 if (brick != null && ball.getBoundsInParent().intersects(brick.getBoundsInParent())) {
                     if (brick.checkIfAlive()) {
                         brick.takeDamage(ball, menuBar, bricks);
-                        ball.bounceY();
+                        bounce(ball, brick);
                     }
                 }
             }
+        }
+    }
+
+    private void bounce(Ball ball, Brick brick) {
+        if (ball.getCenterX() < brick.rightEdge() && ball.getCenterX() > brick.leftEdge()) {
+            ball.bounceY();
+        }
+        else {
+            ball.bounceX();
         }
     }
 
