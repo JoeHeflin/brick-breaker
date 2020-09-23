@@ -22,10 +22,9 @@ public class BombBrick extends Brick{
             Brick[][] bricks = layout.getBrickLayout();
             for (int r = rowPos - 1; r < rowPos + 2; r++) {
                 for (int c = colPos - 1; c < colPos + 2; c++) {
-                    if (0 < r && r < bricks.length){
-                        if(0 < c && c < bricks[r].length){
-                            bricks[r][c].takeDamage(ball, menuBar,layout);// switched c and r
-                        }
+                    if (!(r == rowPos && c == colPos) && 0 < r && r < bricks.length &&
+                        0 < c && c < bricks[r].length){
+                        bricks[r][c].takeDamage(ball, menuBar,layout);// switched c and r
                     }
                 }
             }

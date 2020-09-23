@@ -38,12 +38,14 @@ public abstract class Brick extends Rectangle {
     }
 
     void takeDamage(Ball ball, MenuBar menuBar, LevelBuilder layout){
-        health = health - ball.getDamage();
-        if(!checkIfAlive()){
-            actOnDeath();
-            menuBar.addPoints();
-            layout.removeBrickFromCount();
-        }
+        if (checkIfAlive()) { //HERE
+            health = health - ball.getDamage();
+            if (!checkIfAlive()) {
+                actOnDeath();
+                menuBar.addPoints();
+                layout.removeBrickFromCount();
+            }
+        } //HERE
     }
 
     boolean checkIfAlive(){
