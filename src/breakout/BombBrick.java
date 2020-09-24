@@ -28,7 +28,7 @@ public class BombBrick extends Brick{
                     }
                 }
             }
-            //layout.setBrickLayout(bricks);
+            layout.setBrickLayout(bricks);
         }
     }
 }
