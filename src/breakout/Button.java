@@ -31,10 +31,10 @@ public abstract class Button {
         StackPane sp = new StackPane();
         sp.getChildren().addAll(box,restartText);
         myFlowPane.getChildren().add(sp);
-        reactToClick(myGame, myFlowPane);
+        reactToClick(myGame, sp);
     }
 
-    public void reactToClick(Game game, FlowPane root) {
+    public void reactToClick(Game game, StackPane root) {
 
     }
 }

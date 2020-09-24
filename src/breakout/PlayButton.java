@@ -17,18 +17,7 @@ public class PlayButton extends Button{
     }
 
     @Override
-    public void reactToClick(Game game, FlowPane fp) {
-        fp.setOnMouseClicked(e -> game.setUpLevelStage());
+    public void reactToClick(Game game, StackPane sp) {
+        sp.setOnMouseClicked(e -> game.setUpLevelStage(0));
     }
-//    public void activateButton(Game game, FlowPane root) {
-//        Text restartText = new Text(myText);
-//        restartText.setFont(new Font("Verdana", 20));
-//        restartText.setFill(Color.WHITE);
-//        Rectangle box = new Rectangle(0,0,BUTTON_WIDTH,BUTTON_HEIGHT);
-//        box.setFill(BUTTON_COLOR);
-//        StackPane sp = new StackPane();
-//        sp.getChildren().addAll(box,restartText);
-//        root.getChildren().add(sp);
-//        sp.setOnMouseClicked(e -> game.setUpLevelStage());
-//    }
 }

@@ -22,7 +22,7 @@ public class GameTest extends ApplicationTest {
 
     @Override
     public void start (Stage stage) throws IOException {
-            myScene = myGame.setUpLevelScene();
+            myScene = myGame.setUpLevelScene(1);
             myGame.reset(myScene);
             stage.setScene(myScene);
             stage.setTitle(Game.TITLE);

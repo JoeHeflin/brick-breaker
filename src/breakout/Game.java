@@ -53,6 +53,7 @@ public class Game extends Application {
     private static final List<String> LEVELS = new ArrayList(Arrays.asList("level1.txt","level2.txt"));
     private static final String LEVELS_DIR = "levelFormats/";
     private static final String GAME_TITLE = "BRICK\nSLAYER";
+    private static final int LEVEL_BUTTON_SIZE = 20;
 
 
     //TODO: Level Select class, confirming when blocks are broken / level is beaten -> loading to next level
@@ -122,9 +123,10 @@ public class Game extends Application {
         root.setVgap(30);
         Button playButton = new PlayButton(root, this);
         playButton.activateButton();
-//        for (int level = 1; level < LEVELS.size(); level++) {
-//            LevelButton levelButton = new LevelButton(level, level * LEVEL_BUTTON_SIZE);
-//        }
+        for (int level = 1; level <= LEVELS.size(); level++) {
+            Button levelButton = new LevelButton(level, level * LEVEL_BUTTON_SIZE, root, this);
+            levelButton.activateButton();
+        }
         Scene scene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
         return scene;
     }
@@ -138,8 +140,8 @@ public class Game extends Application {
 //        }
 //    }
 
-    public void setUpLevelStage() {
-        myScene = setUpLevelScene();
+    public void setUpLevelStage(int level) {
+        myScene = setUpLevelScene(level);
         myDetector.reset(myScene);
         myStage.setScene(myScene);
         myStage.setTitle(TITLE);
@@ -156,10 +158,16 @@ public class Game extends Application {
         scene.setOnMouseClicked(e -> myBall.start(INITIAL_LAUNCH_ANGLE, myPaddle));
     }
 
-    Scene setUpLevelScene () {
+//    public void setCurrentLevel(int level) {
+//        myCurrentLevel = level;
+//    }
+
+    Scene setUpLevelScene (int level) {
+        myCurrentLevel = level;
+
         Group root = new Group();
 
-        bricks = new LevelBuilder(LEVELS_DIR + LEVELS.get(myCurrentLevel));
+        bricks = new LevelBuilder(LEVELS_DIR + LEVELS.get(level));
         try {
             bricks.init();
         } catch (Exception e) {e.printStackTrace();}
@@ -244,7 +252,7 @@ public class Game extends Application {
         else {
             myCurrentLevel ++;
             bricks = new LevelBuilder(LEVELS_DIR + LEVELS.get(myCurrentLevel));
-            setUpLevelStage();
+            setUpLevelStage(myCurrentLevel);
         }
     }
 
