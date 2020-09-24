@@ -120,7 +120,8 @@ public class Game extends Application {
         addDisplayText(root, GAME_TITLE, 80);
         root.setAlignment(Pos.CENTER);
         root.setVgap(30);
-        PlayButton playButton = new PlayButton(this, root);
+        Button playButton = new PlayButton(root, this);
+        playButton.activateButton();
 //        for (int level = 1; level < LEVELS.size(); level++) {
 //            LevelButton levelButton = new LevelButton(level, level * LEVEL_BUTTON_SIZE);
 //        }
@@ -143,18 +144,7 @@ public class Game extends Application {
         myStage.setScene(myScene);
         myStage.setTitle(TITLE);
         myStage.show();
-        KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
-            try {
-                step(SECOND_DELAY);
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-        });
-        Timeline animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(frame);
-        myLevelActive = true;
-        animation.play();
+        startGamePlay();
     }
 
 //    Overload for testing
@@ -274,7 +264,9 @@ public class Game extends Application {
         root.setAlignment(Pos.CENTER);
         root.setVgap(30);
 
-        RestartButton restartButton = new RestartButton(this, root);
+        Button restartButton = new RestartButton(root, this);
+        restartButton.activateButton();
+
         Scene gameOverScene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
         myLevelActive = false;
         myStage.setScene(gameOverScene);
