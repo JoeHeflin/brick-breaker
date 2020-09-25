@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <modelVersion>4.0.0</modelVersion>
 <groupId>CompSci307_2020Fall</groupId>
-<artifactId>game_team22</artifactId>
+<artifactId>game_team01</artifactId>
 <version>master-SNAPSHOT</version>
 <packaging>jar</packaging>
 
@@ -29,14 +29,21 @@
                 <includes>
                     <include>src/**/*.java</include>
                 </includes>
-                <source>1.11</source>
-                <target>1.11</target>
+                <source>1.14</source>
+                <target>1.14</target>
             </configuration>
         </plugin>
         <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-checkstyle-plugin</artifactId>
             <version>3.1.1</version>
+            <dependencies>
+                <dependency>
+                    <groupId>com.puppycrawl.tools</groupId>
+                    <artifactId>checkstyle</artifactId>
+                    <version>8.36</version>
+                </dependency>
+            </dependencies>
             <configuration>
                 <configLocation>google_checks.xml</configLocation>
                 <encoding>UTF-8</encoding>
