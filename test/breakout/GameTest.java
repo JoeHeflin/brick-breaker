@@ -22,26 +22,27 @@ public class GameTest extends ApplicationTest {
 
     @Override
     public void start (Stage stage) {
-            myScene = myGame.setUpLevelScene(1);
-            myGame.reset(myScene);
-            stage.setScene(myScene);
-            stage.setTitle(Game.TITLE);
-            stage.show();
+        myScene = myGame.setUpLevelScene(1);
+        myGame.getMyDetector().reset(myScene);
+        myGame.reset(myScene);
+        stage.setScene(myScene);
+        stage.setTitle(Game.TITLE);
+        stage.show();
 
-            myBall = lookup("#Ball").query();
-            myPaddle = lookup("#Paddle").query();
-            myBrick1 = lookup("#brick1").query();
-            myBrick2 = lookup("#brick2").query();
-            myBrick3 = lookup("#brick3").query();
+        myBall = lookup("#Ball").query();
+        myPaddle = lookup("#Paddle").query();
+        myBrick1 = lookup("#brick1").query();
+        myBrick2 = lookup("#brick2").query();
+        myBrick3 = lookup("#brick3").query();
     }
 
     @Test
     void ballCharacteristics() {
         //myGame.startGamePlay();
-        assertEquals(0, myGame.getBall().getXVel());
-        assertEquals(5, myGame.getBall().getRadius());
-        assertEquals(180, myGame.getBall().getCenterX());
-        assertEquals(385, myGame.getBall().getCenterY());
+        assertEquals(0, myGame.getMyBall().getXVel());
+        assertEquals(5, myGame.getMyBall().getRadius());
+        assertEquals(180, myGame.getMyBall().getCenterX());
+        assertEquals(385, myGame.getMyBall().getCenterY());
     }
     @Test
     void paddleCharacteristics() {
@@ -84,8 +85,8 @@ public class GameTest extends ApplicationTest {
     @Test
     void objectBounce() throws IOException {
         myGame.startGamePlay();
-        myGame.getBall().setCenterX(220);
-        myGame.getBall().setCenterY(70);
+        myGame.getMyBall().setCenterX(220);
+        myGame.getMyBall().setCenterY(70);
         myBall.start(90, myPaddle);
         for(int i = 0; i < 20; i++) {
             myGame.testStep();
@@ -98,26 +99,62 @@ public class GameTest extends ApplicationTest {
         assertTrue(Game.INITIAL_BALL_SPEED - EPSILON < myBall.getYVel() &&
                 myBall.getYVel() < Game.INITIAL_BALL_SPEED + EPSILON);
         assertEquals(0, myBrick1.health);
-
-
     }
 
     @Test
     void offScreenReset() throws IOException {
 
         myGame.startGamePlay();
-        myGame.getBall().setCenterX(Game.STAGE_WIDTH - 10);
-        myGame.getBall().setCenterY(3 * Game.STAGE_HEIGHT / 4);
-        myGame.getBall().start(-90, myPaddle);
+        myGame.getMyBall().setCenterX(Game.STAGE_WIDTH - 10);
+        myGame.getMyBall().setCenterY(3 * Game.STAGE_HEIGHT / 4);
+        myGame.getMyBall().start(-90, myPaddle);
 
         for(int i = 0; i < 50; i++) {
             myGame.testStep();
-            System.out.println(myGame.getBall().getXVel());
+            System.out.println(myGame.getMyBall().getXVel());
         }
 
         ballCharacteristics();
         paddleCharacteristics();
     }
+
+    @Test
+    void livesDisplay() throws IOException {
+
+        myGame.startGamePlay();
+        int lives = myGame.getMyMenuBar().getLives();
+        myGame.getMyBall().setCenterX(Game.STAGE_WIDTH - 10);
+        myGame.getMyBall().setCenterY(3 * Game.STAGE_HEIGHT / 4);
+        myGame.getMyBall().start(-90, myPaddle);
+        for(int i = 0; i < 50; i++) {
+            myGame.testStep();
+        }
+        String text = myGame.getMyMenuBar().getLivesText();
+        lives--;
+        assertEquals(text.compareTo(Integer.toString(lives)), 0);
+    }
+
+    @Test
+    void pointsDisplay() throws IOException {
+        myGame.startGamePlay();
+        myGame.getMyBall().setCenterX(220);
+        myGame.getMyBall().setCenterY(70);
+        myBall.start(90, myPaddle);
+        for(int i = 0; i < 20; i++) {
+            myGame.testStep();
+        }
+        String text = myGame.getMyMenuBar().getPointsText();
+        assertEquals(text.compareTo("10"), 0);
+        myGame.getMyBall().setCenterX(112);
+        myGame.getMyBall().setCenterY(104);
+        myBall.start(90, myPaddle);
+        for(int i = 0; i < 20; i++) {
+            myGame.testStep();
+        }
+        text = myGame.getMyMenuBar().getPointsText();
+        assertEquals(text.compareTo("20"), 0);
+    }
+
 
 }
 

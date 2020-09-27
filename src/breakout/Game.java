@@ -31,7 +31,7 @@ public class Game extends Application {
     public static final int STAGE_HEIGHT = 400;
     public static final int MENU_NUMBER_OF_ROWS = 1;
     public static final int MENU_BAR_HEIGHT = MENU_NUMBER_OF_ROWS * BRICK_HEIGHT;
-    public static final int PADDLE_WIDTH = STAGE_WIDTH/6;
+    public static final int PADDLE_WIDTH = STAGE_WIDTH / 6;
     public static final int PADDLE_HEIGHT = 10;
     public static final Color PADDLE_COLOR = Color.BROWN;
     public static final double INITIAL_BALL_SPEED = 150;
@@ -42,7 +42,7 @@ public class Game extends Application {
     public static final int INITIAL_LIVES_COUNT = 2;
     private static final String LOSER_MESSAGE = "YOU\nLOSE";
     private static final String WINNER_MESSAGE = "YOU\nWIN";
-    private static final List<String> LEVELS = new ArrayList(Arrays.asList("level1.txt","level2.txt"));
+    private static final List<String> LEVELS = new ArrayList(Arrays.asList("level1.txt", "level2.txt"));
     private static final String LEVELS_DIR = "levelFormats/";
     private static final String GAME_TITLE = "BRICK\nSLAYER";
     private static final int LEVEL_BUTTON_SIZE = 20;
@@ -88,7 +88,7 @@ public class Game extends Application {
         return scene;
     }
 
-    public void startGamePlay(){
+    public void startGamePlay() {
         KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
             try {
                 step(SECOND_DELAY);
@@ -124,14 +124,16 @@ public class Game extends Application {
         return new LevelBuilder(filePath);
     }
 
-    public Scene setUpLevelScene (int level) {
+    public Scene setUpLevelScene(int level) {
         myCurrentLevel = level;
         Group root = new Group();
         myBricks = buildBrick(LEVELS_DIR + LEVELS.get(level));
 
         try {
             myBricks.init();
-        } catch (Exception e) {e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         setBrickIds();
 
@@ -141,22 +143,6 @@ public class Game extends Application {
         myDetector = new Detector(scene, myBricks, myBall, myPaddle, myMenuBar);
         scene.setOnKeyPressed(e -> myPaddle.handleHorizontalMovement(e.getCode(), SECOND_DELAY)); //TODO
         return scene;
-//        myBall = new Ball(STAGE_WIDTH/2,STAGE_HEIGHT/2,INITIAL_BALL_SPEED,BALL_RADIUS);
-//        root.getChildren().add(myBall);
-//        myBall.setId("Ball");
-//
-//        myPaddle = new Paddle(INITIAL_PADDLE_SPEED);
-//        root.getChildren().add(myPaddle);
-//        myPaddle.setId("Paddle");
-//
-//        myMenuBar = new MenuBar();
-//        root.getChildren().add(myMenuBar.getMenuBar());
-//        myMenuBar.init();
-//
-//        Scene scene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
-//        myDetector = new Detector(scene, myBricks, myBall, myPaddle, myMenuBar);
-//        scene.setOnKeyPressed(e -> myPaddle.handleHorizontalMovement(e.getCode(), SECOND_DELAY)); //TODO
-//        return scene;
     }
 
     public void setBrickIds() {
@@ -171,7 +157,7 @@ public class Game extends Application {
             }
         }
 
-        myBall = new Ball(STAGE_WIDTH/2,STAGE_HEIGHT/2,INITIAL_BALL_SPEED,BALL_RADIUS);
+        myBall = new Ball(STAGE_WIDTH / 2, STAGE_HEIGHT / 2, INITIAL_BALL_SPEED, BALL_RADIUS);
         root.getChildren().add(myBall);
         myBall.setId("Ball");
 
@@ -184,20 +170,13 @@ public class Game extends Application {
         myMenuBar.init();
     }
 
-//    private void setBrickIds() {
-//        Brick brick1 = myBricks.getBrickLayout()[0][0];
-//        brick1.setId("brick1");
-//        Brick brick2 = myBricks.getBrickLayout()[1][0];
-//        brick2.setId("brick2");
-//        Brick brick3 = myBricks.getBrickLayout()[0][2];
-//        brick3.setId("brick3");
-//    }
-
     public LevelBuilder getBricks() {
         return myBricks;
     }
 
-    /** TODO: Get it working :| */
+    /**
+     * TODO: Get it working :|
+     */
 //    private void handleLaunch (double x, double y) {
 //        double angle;
 //        double deltaX = x/myBall.getCenterX();
@@ -211,7 +190,6 @@ public class Game extends Application {
 //            angle = Math.toDegrees(Math.atan((y - myBall.getCenterY()) / (x - myBall.getCenterX())));
 //        }
 //    }
-
     public void testStep() throws IOException {
         step(SECOND_DELAY);
     }
@@ -250,15 +228,16 @@ public class Game extends Application {
     public void restartGame() {
         try {
             start(myStage);
-        } catch (Exception e) {e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void nextLevel() throws IOException {
-        if (myCurrentLevel == LEVELS.size()-1) {
+        if (myCurrentLevel == LEVELS.size() - 1) {
             gameOver(WINNER_MESSAGE); // TODO
-        }
-        else {
-            myCurrentLevel ++;
+        } else {
+            myCurrentLevel++;
             myBricks = new LevelBuilder(LEVELS_DIR + LEVELS.get(myCurrentLevel));
             setUpLevelStage(myCurrentLevel);
         }
@@ -274,29 +253,40 @@ public class Game extends Application {
         root.getChildren().add(sp);
     }
 
+    public Ball getMyBall() {
+        return myBall;
+    }
+
+    public MenuBar getMyMenuBar() {
+        return myMenuBar;
+    }
 
 
 /** TODO: Robert - Rewrite PowerUp class (and its extensions), make powerups functional
-    public void powerUpChance(double x, double y) {
-        double spawnChance = Math.random() * 15;
-        Math.floor(spawnChance);
-        if (spawnChance == 1) {
-            PowerUp power = new SlowMotion(x, y);
-        }
-        else if (spawnChance == 2){
-            PowerUp power = new GrowPaddle (x, y);
-        }
-    }
+ public void powerUpChance(double x, double y) {
+ double spawnChance = Math.random() * 15;
+ Math.floor(spawnChance);
+ if (spawnChance == 1) {
+ PowerUp power = new SlowMotion(x, y);
+ }
+ else if (spawnChance == 2){
+ PowerUp power = new GrowPaddle (x, y);
+ }
+ }
  */
 
     /**
      * Start of the program.
      */
-    public static void main (String[] args) {
+    public static void main(String[] args) {
         launch(args);
     }
 
-    public Ball getBall() {
-        return myBall;
+    public Scene getMyScene() {
+        return myScene;
+    }
+
+    public Detector getMyDetector() {
+        return myDetector;
     }
 }

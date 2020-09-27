@@ -68,4 +68,12 @@ public class MenuBar {
         myLivesCountText.setText(Integer.toString(myLives));
         myPointsText.setText(Integer.toString(myPoints));
     }
+
+    public String getLivesText() {
+        return myLivesCountText.getText();
+    }
+
+    public String getPointsText() {
+        return myPointsText.getText();
+    }
 }
