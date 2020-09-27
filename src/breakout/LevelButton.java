@@ -5,7 +5,6 @@ import javafx.scene.layout.StackPane;
 
 public class LevelButton extends Button {
 
-    private int mySize;
     private int myLevel;
 
     public LevelButton(int level, int buttonSize, FlowPane fp, Game game) {

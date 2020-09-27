@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class GameTest extends ApplicationTest {
-    private final Game myGame = new Game();
+    private final Game myGame = new GameTester();
     private Scene myScene;
     private Ball myBall;
     private Paddle myPaddle;
@@ -21,7 +21,7 @@ public class GameTest extends ApplicationTest {
     private Brick myBrick3;
 
     @Override
-    public void start (Stage stage) throws IOException {
+    public void start (Stage stage) {
             myScene = myGame.setUpLevelScene(1);
             myGame.reset(myScene);
             stage.setScene(myScene);
@@ -34,12 +34,14 @@ public class GameTest extends ApplicationTest {
             myBrick2 = lookup("#brick2").query();
             myBrick3 = lookup("#brick3").query();
     }
+
     @Test
     void ballCharacteristics() {
-        assertEquals(0, myBall.getXVel());
-        assertEquals(5, myBall.getRadius());
-        assertEquals(180, myBall.getCenterX());
-        assertEquals(385, myBall.getCenterY());
+        //myGame.startGamePlay();
+        assertEquals(0, myGame.getBall().getXVel());
+        assertEquals(5, myGame.getBall().getRadius());
+        assertEquals(180, myGame.getBall().getCenterX());
+        assertEquals(385, myGame.getBall().getCenterY());
     }
     @Test
     void paddleCharacteristics() {
@@ -51,43 +53,71 @@ public class GameTest extends ApplicationTest {
 
     @Test
     void blockLocation() {
-        assertEquals(0, myBrick1.getX());
-        assertEquals(0, myBrick1.getY());
-        assertEquals(0, myBrick2.getX());
-        assertEquals(10, myBrick2.getY());
-        assertEquals(72, myBrick3.getX());
-        assertEquals(0, myBrick3.getY());
-//        assertThrows(Exception.class, e -> {myBrick3;});
+        assertEquals(216, myBrick1.getX());
+        assertEquals(60, myBrick1.getY());
+        assertEquals(1, myBrick1.health);
+        assertEquals(108, myBrick2.getX());
+        assertEquals(100, myBrick2.getY());
+        assertEquals(1, myBrick2.health);
+        assertEquals(324, myBrick3.getX());
+        assertEquals(20, myBrick3.getY());
+        assertEquals(1, myBrick3.health);
     }
 
     @Test
     void cornerBounce() throws IOException {
-        myBall.setCenterX(Game.STAGE_WIDTH - 10);
+        myGame.startGamePlay();
+        myBall.setCenterX(10);
         myBall.setCenterY(10);
-        myBall.start(45, myPaddle);
-        for(int i = 0; i < 10; i++) {
+        myBall.start(135, myPaddle);
+        for(int i = 0; i < 20; i++) {
             myGame.testStep();
         }
 
-        final double EPSILON = 0.0000000000001;
-        assertTrue(-1 * 15 * Math.sqrt(2) / 2 - EPSILON < myBall.getXVel() &&
-                myBall.getXVel() < -1 * 15 * Math.sqrt(2) / 2 + EPSILON);
-        assertTrue(-1 * 15 * Math.sqrt(2) / 2 - EPSILON < myBall.getYVel() &&
-                myBall.getYVel() < -1 * 15 * Math.sqrt(2) / 2 + EPSILON);
+        final double EPSILON = 0.00000001;
+        assertTrue(Game.INITIAL_BALL_SPEED * Math.sqrt(2) / 2 - EPSILON < myBall.getXVel() &&
+                myBall.getXVel() < Game.INITIAL_BALL_SPEED * Math.sqrt(2) / 2 + EPSILON);
+        assertTrue(Game.INITIAL_BALL_SPEED * Math.sqrt(2) / 2 - EPSILON < myBall.getYVel() &&
+                myBall.getYVel() < Game.INITIAL_BALL_SPEED * Math.sqrt(2) / 2 + EPSILON);
     }
 //
-//    @Test TODO
-//    void objectBounce() {
-//        assertEquals();
-//        assertEquals();
-//        assertEquals();
-//    }
-//    @Test TODO
-//    void offScreenReset() {
-//        assertEquals();
-//        assertEquals();
-//        assertEquals();
-//    }
+    @Test
+    void objectBounce() throws IOException {
+        myGame.startGamePlay();
+        myGame.getBall().setCenterX(220);
+        myGame.getBall().setCenterY(70);
+        myBall.start(90, myPaddle);
+        for(int i = 0; i < 20; i++) {
+            myGame.testStep();
+        }
+
+        final double EPSILON = 0.00000001;
+        assertEquals(0, myBrick1.health);
+        assertTrue(-1 * EPSILON < myBall.getXVel() &&
+                myBall.getXVel() < EPSILON);
+        assertTrue(Game.INITIAL_BALL_SPEED - EPSILON < myBall.getYVel() &&
+                myBall.getYVel() < Game.INITIAL_BALL_SPEED + EPSILON);
+        assertEquals(0, myBrick1.health);
+
+
+    }
+
+    @Test
+    void offScreenReset() throws IOException {
+
+        myGame.startGamePlay();
+        myGame.getBall().setCenterX(Game.STAGE_WIDTH - 10);
+        myGame.getBall().setCenterY(3 * Game.STAGE_HEIGHT / 4);
+        myGame.getBall().start(-90, myPaddle);
+
+        for(int i = 0; i < 50; i++) {
+            myGame.testStep();
+            System.out.println(myGame.getBall().getXVel());
+        }
+
+        ballCharacteristics();
+        paddleCharacteristics();
+    }
 
 }
 

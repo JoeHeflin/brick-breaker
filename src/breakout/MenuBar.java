@@ -47,10 +47,10 @@ public class MenuBar {
         return myMenuBarGroup;
     }
 
-//    public int getLives() {
-////        String ret = Integer.toString(lives);
-//        return myLives;
-//    }
+    public int getLives() {
+//        String ret = Integer.toString(lives);
+        return myLives;
+    }
 
     public void loseLife() {
         myLives --;
