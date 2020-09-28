@@ -17,15 +17,14 @@ public class BombBrick extends Brick{
     void takeDamage(Ball ball, MenuBar menuBar, LevelBuilder layout){
         super.takeDamage(ball, menuBar, layout);
         if(health <= 0) {
-            int rowPos = (int) (x / width);
-            int colPos = (int) (y / height);
+            int colPos = (int) (x / width);
+            int rowPos = (int) (y / height);
             Brick[][] bricks = layout.getBrickLayout();
-            for (int r = rowPos - 1; r > rowPos + 2; r++) {
-                for (int c = colPos - 1; c > colPos + 2; c++) {
-                    if (0 < r && r < bricks.length){
-                        if(0 < c && c < bricks[r].length){
-                            bricks[r][c].takeDamage(ball, menuBar,layout);
-                        }
+            for (int r = rowPos - 1; r < rowPos + 2; r++) {
+                for (int c = colPos - 1; c < colPos + 2; c++) {
+                    if (!(r == rowPos && c == colPos) && 0 < r && r < bricks.length &&
+                        0 < c && c < bricks[r].length){
+                        bricks[r][c].takeDamage(ball, menuBar,layout);// switched c and r
                     }
                 }
             }

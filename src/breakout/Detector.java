@@ -30,7 +30,13 @@ public class Detector {
         myRightBallEdge = ball.getCenterX() + ball.getRadius();
     }
 
-    void detectStage (Ball ball) {
+    public void detectCollisions(LevelBuilder bricks, Ball ball, MenuBar menuBar) {
+        detectStage(ball);
+        detectPaddle(ball);
+        detectBrick(bricks, ball, menuBar);
+    }
+
+    private void detectStage (Ball ball) {
         updateBoundaries(ball);
         if (myLeftBallEdge < 0) {
             ball.bounceX();
@@ -49,7 +55,7 @@ public class Detector {
         }
     }
 
-    void detectPaddle (Ball ball) {
+    private void detectPaddle (Ball ball) {
         //Checks if touching paddle and midpoint of the ball isn't beneath the top of the paddle
         if(ball.getBoundsInParent().intersects(myPaddle.getBoundsInParent()) && myBottomBallEdge > myPaddle.getY()){
             ball.bounceY();
@@ -59,16 +65,25 @@ public class Detector {
 
     }
 
-    void detectBrick(LevelBuilder bricks, Ball ball, MenuBar menuBar) { //TODO: bounce off edges of brick
+    private void detectBrick(LevelBuilder bricks, Ball ball, MenuBar menuBar) { //TODO: bounce off edges of brick
         for (Brick[] brickCol : bricks.getBrickLayout()) {
             for (Brick brick : brickCol) {
-                if (brick != null && ball.getBoundsInParent().intersects(brick.getBoundsInParent())) {
+                if (brick != null && ball.getBoundsInParent().intersects(brick.getBoundsInParent())) { //TODO Nested if
                     if (brick.checkIfAlive()) {
                         brick.takeDamage(ball, menuBar, bricks);
-                        ball.bounceY();
+                        bounce(ball, brick);
                     }
                 }
             }
+        }
+    }
+
+    private void bounce(Ball ball, Brick brick) {
+        if (ball.getCenterX() < brick.rightEdge() && ball.getCenterX() > brick.leftEdge()) {
+            ball.bounceY();
+        }
+        else {
+            ball.bounceX();
         }
     }
 

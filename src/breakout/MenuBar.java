@@ -13,8 +13,6 @@ public class MenuBar {
     private Text myPointsText;
     private int myPoints;
 
-
-
     public MenuBar() {
         myMenuBarGroup = new Group();
         myLives = Game.INITIAL_LIVES_COUNT + 1;
@@ -23,7 +21,7 @@ public class MenuBar {
 
     public void init() {
         // "Lives: " text in menu bar
-        // Could reduce duplicated code TODO
+        // Could reduce duplicated code TODO constants for magic numbers
         Text livesText = new Text(Game.STAGE_WIDTH - 50, 15, "Lives: ");
         livesText.setFont(new Font("Verdana", 10));
         livesText.setFill(Color.BLACK);
@@ -43,18 +41,16 @@ public class MenuBar {
         myPointsText.setFont(new Font("Verdana", 10));
         myPointsText.setFill(Color.BLACK);
         myMenuBarGroup.getChildren().add(myPointsText);
-
-
     }
 
     public Group getMenuBar() {
         return myMenuBarGroup;
     }
 
-//    public int getLives() {
-////        String ret = Integer.toString(lives);
-//        return myLives;
-//    }
+    public int getLives() {
+//        String ret = Integer.toString(lives);
+        return myLives;
+    }
 
     public void loseLife() {
         myLives --;
@@ -71,5 +67,13 @@ public class MenuBar {
     public void updateText(){
         myLivesCountText.setText(Integer.toString(myLives));
         myPointsText.setText(Integer.toString(myPoints));
+    }
+
+    public String getLivesText() {
+        return myLivesCountText.getText();
+    }
+
+    public String getPointsText() {
+        return myPointsText.getText();
     }
 }
