@@ -64,6 +64,7 @@ public class LevelBuilder {
         return myBrickCount == 0;
     }
 
+    //TODO duplicate line myBrickCount++
     public Brick buildBrick(double x, double y, String type) {
         if (type.equals("1")) {
             myBrickCount++;

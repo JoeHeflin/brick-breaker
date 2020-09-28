@@ -111,4 +111,5 @@ public class Ball extends Circle{
     public int getDamage() {
         return damage;
     }
+
 }
