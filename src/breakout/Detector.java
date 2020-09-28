@@ -2,6 +2,8 @@ package breakout;
 
 import javafx.scene.Scene;
 
+import java.util.ArrayList;
+
 public class Detector {
 
     private LevelBuilder myBricks;
@@ -84,6 +86,14 @@ public class Detector {
         }
         else {
             ball.bounceX();
+        }
+    }
+
+    public void detectPowerUps(ArrayList<PowerUp> powerUps, Ball ball){
+        for(PowerUp p : powerUps){
+            if(ball.getBoundsInParent().intersects(p.getBoundsInParent())){
+                p.usePower();
+            }
         }
     }
 

@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
@@ -36,6 +37,7 @@ public class Game extends Application {
     public static final Color PADDLE_COLOR = Color.BROWN;
     public static final double INITIAL_BALL_SPEED = 150;
     public static final int BALL_RADIUS = 5;
+    public static final int POWERUP_RADIUS = 5;
     public static final Color BACKGROUND_COLOR = Color.WHITE;
     public static final double INITIAL_PADDLE_SPEED = 15;
     public static final double INITIAL_LAUNCH_ANGLE = 60;
@@ -60,10 +62,12 @@ public class Game extends Application {
     private int paddleSpeed;
     private LevelBuilder myBricks;
     private Detector myDetector;
+    private Group myRoot;
     private MenuBar myMenuBar;
     private Stage myStage;
     private boolean myLevelActive;
     private int myCurrentLevel = 0;
+    private ArrayList<PowerUp> activePowerUps = new ArrayList<>();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -72,6 +76,8 @@ public class Game extends Application {
         myStage.setScene(myScene);
         myStage.show();
     }
+
+
 
     private Scene setUpIntroScreen() {
         FlowPane root = new FlowPane();
@@ -141,11 +147,24 @@ public class Game extends Application {
 
         Scene scene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
         myDetector = new Detector(scene, myBricks, myBall, myPaddle, myMenuBar);
+        myRoot = root;
         scene.setOnKeyPressed(e -> myPaddle.handleHorizontalMovement(e.getCode(), SECOND_DELAY)); //TODO
         return scene;
     }
 
     public void setBrickIds() {
+    }
+
+    public Scene getMyScene() {
+        return myScene;
+    }
+
+    public Detector getMyDetector() {
+        return myDetector;
+    }
+
+    public Group getMyRoot(){
+        return myRoot;
     }
 
     public void displayLevelFeatures(Group root) {
@@ -195,7 +214,6 @@ public class Game extends Application {
     }
 
     private void step(double elapsedTime) throws IOException {
-        //if (myDetector.getLives() > 0) {
         if (myLevelActive) {
             myDetector.detectCollisions(myBricks, myBall, myMenuBar);
             myMenuBar.updateText();
@@ -233,7 +251,7 @@ public class Game extends Application {
         }
     }
 
-    private void nextLevel() throws IOException {
+    private void nextLevel(){
         if (myCurrentLevel == LEVELS.size() - 1) {
             gameOver(WINNER_MESSAGE); // TODO
         } else {
@@ -253,52 +271,56 @@ public class Game extends Application {
         root.getChildren().add(sp);
     }
 
+
+
     public Ball getMyBall() {
         return myBall;
     }
 
     public MenuBar getMyMenuBar() {
+
         return myMenuBar;
     }
-/** TODO: Robert - Rewrite PowerUp class (and its extensions), make powerups functional
+
+    /**
+//TODO: Robert - Rewrite PowerUp class (and its extensions), make powerups functional
     public void powerUpChance(double x, double y) {
         double spawnChance = Math.random() * 15;
         Math.floor(spawnChance);
         if (spawnChance == 1) {
             PowerUp power = new SlowMotion(x, y);
+            myRoot.getChildren().add(power);
         }
         else if (spawnChance == 2){
             PowerUp power = new GrowPaddle (x, y);
+            myRoot.getChildren().add(power);
         }
     }
- */
+     */
+
+    public void newPowerUp(PowerUp power){
+        myRoot.getChildren().add(power);
+        activePowerUps.add(power);
+    }
+
+    public void removePowerUps(){
+        ArrayList<PowerUp> inactive = new ArrayList<>();
+        for(PowerUp p : activePowerUps){
+            if(!p.getActive()){
+                myRoot.getChildren().remove(p);
+                inactive.add(p);
+            }
+        }
+        activePowerUps.removeAll(inactive);
+    }
 
 
-/** TODO: Robert - Rewrite PowerUp class (and its extensions), make powerups functional
- public void powerUpChance(double x, double y) {
- double spawnChance = Math.random() * 15;
- Math.floor(spawnChance);
- if (spawnChance == 1) {
- PowerUp power = new SlowMotion(x, y);
- }
- else if (spawnChance == 2){
- PowerUp power = new GrowPaddle (x, y);
- }
- }
- */
+
 
     /**
      * Start of the program.
      */
     public static void main(String[] args) {
         launch(args);
-    }
-
-    public Scene getMyScene() {
-        return myScene;
-    }
-
-    public Detector getMyDetector() {
-        return myDetector;
     }
 }
