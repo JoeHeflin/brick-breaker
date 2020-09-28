@@ -24,6 +24,10 @@ public class Paddle extends Rectangle {
         this.setY(Game.STAGE_HEIGHT - Game.PADDLE_HEIGHT);
     }
 
+    public void setInitialSize(){
+        this.setWidth(Game.PADDLE_WIDTH);
+    }
+
 //    void handleHorizontalMovement (KeyCode code) {
     void handleHorizontalMovement (KeyCode code, double elapsedTime) {
         if (ableToMove) {

@@ -43,41 +43,6 @@ public class Ball extends Circle{
         this.yVel = 0;
     }
 
-//    void updateBoundaries(){
-//        this.up = getCenterY() - getRadius();
-//        this.down = getCenterY() + getRadius();
-//        this.left = getCenterX() - getRadius();
-//        this.right = getCenterX() + getRadius();
-//    }
-
-//    public boolean getUp
-
-//    void detectStageAndPaddle (Paddle paddle, Scene scene) {
-//        updateBoundaries();
-//        if(left < 0){
-//            bounce(true);
-//            setCenterX(0 + getRadius());
-//        }
-//        if(right > Game.STAGE_WIDTH){
-//            bounce(true);
-//            setCenterX(Game.STAGE_WIDTH-getRadius());
-//        }
-//        if(up < 0){
-//            bounce(false);
-//            setCenterY(0 + getRadius());
-//        }
-//        if(down > Game.STAGE_HEIGHT){
-//            resetBall(scene, paddle);
-//            //TODO decrement lives
-//        }
-//        //Checks if touching paddle and midpoint of the ball isn't beneath the top of the paddle
-//        if(this.getBoundsInParent().intersects(paddle.getBoundsInParent()) && this.down > paddle.getY()){
-//            bounce(false);
-//            this.setCenterY(paddle.getY() - this.getRadius());
-//        }
-//        //updateBoundaries(); TODO: Why necessary?
-//
-//    }
 
     void bounceX() {
         this.xVel = -this.xVel;
@@ -106,6 +71,14 @@ public class Ball extends Circle{
 
     public double getYVel() {
         return yVel;
+    }
+
+    public void setXVel(double x){
+        xVel = x;
+    }
+
+    public void setYVel(double y){
+        yVel = y;
     }
 
     public int getDamage() {

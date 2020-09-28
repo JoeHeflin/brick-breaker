@@ -65,6 +65,7 @@ public class Game extends Application {
     private Group myRoot;
     private MenuBar myMenuBar;
     private Stage myStage;
+    private PowerUpHolder myPowerUps;
     private boolean myLevelActive;
     private int myCurrentLevel = 0;
     private ArrayList<PowerUp> activePowerUps = new ArrayList<>();
@@ -115,6 +116,7 @@ public class Game extends Application {
         myStage.setScene(myScene);
         myStage.setTitle(TITLE);
         myStage.show();
+        myPowerUps.reset();
         startGamePlay();
     }
 
@@ -146,7 +148,7 @@ public class Game extends Application {
         displayLevelFeatures(root);
 
         Scene scene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
-        myDetector = new Detector(scene, myBricks, myBall, myPaddle, myMenuBar);
+        myDetector = new Detector(scene, myBricks, myBall, myPaddle, myMenuBar, myPowerUps);
         myRoot = root;
         scene.setOnKeyPressed(e -> myPaddle.handleHorizontalMovement(e.getCode(), SECOND_DELAY)); //TODO
         return scene;
@@ -216,9 +218,13 @@ public class Game extends Application {
     private void step(double elapsedTime) throws IOException {
         if (myLevelActive) {
             myDetector.detectCollisions(myBricks, myBall, myMenuBar);
+            myPowerUps.checkPowerUps();
             myMenuBar.updateText();
             if (myBall.isBallInMotion()) {
                 myBall.updatePosition(elapsedTime);
+            }
+            if(myPowerUps.getActivePowerUps().size() > 0){
+                myPowerUps.movePowerUps(elapsedTime);
             }
             if (myBricks.noMoreBricks()) {
                 nextLevel();
@@ -282,37 +288,8 @@ public class Game extends Application {
         return myMenuBar;
     }
 
-    /**
-//TODO: Robert - Rewrite PowerUp class (and its extensions), make powerups functional
-    public void powerUpChance(double x, double y) {
-        double spawnChance = Math.random() * 15;
-        Math.floor(spawnChance);
-        if (spawnChance == 1) {
-            PowerUp power = new SlowMotion(x, y);
-            myRoot.getChildren().add(power);
-        }
-        else if (spawnChance == 2){
-            PowerUp power = new GrowPaddle (x, y);
-            myRoot.getChildren().add(power);
-        }
-    }
-     */
 
-    public void newPowerUp(PowerUp power){
-        myRoot.getChildren().add(power);
-        activePowerUps.add(power);
-    }
 
-    public void removePowerUps(){
-        ArrayList<PowerUp> inactive = new ArrayList<>();
-        for(PowerUp p : activePowerUps){
-            if(!p.getActive()){
-                myRoot.getChildren().remove(p);
-                inactive.add(p);
-            }
-        }
-        activePowerUps.removeAll(inactive);
-    }
 
 
 

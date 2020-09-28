@@ -16,13 +16,15 @@ public class Detector {
     private Ball myBall;
     private int lives = Game.INITIAL_LIVES_COUNT + 1;
     private MenuBar myMenuBar;
+    private PowerUpHolder myPowerUps;
 
-    public Detector (Scene scene, LevelBuilder bricks, Ball ball, Paddle paddle, MenuBar menuBar) {
+    public Detector (Scene scene, LevelBuilder bricks, Ball ball, Paddle paddle, MenuBar menuBar, PowerUpHolder powerUps) {
         myBricks = bricks;
         myPaddle = paddle;
         myScene = scene;
         myBall = ball;
         myMenuBar = menuBar;
+        myPowerUps = powerUps;
     }
 
     void updateBoundaries(Ball ball){
@@ -36,6 +38,7 @@ public class Detector {
         detectStage(ball);
         detectPaddle(ball);
         detectBrick(bricks, ball, menuBar);
+        detectPowerUps(myPowerUps, ball, myPaddle);
     }
 
     private void detectStage (Ball ball) {
@@ -63,7 +66,6 @@ public class Detector {
             ball.bounceY();
             ball.setCenterY(myPaddle.getY() - ball.getRadius());
         }
-        //updateBoundaries(); TODO: Why necessary?
 
     }
 
@@ -74,6 +76,10 @@ public class Detector {
                     if (brick.checkIfAlive()) {
                         brick.takeDamage(ball, menuBar, bricks);
                         bounce(ball, brick);
+                    }
+                    else {
+                        myPowerUps.powerUpChance(brick.getX() + (0.5*brick.getWidth()),
+                                brick.getY() + (0.5*brick.getHeight()));
                     }
                 }
             }
@@ -89,19 +95,20 @@ public class Detector {
         }
     }
 
-    public void detectPowerUps(ArrayList<PowerUp> powerUps, Ball ball){
-        for(PowerUp p : powerUps){
+    public void detectPowerUps(PowerUpHolder powerUps, Ball ball, Paddle paddle){
+        for(PowerUp p : powerUps.getActivePowerUps()){
             if(ball.getBoundsInParent().intersects(p.getBoundsInParent())){
-                p.usePower();
+                p.usePower(ball, paddle);
             }
         }
     }
 
-    public void reset(Scene scene) {//Ball ball) {
+    public void reset(Scene scene) {
         myBall.stop();
         myBall.setInitialPosition();
         myPaddle.freeze();
         myPaddle.setInitialPosition();
+        myPaddle.setInitialSize();
         myMenuBar.loseLife();
         scene.setOnMouseClicked(e -> myBall.start(Game.INITIAL_LAUNCH_ANGLE, myPaddle));
     }

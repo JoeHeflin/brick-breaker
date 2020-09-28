@@ -5,7 +5,7 @@ import javafx.scene.shape.Circle;
 public abstract class PowerUp extends Circle {
 
     private boolean active;
-    private Color color;
+    private double spd;
 
     PowerUp(double x, double y){
         super(x, y, Game.POWERUP_RADIUS);
@@ -16,18 +16,21 @@ public abstract class PowerUp extends Circle {
         return active;
     }
 
-    public void usePower(){
+    public void usePower(Ball ball, Paddle paddle){
         setInactive();
     }
 
     public void setInactive(){
         active = false;
-        color = Game.BACKGROUND_COLOR;
-        setColor();
+        setColor(Game.BACKGROUND_COLOR);
     }
 
-    public void setColor(){
+    public void setColor(Color color){
         this.setFill(color);
+    }
+
+    void updatePosition(double elapsedTime) {
+        setCenterY(getCenterY() + this.spd * elapsedTime);
     }
 
 
