@@ -29,9 +29,18 @@ the menu
 
 Cheat keys: 
 
-•P: Pauses the game
-
-•N: Progresses to a new level
+| cheat key | action  |
+|:---------:|:----------------|
+|    R      |     Reset ball and paddle     | 
+|  SPACE    |     Pause/Unpause     | 
+|    L      |     Add a Life     | 
+|    P      |     Spawn powerup     | 
+|    N      |     procede to next level     | 
+|    D      |     Destroy brick     | 
+|    W      |     Win game     | 
+|    1      |     Go to Level 1     | 
+|    2      |     Go to Level 2     | 
+|    3      |     Go to Level 3     | 
 
 Known Bugs: Very occasionally, the ball will phase through a brick instead of bouncing off.
 The bug is hard to accurately replicate and rarely occurs, but it does happen.
