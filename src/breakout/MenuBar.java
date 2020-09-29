@@ -46,7 +46,6 @@ public class MenuBar {
     }
 
     public int getLives() {
-//        String ret = Integer.toString(lives);
         return myLives;
     }
 
