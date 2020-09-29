@@ -24,10 +24,6 @@ public class LevelBuilder {
         myLevel = level;
     }
 
-    public void removeBrickFromCount() {
-        myBrickCount--;
-    }
-
     void init() throws IOException { //TODO Why init?
         row = Game.MENU_NUMBER_OF_ROWS;
         col = 0;
@@ -52,6 +48,10 @@ public class LevelBuilder {
         }
     }
 
+    public void removeBrickFromCount() {
+        myBrickCount--;
+    }
+
     public Brick[][] getBrickLayout() {
         return brickLayout;
     }
@@ -64,7 +64,7 @@ public class LevelBuilder {
         return myBrickCount == 0;
     }
 
-    //TODO duplicate line myBrickCount++
+
     public Brick buildBrick(double x, double y, String type) {
         if (type.equals("1")) {
             myBrickCount++;
@@ -79,5 +79,7 @@ public class LevelBuilder {
             return new BrokenBrick(x, y);
         }
     }
+
+
 
 }
