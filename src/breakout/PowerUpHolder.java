@@ -7,10 +7,12 @@ import java.util.ArrayList;
 public class PowerUpHolder {
     private static final int POWERUP_ODDS = 10;
 
+    MenuBar myMenu;
     Group myRoot;
     ArrayList<PowerUp> activePowerUps;
 
-    PowerUpHolder(Group root){
+    PowerUpHolder(Group root, MenuBar menu){
+        myMenu = menu;
         myRoot = root;
         activePowerUps = new ArrayList<>();
     }
@@ -26,6 +28,8 @@ public class PowerUpHolder {
             p.setInactive();
         }
     }
+
+
 
     public void newPowerUp(PowerUp power){
         myRoot.getChildren().add(power);
@@ -55,6 +59,10 @@ public class PowerUpHolder {
         }
         else if (spawnChance == 1){
             PowerUp power = new GrowPaddle (x, y);
+            newPowerUp(power);
+        }
+        else if (spawnChance == 2){
+            PowerUp power = new ExtraLife (x, y, myMenu);
             newPowerUp(power);
         }
     }
