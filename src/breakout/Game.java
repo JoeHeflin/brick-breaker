@@ -2,6 +2,7 @@ package breakout;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -28,7 +29,7 @@ public class Game extends Application {
     public static final int BRICK_WIDTH = 36;
     public static final int BRICK_HEIGHT = 20;
     public static final int STAGE_WIDTH = 10 * BRICK_WIDTH;
-    public static final int STAGE_HEIGHT = 400;
+    public static final int STAGE_HEIGHT = 500;
     public static final int MENU_NUMBER_OF_ROWS = 1;
     public static final int MENU_BAR_HEIGHT = MENU_NUMBER_OF_ROWS * BRICK_HEIGHT;
     public static final int PADDLE_WIDTH = STAGE_WIDTH / 5;
@@ -83,8 +84,6 @@ public class Game extends Application {
         myStage.show();
     }
 
-
-
     public void startGamePlay() {
         KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> { step(); });
         Timeline animation = new Timeline();
@@ -94,10 +93,10 @@ public class Game extends Application {
     }
 
     private Scene setUpIntroScreen() {
-        FlowPane root = new FlowPane();
+        FlowPane root = new FlowPane(Orientation.VERTICAL);
         addDisplayText(root, GAME_TITLE, GAME_TITLE_SIZE);
         root.setAlignment(Pos.CENTER);
-        root.setVgap(30);
+        root.setVgap(5);
         Button playButton = new PlayButton(root, this);
         playButton.activateButton();
         for (int level = 1; level <= LEVELS.size(); level++) {
@@ -110,9 +109,17 @@ public class Game extends Application {
 
     private void handleKeyInput(KeyCode code) {
         switch (code) {
-            case P -> pause();
+            case R -> myDetector.reset(myScene);
+            case SPACE -> pause();
+            case L -> myMenuBar.addLife();
+            case P -> myPowerUps.powerUpChance(myBall.getCenterX(),myBall.getCenterY());
             case N -> nextLevel();
             case LEFT, RIGHT -> myPaddle.handleHorizontalMovement(code, SECOND_DELAY);
+            case D -> myBricks.destroyFirstBrick(myPowerUps, myMenuBar);
+            case DIGIT1 -> setUpLevelStage(1);
+            case DIGIT2 -> setUpLevelStage(2);
+            case DIGIT3 -> setUpLevelStage(3);
+            case W -> gameOver(WINNER_MESSAGE);
         }
     }
 
@@ -214,7 +221,7 @@ public class Game extends Application {
     }
 
     private void gameOver(String message) {
-        FlowPane root = new FlowPane();
+        FlowPane root = new FlowPane(Orientation.VERTICAL);
         addDisplayText(root, message, 100);
         root.setAlignment(Pos.CENTER);
         root.setVgap(30);

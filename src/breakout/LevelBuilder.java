@@ -55,6 +55,17 @@ public class LevelBuilder {
         return brickLayout;
     }
 
+    public void destroyFirstBrick(PowerUpHolder powerUps, MenuBar menu) {
+        for (Brick[] col: brickLayout) {
+            for (Brick brick: col) {
+                if (brick != null && brick.checkIfAlive()) {
+                    brick.actOnDeath(powerUps, menu, this);
+                    return;
+                }
+            }
+        }
+    }
+
     public void setBrickLayout(Brick[][] newLayout) {
         brickLayout = newLayout;
     }
