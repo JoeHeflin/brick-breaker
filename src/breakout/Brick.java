@@ -51,7 +51,6 @@ public abstract class Brick extends Rectangle {
         return health > 0;
     }
 
-
     void actOnDeath(PowerUpHolder powerUps){
         health = 0;
         color = Game.BACKGROUND_COLOR;
