@@ -3,36 +3,69 @@ game
 
 This project implements the game of Breakout.
 
-Name: 
+Name: Robert Hellinga, Joseph Heflin
 
 ### Timeline
 
-Start Date: 
+Start Date: September 13, 2020
 
-Finish Date: 
+Finish Date: September 28, 2020
 
-Hours Spent:
+Hours Spent: 25-30
 
 ### Resources Used
+
+design.cs.duke.edu
 
 
 ### Running the Program
 
-Main class:
+Main class: Game.java
 
-Data files needed: 
+Data files needed: level1.txt, level2.txt, etc... (found in levelFormats folder)
 
-Key/Mouse inputs:
+Key/Mouse inputs: left and right to move, mouse to fire the ball. Use mouse to navigate
+the menu
 
-Cheat keys:
+Cheat keys: 
 
-Known Bugs:
+| key | action  |
+|:---------:|:----------------|
+|    R      |     Reset ball and paddle     | 
+|  SPACE    |     Pause/Unpause     | 
+|    L      |     Add a Life     | 
+|    P      |     Spawn powerup     | 
+|    N      |     procede to next level     | 
+|    D      |     Destroy brick     | 
+|    W      |     Win game     | 
+|    1      |     Go to Level 1     | 
+|    2      |     Go to Level 2     | 
+|    3      |     Go to Level 3     | 
+
+Known Bugs: Very occasionally, the ball will phase through a brick instead of bouncing off.
+The bug is hard to accurately replicate and rarely occurs, but it does happen.
 
 Extra credit:
 
+Cut screens (opening/ending, win/loss)
+
+Notable bonus features: 
+
+•dynamic bouncing off of the paddle
+
+•Easily expandable level pool (until the level select text wraps off the 
+screen)
+
 
 ### Notes/Assumptions
+INSTRUCTIONS:
+
+• Use the arrow keys to move and the mouse to fire the ball 
 
 
 ### Impressions
 
+The implementation of Brick Breaker here is relatively basic, but the structure of the
+code allows for easy expansion/customization towards whatever direction a programmer 
+seeks to take it. We chose to focus on building a strong framework for our code that was
+easy to add new bricks power ups and levels to.
