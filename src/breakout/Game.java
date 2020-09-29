@@ -136,6 +136,7 @@ public class Game extends Application {
         myCurrentLevel = level;
         Group root = new Group();
         myBricks = buildBrick(LEVELS_DIR + LEVELS.get(level));
+        myPowerUps = new PowerUpHolder(root);
 
         try {
             myBricks.init();

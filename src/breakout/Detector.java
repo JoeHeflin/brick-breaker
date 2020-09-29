@@ -74,12 +74,8 @@ public class Detector {
             for (Brick brick : brickCol) {
                 if (brick != null && ball.getBoundsInParent().intersects(brick.getBoundsInParent())) { //TODO Nested if
                     if (brick.checkIfAlive()) {
-                        brick.takeDamage(ball, menuBar, bricks);
+                        brick.takeDamage(ball, menuBar, bricks, myPowerUps);
                         bounce(ball, brick);
-                    }
-                    else {
-                        myPowerUps.powerUpChance(brick.getX() + (0.5*brick.getWidth()),
-                                brick.getY() + (0.5*brick.getHeight()));
                     }
                 }
             }
@@ -99,6 +95,9 @@ public class Detector {
         for(PowerUp p : powerUps.getActivePowerUps()){
             if(ball.getBoundsInParent().intersects(p.getBoundsInParent())){
                 p.usePower(ball, paddle);
+            }
+            else if(p.getCenterY() > Game.STAGE_HEIGHT - 5){
+                p.setInactive();
             }
         }
     }

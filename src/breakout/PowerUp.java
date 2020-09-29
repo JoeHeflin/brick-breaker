@@ -10,6 +10,7 @@ public abstract class PowerUp extends Circle {
     PowerUp(double x, double y){
         super(x, y, Game.POWERUP_RADIUS);
         active = true;
+        spd = 100;
     }
 
     public boolean getActive(){

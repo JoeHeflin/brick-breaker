@@ -12,7 +12,7 @@ public class BrokenBrick extends Brick{
     }
 
     @Override
-    void takeDamage(Ball ball, MenuBar menuBar, LevelBuilder layout) {
+    void takeDamage(Ball ball, MenuBar menuBar, LevelBuilder layout, PowerUpHolder powerUps) {
 
     }
 
