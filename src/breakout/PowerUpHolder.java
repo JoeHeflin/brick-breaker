@@ -61,9 +61,9 @@ public class PowerUpHolder {
             PowerUp power = new GrowPaddle (x, y);
             newPowerUp(power);
         }
-        else if (spawnChance == 2){
-            PowerUp power = new ExtraLife (x, y, myMenu);
-            newPowerUp(power);
-        }
+//        else if (spawnChance == 2){
+//            PowerUp power = new ExtraLife (x, y, myMenu);
+//            newPowerUp(power);
+//        }
     }
 }
