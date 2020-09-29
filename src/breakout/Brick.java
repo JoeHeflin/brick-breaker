@@ -37,10 +37,7 @@ public abstract class Brick extends Rectangle {
         if (checkIfAlive()) { //HERE
             health = health - ball.getDamage();
             if (!checkIfAlive()) {
-                actOnDeath(powerUps);
-
-                menuBar.addPoints();
-                layout.removeBrickFromCount();
+                actOnDeath(powerUps, menuBar, layout);
             }
         } //HERE
     }
@@ -51,10 +48,12 @@ public abstract class Brick extends Rectangle {
         return health > 0;
     }
 
-    void actOnDeath(PowerUpHolder powerUps){
+    void actOnDeath(PowerUpHolder powerUps,MenuBar menuBar, LevelBuilder layout){
         health = 0;
         color = Game.BACKGROUND_COLOR;
         setColor();
+        menuBar.addPoints();
+        layout.removeBrickFromCount();
         powerUps.powerUpChance(this.getX() + (0.5*this.getWidth()),
                 this.getY() + (0.5*this.getHeight()));
     }

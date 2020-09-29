@@ -57,6 +57,7 @@ public class Detector {
         }
         else if (myBottomBallEdge > Game.STAGE_HEIGHT) {
             reset(myScene);
+            myMenuBar.loseLife();
         }
     }
 
@@ -93,10 +94,11 @@ public class Detector {
     }
 
     private void paddleBounce(Ball ball, Paddle paddle){
-        double multiplier = 0.9;
+        double multiplier = 0.5;
         double paddleCenter = paddle.getWidth()/2;
         double distFromCenter = Math.abs(ball.getCenterX() - (paddle.getX() + paddleCenter));
-        multiplier = multiplier + ((distFromCenter/paddleCenter)*0.2);
+//        multiplier = multiplier + ((distFromCenter/paddleCenter)*0.2);
+        multiplier = multiplier*distFromCenter;
         ball.setXVel(ball.getXVel() * multiplier);
         ball.bounceY();
         ball.setCenterY(paddle.getY() - ball.getRadius() - 1);
@@ -131,7 +133,7 @@ public class Detector {
         myPaddle.freeze();
         myPaddle.setInitialPosition();
         myPaddle.setInitialSize();
-        myMenuBar.loseLife();
+
         if (!myBall.isBallInMotion()){
             scene.setOnMouseClicked(e -> myBall.start(getLaunchAngle(e.getX(), e.getY()), myPaddle));
         }
