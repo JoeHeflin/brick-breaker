@@ -29,7 +29,7 @@ the menu
 
 Cheat keys: 
 
-| cheat key | action  |
+| key | action  |
 |:---------:|:----------------|
 |    R      |     Reset ball and paddle     | 
 |  SPACE    |     Pause/Unpause     | 
