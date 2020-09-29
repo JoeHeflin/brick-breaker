@@ -4,6 +4,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.FlowPane;
@@ -40,7 +41,6 @@ public class Game extends Application {
     public static final int POWERUP_RADIUS = 5;
     public static final Color BACKGROUND_COLOR = Color.WHITE;
     public static final double INITIAL_PADDLE_SPEED = 15;
-    public static final double INITIAL_LAUNCH_ANGLE = 60;
     public static final int INITIAL_LIVES_COUNT = 2;
     private static final String LOSER_MESSAGE = "YOU\nLOSE";
     private static final String WINNER_MESSAGE = "YOU\nWIN";
@@ -77,6 +77,8 @@ public class Game extends Application {
         myStage.setScene(myScene);
         myStage.show();
     }
+
+
 
     private Scene setUpIntroScreen() {
         FlowPane root = new FlowPane();
@@ -136,7 +138,7 @@ public class Game extends Application {
         myBall.setInitialPosition();
         myPaddle.freeze();
         myPaddle.setInitialPosition();
-        scene.setOnMouseClicked(e -> myBall.start(INITIAL_LAUNCH_ANGLE, myPaddle));
+        scene.setOnMouseClicked(e -> myBall.start(myDetector.getLaunchAngle(e.getX(), e.getY()), myPaddle));
     }
 
     public LevelBuilder buildBrick(String filePath) {
@@ -160,8 +162,7 @@ public class Game extends Application {
         displayLevelFeatures(root);
 
         Scene scene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
-        myDetector = new Detector(scene, myBricks, myBall, myPaddle, myMenuBar,myPowerUps);
-//        scene.setOnKeyPressed(e -> myPaddle.handleHorizontalMovement(e.getCode(), SECOND_DELAY)); //TODO
+        myDetector = new Detector(scene, myBricks, myBall, myPaddle, myMenuBar, myPowerUps);
         myRoot = root;
         scene.setOnKeyPressed(e -> myPaddle.handleHorizontalMovement(e.getCode(), SECOND_DELAY)); //TODO
         return scene;
@@ -208,22 +209,8 @@ public class Game extends Application {
         return myBricks;
     }
 
-    /**
-     * TODO: Get it working :|
-     */
-//    private void handleLaunch (double x, double y) {
-//        double angle;
-//        double deltaX = x/myBall.getCenterX();
-//        double deltaY = y/myBall.getCenterY();
-//        if(deltaY < 0){ deltaY = 1; }
-//        if(deltaX == 0) {
-//            angle = 90;
-//
-//        }
-//        if(deltaX > 0) {
-//            angle = Math.toDegrees(Math.atan((y - myBall.getCenterY()) / (x - myBall.getCenterX())));
-//        }
-//    }
+
+
     public void testStep() throws IOException {
         step(SECOND_DELAY);
     }
@@ -290,11 +277,14 @@ public class Game extends Application {
         root.getChildren().add(sp);
     }
 
+
+
     public Ball getMyBall() {
         return myBall;
     }
 
     public MenuBar getMyMenuBar() {
+
         return myMenuBar;
     }
 

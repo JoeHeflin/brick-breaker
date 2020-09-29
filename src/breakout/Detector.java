@@ -102,6 +102,20 @@ public class Detector {
         }
     }
 
+    public double getLaunchAngle(double x, double y) {
+        double angle = 90;
+        double deltaX = x - myBall.getCenterX();
+        double deltaY = y - myBall.getCenterY();
+        if(deltaY < 0){
+            deltaY = 1;
+        }
+        if(x > 0 &&  x < Game.STAGE_WIDTH) {
+            angle = angle + Math.toDegrees(Math.atan((deltaY) / (deltaX)));
+        }
+
+        return angle;
+    }
+
     public void reset(Scene scene) {
         myBall.stop();
         myBall.setInitialPosition();
@@ -109,6 +123,6 @@ public class Detector {
         myPaddle.setInitialPosition();
         myPaddle.setInitialSize();
         myMenuBar.loseLife();
-        scene.setOnMouseClicked(e -> myBall.start(Game.INITIAL_LAUNCH_ANGLE, myPaddle));
+        scene.setOnMouseClicked(e -> myBall.start(getLaunchAngle(e.getX(), e.getY()), myPaddle));
     }
 }
