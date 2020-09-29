@@ -94,11 +94,10 @@ public class Detector {
     }
 
     private void paddleBounce(Ball ball, Paddle paddle){
-        double multiplier = 0.5;
+        double multiplier = 0.8;
         double paddleCenter = paddle.getWidth()/2;
         double distFromCenter = Math.abs(ball.getCenterX() - (paddle.getX() + paddleCenter));
-//        multiplier = multiplier + ((distFromCenter/paddleCenter)*0.2);
-        multiplier = multiplier*distFromCenter;
+        multiplier = multiplier + ((distFromCenter/paddleCenter)*(1-multiplier));
         ball.setXVel(ball.getXVel() * multiplier);
         ball.bounceY();
         ball.setCenterY(paddle.getY() - ball.getRadius() - 1);

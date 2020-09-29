@@ -5,7 +5,7 @@ import javafx.scene.Group;
 import java.util.ArrayList;
 
 public class PowerUpHolder {
-    private static final int POWERUP_ODDS = 10;
+    private static final int POWERUP_ODDS = 100;
 
     MenuBar myMenu;
     Group myRoot;
@@ -53,17 +53,18 @@ public class PowerUpHolder {
 
     public void powerUpChance(double x, double y) {
         int spawnChance = (int) (Math.random() * POWERUP_ODDS);
-        if (spawnChance == 0) {
+        if (0 < spawnChance && spawnChance < 5) {
             PowerUp power = new SlowMotion(x, y);
             newPowerUp(power);
         }
-        else if (spawnChance == 1){
+        else if (10 < spawnChance && spawnChance < 20){
             PowerUp power = new GrowPaddle (x, y);
             newPowerUp(power);
         }
-//        else if (spawnChance == 2){
-//            PowerUp power = new ExtraLife (x, y, myMenu);
-//            newPowerUp(power);
-//        }
+
+        else if (30 < spawnChance && spawnChance < 33){
+            PowerUp power = new ExtraLife (x, y, myMenu);
+            newPowerUp(power);
+        }
     }
 }

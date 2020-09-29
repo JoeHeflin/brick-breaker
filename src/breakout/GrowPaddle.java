@@ -10,7 +10,9 @@ public class GrowPaddle extends PowerUp{
 
     @Override
     public void usePower(Ball ball, Paddle paddle){
-        paddle.setWidth(paddle.getWidth() * 1.5);
+        if(paddle.getWidth() < Game.STAGE_WIDTH/2) {
+            paddle.setWidth(paddle.getWidth() * 1.25);
+        }
         super.usePower(ball, paddle);
     }
 

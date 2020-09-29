@@ -20,8 +20,6 @@ public class MenuBar {
     }
 
     public void init() {
-        // "Lives: " text in menu bar
-        // Could reduce duplicated code TODO constants for magic numbers
         Text livesText = new Text(Game.STAGE_WIDTH - 50, 15, "Lives: ");
         livesText.setFont(new Font("Verdana", 10));
         livesText.setFill(Color.BLACK);
