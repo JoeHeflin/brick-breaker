@@ -33,8 +33,8 @@ public class Ball extends Circle{
 
     void start(double launchAngle, Paddle paddle) {
         ballInMotion = true;
-        this.xVel = (double) (speed * Math.cos(Math.toRadians(launchAngle)));
-        this.yVel = (double) (-1 * speed * Math.sin(Math.toRadians((launchAngle))));
+        this.xVel = (speed * Math.cos(Math.toRadians(launchAngle)));
+        this.yVel = (-1 * speed * Math.sin(Math.toRadians((launchAngle))));
         paddle.unfreeze();
     }
     void stop() {
@@ -53,8 +53,8 @@ public class Ball extends Circle{
     }
 
     void updatePosition(double elapsedTime) {
-        setCenterX(getCenterX() + this.xVel * 0.025); //* elapsedTime);
-        setCenterY(getCenterY() + this.yVel * 0.025); //elapsedTime);
+        setCenterX(getCenterX() + this.xVel * elapsedTime);
+        setCenterY(getCenterY() + this.yVel * elapsedTime);
         //System.out.println("Radius: " + getRadius() + " XPos: " + getCenterX() + "xVel: " + xVel + "yPos: " + getCenterY() + "yVel: " + yVel);
     }
 

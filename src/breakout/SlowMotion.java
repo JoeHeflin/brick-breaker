@@ -9,7 +9,7 @@ public class SlowMotion extends PowerUp{
     }
 
     public void usePower(Ball ball, Paddle paddle){
-        ball.setXVel(ball.getXVel() * 0.75);
+        ball.setXVel(ball.getXVel() * 0.75); // TODO
         ball.setYVel(ball.getYVel() * 0.75);
         super.usePower(ball, paddle);
     }
