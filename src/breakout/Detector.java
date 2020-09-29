@@ -93,10 +93,10 @@ public class Detector {
 
     public void detectPowerUps(PowerUpHolder powerUps, Ball ball, Paddle paddle){
         for(PowerUp p : powerUps.getActivePowerUps()){
-            if(ball.getBoundsInParent().intersects(p.getBoundsInParent())){
+            if(paddle.getBoundsInParent().intersects(p.getBoundsInParent())){
                 p.usePower(ball, paddle);
             }
-            else if(p.getCenterY() > Game.STAGE_HEIGHT - 5){
+            if(p.getCenterY() > Game.STAGE_HEIGHT - 5){
                 p.setInactive();
             }
         }
@@ -106,13 +106,16 @@ public class Detector {
         double angle = 90;
         double deltaX = x - myBall.getCenterX();
         double deltaY = y - myBall.getCenterY();
-        if(deltaY < 0){
-            deltaY = 1;
+        if(deltaY > 0){
+            deltaY = -1;
         }
         if(x > 0 &&  x < Game.STAGE_WIDTH) {
-            angle = angle + Math.toDegrees(Math.atan((deltaY) / (deltaX)));
+            angle = Math.toDegrees(Math.atan((deltaY) / (deltaX)));
         }
 
+        if(deltaX < 0){
+            angle = 180 - angle;
+        }
         return angle;
     }
 
