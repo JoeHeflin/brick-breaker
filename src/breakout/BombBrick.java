@@ -24,7 +24,7 @@ public class BombBrick extends Brick{
                 for (int c = colPos - 1; c < colPos + 2; c++) {
                     if (!(r == rowPos && c == colPos) && 0 < r && r < bricks.length &&
                         0 < c && c < bricks[r].length){
-                        bricks[r][c].takeDamage(ball, menuBar,layout, powerUps);// switched c and r
+                        bricks[r][c].takeDamage(ball, menuBar,layout, powerUps);
                     }
                 }
             }
