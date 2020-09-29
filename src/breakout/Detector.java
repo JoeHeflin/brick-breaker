@@ -57,6 +57,7 @@ public class Detector {
         }
         else if (myBottomBallEdge > Game.STAGE_HEIGHT) {
             reset(myScene);
+            myMenuBar.loseLife();
         }
     }
 
@@ -131,7 +132,7 @@ public class Detector {
         myPaddle.freeze();
         myPaddle.setInitialPosition();
         myPaddle.setInitialSize();
-        myMenuBar.loseLife();
+
         if (!myBall.isBallInMotion()){
             scene.setOnMouseClicked(e -> myBall.start(getLaunchAngle(e.getX(), e.getY()), myPaddle));
         }
