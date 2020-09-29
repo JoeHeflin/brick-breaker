@@ -82,11 +82,12 @@ public class Detector {
         }
     }
 
+
     private void bounce(Ball ball, Brick brick) {
         if (ball.getCenterX() < brick.rightEdge() && ball.getCenterX() > brick.leftEdge()) {
             ball.bounceY();
         }
-        else {
+        if (ball.getCenterY() < (brick.getY() + brick.getHeight()) && ball.getCenterY() > brick.getY()) {
             ball.bounceX();
         }
     }
