@@ -61,6 +61,7 @@ public class Game extends Application {
     private boolean myLevelActive;
     private int myCurrentLevel = 0;
     private ArrayList<PowerUp> activePowerUps = new ArrayList<>();
+    private List<Ball> myBallArray = new ArrayList<>();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -146,7 +147,7 @@ public class Game extends Application {
         myLevelActive = true;
         Group root = new Group();
         myBricks = buildBrick(LEVELS_DIR + LEVELS.get(level));
-        myPowerUps = new PowerUpHolder(root);
+        myPowerUps = new PowerUpHolder(root, myMenuBar);
 
         try {
             myBricks.init();
@@ -230,7 +231,6 @@ public class Game extends Application {
     private void step() {
         myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         if (myLevelActive) {
-            testBallSpeed = myBall.getXVel();
             myDetector.detectCollisions(myBricks, myBall, myMenuBar);
             myPowerUps.checkPowerUps();
             myMenuBar.updateText();

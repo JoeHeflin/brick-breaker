@@ -33,8 +33,5 @@ public abstract class PowerUp extends Circle {
     void updatePosition(double elapsedTime) {
         setCenterY(getCenterY() + this.spd * elapsedTime);
     }
-
-
-
-
+    
 }
