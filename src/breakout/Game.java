@@ -6,6 +6,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -95,6 +96,7 @@ public class Game extends Application {
     }
 
     public void startGamePlay() {
+        myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
             try {
                 step(SECOND_DELAY);
@@ -107,6 +109,18 @@ public class Game extends Application {
         animation.getKeyFrames().add(frame);
         myLevelActive = true;
         animation.play();
+    }
+
+    private void handleKeyInput(KeyCode code) {
+        switch (code) {
+            case P -> pause();
+            case N -> nextLevel();
+            case LEFT, RIGHT -> myPaddle.handleHorizontalMovement(code, 1/60);
+        }
+    }
+
+    public void pause() {
+        myLevelActive = !myLevelActive;
     }
 
     public void setUpLevelStage(int level) {
@@ -274,16 +288,11 @@ public class Game extends Application {
         return myMenuBar;
     }
 
-
-
-
-
-
-
     /**
      * Start of the program.
      */
     public static void main(String[] args) {
         launch(args);
     }
+
 }
