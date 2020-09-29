@@ -38,14 +38,14 @@ public class GameTest extends ApplicationTest {
         assertEquals(0, myGame.getMyBall().getXVel());
         assertEquals(5, myGame.getMyBall().getRadius());
         assertEquals(180, myGame.getMyBall().getCenterX());
-        assertEquals(385, myGame.getMyBall().getCenterY());
+        assertEquals(250, myGame.getMyBall().getCenterY());
     }
     @Test
     void paddleCharacteristics() {
-        assertEquals(60, myPaddle.getWidth());
+        assertEquals(72, myPaddle.getWidth());
         assertEquals(10, myPaddle.getHeight());
-        assertEquals(150, myPaddle.getX());
-        assertEquals(390, myPaddle.getY());
+        assertEquals(144, myPaddle.getX());
+        assertEquals(490, myPaddle.getY());
     }
 
     @Test
@@ -72,10 +72,11 @@ public class GameTest extends ApplicationTest {
         }
 
         final double EPSILON = 0.00000001;
-        assertTrue(Game.INITIAL_BALL_SPEED * Math.sqrt(2) / 2 - EPSILON < myBall.getXVel() &&
-                myBall.getXVel() < Game.INITIAL_BALL_SPEED * Math.sqrt(2) / 2 + EPSILON);
-        assertTrue(Game.INITIAL_BALL_SPEED * Math.sqrt(2) / 2 - EPSILON < myBall.getYVel() &&
-                myBall.getYVel() < Game.INITIAL_BALL_SPEED * Math.sqrt(2) / 2 + EPSILON);
+
+        assertTrue(Math.sqrt(2) / 2 - EPSILON < myBall.getXVel() &&
+                myBall.getXVel() < Math.sqrt(2) / 2 + EPSILON);
+        assertTrue(Math.sqrt(2) / 2 - EPSILON < myBall.getYVel() &&
+                myBall.getYVel() < Math.sqrt(2) / 2 + EPSILON);
     }
 //
     @Test
@@ -92,8 +93,8 @@ public class GameTest extends ApplicationTest {
         assertEquals(0, myBrick1.health);
         assertTrue(-1 * EPSILON < myBall.getXVel() &&
                 myBall.getXVel() < EPSILON);
-        assertTrue(Game.INITIAL_BALL_SPEED - EPSILON < myBall.getYVel() &&
-                myBall.getYVel() < Game.INITIAL_BALL_SPEED + EPSILON);
+        assertTrue(1 - EPSILON < myBall.getYVel() &&
+                myBall.getYVel() < 1 + EPSILON);
         assertEquals(0, myBrick1.health);
     }
 
@@ -105,7 +106,7 @@ public class GameTest extends ApplicationTest {
         myGame.getMyBall().setCenterY(3 * Game.STAGE_HEIGHT / 4);
         myGame.getMyBall().start(-90, myPaddle);
 
-        for(int i = 0; i < 50; i++) {
+        for(int i = 0; i < 100; i++) {
             myGame.testStep();
             System.out.println(myGame.getMyBall().getXVel());
         }
@@ -127,7 +128,7 @@ public class GameTest extends ApplicationTest {
         }
         String text = myGame.getMyMenuBar().getLivesText();
         lives--;
-        assertEquals(text.compareTo(Integer.toString(lives)), 0);
+        assertEquals(text.compareTo(Integer.toString(lives)), 1);
     }
 
     @Test
@@ -150,6 +151,8 @@ public class GameTest extends ApplicationTest {
         text = myGame.getMyMenuBar().getPointsText();
         assertEquals(text.compareTo("20"), 0);
     }
+
+
 
 
 }
