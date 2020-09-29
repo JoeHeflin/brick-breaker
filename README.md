@@ -65,14 +65,19 @@ INSTRUCTIONS:
 BRICK TYPES:
 
 -Broken brick (empty) ("0")
+
 -Single brick (basic) ("1")
+
 -Double brick (2x health) ("2")
+
 -Bomb brick (blows up bricks around it in a 1x1 grid) ("3")
 
 POWER UPS:
 
 -Slow Motion (Purple)
+
 -Paddle Grower (Yellow)
+
 -Extra life [rare!] (Pink)
 
 
