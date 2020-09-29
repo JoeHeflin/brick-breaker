@@ -8,10 +8,6 @@ public class Ball extends Circle{
 
     private static final Color BALL_COLOR = Color.BLUE;
     private boolean ballInMotion;
-    private double up;
-    private double down;
-    private double left;
-    private double right;
     private double speed;
     private double xVel;
     private double yVel;
@@ -19,10 +15,6 @@ public class Ball extends Circle{
 
     public Ball(double x, double y, double spd, int radius){
         super(x, y, radius);
-        this.up = y + radius;
-        this.down = y - radius;
-        this.left = x - radius;
-        this.right = x + radius;
         this.xVel = 0;
         this.yVel = 0;
         this.speed = spd;
@@ -41,6 +33,7 @@ public class Ball extends Circle{
         ballInMotion = false;
         this.xVel = 0;
         this.yVel = 0;
+        this.damage = 1;
     }
 
 

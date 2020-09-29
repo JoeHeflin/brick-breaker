@@ -38,9 +38,9 @@ public class Game extends Application {
     public static final Color PADDLE_COLOR = Color.BROWN;
     public static final double INITIAL_BALL_SPEED = 150;
     public static final int BALL_RADIUS = 5;
-    public static final int POWERUP_RADIUS = 5;
+    public static final int POWERUP_RADIUS = 7;
     public static final Color BACKGROUND_COLOR = Color.WHITE;
-    public static final double INITIAL_PADDLE_SPEED = 15;
+    public static final double INITIAL_PADDLE_SPEED = 900;
     public static final int INITIAL_LIVES_COUNT = 2;
     private static final String LOSER_MESSAGE = "YOU\nLOSE";
     private static final String WINNER_MESSAGE = "YOU\nWIN";
@@ -50,11 +50,6 @@ public class Game extends Application {
     private static final int LEVEL_BUTTON_SIZE = 20;
     private static final int GAME_TITLE_SIZE = 80;
 
-
-    //TODO: Level Select class, confirming when blocks are broken / level is beaten -> loading to next level
-    //TODO: Restructure level reading to be a matrix that stores Bricks, so we can keep track of them
-
-    private double testBallSpeed;
     private Scene myScene;
     private Ball myBall;
     private Paddle myPaddle;
@@ -108,7 +103,7 @@ public class Game extends Application {
         switch (code) {
             case P -> pause();
             case N -> nextLevel();
-            case LEFT, RIGHT -> myPaddle.handleHorizontalMovement(code, 1/60);
+            case LEFT, RIGHT -> myPaddle.handleHorizontalMovement(code, SECOND_DELAY);
         }
     }
 
