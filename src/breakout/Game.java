@@ -33,7 +33,7 @@ public class Game extends Application {
     public static final int STAGE_HEIGHT = 400;
     public static final int MENU_NUMBER_OF_ROWS = 1;
     public static final int MENU_BAR_HEIGHT = MENU_NUMBER_OF_ROWS * BRICK_HEIGHT;
-    public static final int PADDLE_WIDTH = STAGE_WIDTH / 6;
+    public static final int PADDLE_WIDTH = STAGE_WIDTH / 5;
     public static final int PADDLE_HEIGHT = 10;
     public static final Color PADDLE_COLOR = Color.BROWN;
     public static final double INITIAL_BALL_SPEED = 150;
@@ -44,7 +44,7 @@ public class Game extends Application {
     public static final int INITIAL_LIVES_COUNT = 2;
     private static final String LOSER_MESSAGE = "YOU\nLOSE";
     private static final String WINNER_MESSAGE = "YOU\nWIN";
-    private static final List<String> LEVELS = new ArrayList(Arrays.asList("level1.txt", "level2.txt"));
+    private static final List<String> LEVELS = new ArrayList(Arrays.asList("level1.txt", "level2.txt", "level3.txt"));
     private static final String LEVELS_DIR = "levelFormats/";
     private static final String GAME_TITLE = "BRICK\nSLAYER";
     private static final int LEVEL_BUTTON_SIZE = 20;
@@ -127,6 +127,7 @@ public class Game extends Application {
         myPaddle.freeze();
         myPaddle.setInitialPosition();
         scene.setOnMouseClicked(e -> myBall.start(myDetector.getLaunchAngle(e.getX(), e.getY()), myPaddle));
+
     }
 
     public LevelBuilder buildBrick(String filePath) {
@@ -206,7 +207,6 @@ public class Game extends Application {
     private void step() {
         myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         if (myLevelActive) {
-            testBallSpeed = myBall.getXVel();
             myDetector.detectCollisions(myBricks, myBall, myMenuBar);
             myPowerUps.checkPowerUps();
             myMenuBar.updateText();

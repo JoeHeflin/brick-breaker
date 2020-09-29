@@ -63,8 +63,7 @@ public class Detector {
     private void detectPaddle (Ball ball) {
         //Checks if touching paddle and midpoint of the ball isn't beneath the top of the paddle
         if(ball.getBoundsInParent().intersects(myPaddle.getBoundsInParent()) && myBottomBallEdge > myPaddle.getY()){
-            ball.bounceY();
-            ball.setCenterY(myPaddle.getY() - ball.getRadius());
+            paddleBounce(ball, myPaddle);
         }
 
     }
@@ -83,6 +82,7 @@ public class Detector {
     }
 
 
+
     private void bounce(Ball ball, Brick brick) {
         if (ball.getCenterX() < brick.rightEdge() && ball.getCenterX() > brick.leftEdge()) {
             ball.bounceY();
@@ -90,6 +90,14 @@ public class Detector {
         if (ball.getCenterY() < (brick.getY() + brick.getHeight()) && ball.getCenterY() > brick.getY()) {
             ball.bounceX();
         }
+    }
+
+    private void paddleBounce(Ball ball, Paddle paddle){
+        double paddleCenter = paddle.getWidth()/2;
+        double distFromCenter = ball.getCenterX() - (paddle.getX() + paddleCenter);
+        ball.setXVel(ball.getXVel() + distFromCenter/paddleCenter);
+        ball.bounceY();
+        ball.setCenterY(paddle.getY() - ball.getRadius() - 1);
     }
 
     public void detectPowerUps(PowerUpHolder powerUps, Ball ball, Paddle paddle){
@@ -107,12 +115,7 @@ public class Detector {
         double angle = 90;
         double deltaX = x - myBall.getCenterX();
         double deltaY = y - myBall.getCenterY();
-        if(deltaY > 0){
-            deltaY = -1;
-        }
-        if(x > 0 &&  x < Game.STAGE_WIDTH) {
-            angle = Math.toDegrees(Math.atan((deltaY) / (deltaX)));
-        }
+        angle = Math.toDegrees(Math.atan((deltaY) / (deltaX)));
 
         if(deltaX < 0){
             angle = 180 - angle;
