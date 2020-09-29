@@ -40,7 +40,7 @@ public class Game extends Application {
     public static final int BALL_RADIUS = 5;
     public static final int POWERUP_RADIUS = 7;
     public static final Color BACKGROUND_COLOR = Color.WHITE;
-    public static final double INITIAL_PADDLE_SPEED = 15;
+    public static final double INITIAL_PADDLE_SPEED = 900;
     public static final int INITIAL_LIVES_COUNT = 2;
     private static final String LOSER_MESSAGE = "YOU\nLOSE";
     private static final String WINNER_MESSAGE = "YOU\nWIN";
@@ -111,7 +111,7 @@ public class Game extends Application {
         switch (code) {
             case P -> pause();
             case N -> nextLevel();
-            case LEFT, RIGHT -> myPaddle.handleHorizontalMovement(code, 1/60);
+            case LEFT, RIGHT -> myPaddle.handleHorizontalMovement(code, SECOND_DELAY);
         }
     }
 

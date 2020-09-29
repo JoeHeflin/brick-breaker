@@ -41,6 +41,7 @@ public class Ball extends Circle{
         ballInMotion = false;
         this.xVel = 0;
         this.yVel = 0;
+        this.damage = 1;
     }
 
 
@@ -53,8 +54,8 @@ public class Ball extends Circle{
     }
 
     void updatePosition(double elapsedTime) {
-        setCenterX(getCenterX() + this.xVel * 0.025); //* elapsedTime);
-        setCenterY(getCenterY() + this.yVel * 0.025); //elapsedTime);
+        setCenterX(getCenterX() + this.xVel * elapsedTime); //* elapsedTime);
+        setCenterY(getCenterY() + this.yVel * elapsedTime); //elapsedTime);
         //System.out.println("Radius: " + getRadius() + " XPos: " + getCenterX() + "xVel: " + xVel + "yPos: " + getCenterY() + "yVel: " + yVel);
     }
 

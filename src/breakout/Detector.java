@@ -126,6 +126,8 @@ public class Detector {
         myPaddle.setInitialPosition();
         myPaddle.setInitialSize();
         myMenuBar.loseLife();
-        scene.setOnMouseClicked(e -> myBall.start(getLaunchAngle(e.getX(), e.getY()), myPaddle));
+        if (!myBall.isBallInMotion()){
+            scene.setOnMouseClicked(e -> myBall.start(getLaunchAngle(e.getX(), e.getY()), myPaddle));
+        }
     }
 }
