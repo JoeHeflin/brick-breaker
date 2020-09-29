@@ -4,8 +4,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
@@ -78,8 +78,6 @@ public class Game extends Application {
         myStage.show();
     }
 
-
-
     private Scene setUpIntroScreen() {
         FlowPane root = new FlowPane();
         addDisplayText(root, GAME_TITLE, GAME_TITLE_SIZE);
@@ -96,6 +94,7 @@ public class Game extends Application {
     }
 
     public void startGamePlay() {
+        myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
             try {
                 step(SECOND_DELAY);
@@ -108,6 +107,18 @@ public class Game extends Application {
         animation.getKeyFrames().add(frame);
         myLevelActive = true;
         animation.play();
+    }
+
+    private void handleKeyInput(KeyCode code) {
+        switch (code) {
+            case P -> pause();
+            case N -> nextLevel();
+            case LEFT, RIGHT -> myPaddle.handleHorizontalMovement(code, 1/60);
+        }
+    }
+
+    public void pause() {
+        myLevelActive = !myLevelActive;
     }
 
     public void setUpLevelStage(int level) {
@@ -149,7 +160,8 @@ public class Game extends Application {
         displayLevelFeatures(root);
 
         Scene scene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
-        myDetector = new Detector(scene, myBricks, myBall, myPaddle, myMenuBar, myPowerUps);
+        myDetector = new Detector(scene, myBricks, myBall, myPaddle, myMenuBar,myPowerUps);
+//        scene.setOnKeyPressed(e -> myPaddle.handleHorizontalMovement(e.getCode(), SECOND_DELAY)); //TODO
         myRoot = root;
         scene.setOnKeyPressed(e -> myPaddle.handleHorizontalMovement(e.getCode(), SECOND_DELAY)); //TODO
         return scene;
@@ -278,22 +290,13 @@ public class Game extends Application {
         root.getChildren().add(sp);
     }
 
-
-
     public Ball getMyBall() {
         return myBall;
     }
 
     public MenuBar getMyMenuBar() {
-
         return myMenuBar;
     }
-
-
-
-
-
-
 
     /**
      * Start of the program.
@@ -301,4 +304,5 @@ public class Game extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 }
