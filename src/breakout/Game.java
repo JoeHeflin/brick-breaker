@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Game extends Application {
-    //TODO: place the constants in appropriate classes
     public static final String TITLE = "New Game";
     public static final int FRAMES_PER_SECOND = 60;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
@@ -131,14 +130,6 @@ public class Game extends Application {
         myPowerUps.reset();
     }
 
-//    public void reset(Scene scene) {
-//        myBall.stop();
-//        myBall.setInitialPosition();
-//        myPaddle.freeze();
-//        myPaddle.setInitialPosition();
-//        scene.setOnMouseClicked(e -> myBall.start(INITIAL_LAUNCH_ANGLE, myPaddle));
-//    }
-
     public LevelBuilder buildBrick(String filePath) {
         return new LevelBuilder(filePath);
     }
@@ -174,18 +165,6 @@ public class Game extends Application {
     public void setBrickIds() {
     }
 
-    public Scene getMyScene() {
-        return myScene;
-    }
-
-    public Detector getMyDetector() {
-        return myDetector;
-    }
-
-    public Group getMyRoot(){
-        return myRoot;
-    }
-
     public void displayLevelFeatures(Group root) {
         for (Brick[] brickRow : myBricks.getBrickLayout()) {
             for (Brick brick : brickRow) {
@@ -209,22 +188,6 @@ public class Game extends Application {
         return myBricks;
     }
 
-    /**
-     * TODO: Get it working :|
-     */
-//    private void handleLaunch (double x, double y) {
-//        double angle;
-//        double deltaX = x/myBall.getCenterX();
-//        double deltaY = y/myBall.getCenterY();
-//        if(deltaY < 0){ deltaY = 1; }
-//        if(deltaX == 0) {
-//            angle = 90;
-//
-//        }
-//        if(deltaX > 0) {
-//            angle = Math.toDegrees(Math.atan((y - myBall.getCenterY()) / (x - myBall.getCenterX())));
-//        }
-//    }
     public void testStep() throws IOException {
         step();
     }

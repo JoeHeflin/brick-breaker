@@ -4,7 +4,6 @@ import java.io.*;
 
 public class LevelBuilder {
 
-    //TODO: Return list of Bricks in the level
     private int row;
     private int col;
     private int brickHeight;
