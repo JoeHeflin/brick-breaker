@@ -21,13 +21,9 @@ public class GameTest extends ApplicationTest {
     private Brick myBrick3;
 
     @Override
-    public void start (Stage stage) {
-        myScene = myGame.setUpLevelScene(1);
-        myGame.getMyDetector().reset(myScene);
-        myGame.reset(myScene);
-        stage.setScene(myScene);
-        stage.setTitle(Game.TITLE);
-        stage.show();
+    public void start (Stage stage) throws Exception {
+        myGame.testStartAgain(stage);
+        myGame.startGamePlay();
 
         myBall = lookup("#Ball").query();
         myPaddle = lookup("#Paddle").query();

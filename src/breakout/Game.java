@@ -4,7 +4,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.FlowPane;
@@ -62,6 +61,7 @@ public class Game extends Application {
     private boolean myLevelActive;
     private int myCurrentLevel = 0;
     private ArrayList<PowerUp> activePowerUps = new ArrayList<>();
+    private List<Ball> myBallArray = new ArrayList<>();
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -75,6 +75,15 @@ public class Game extends Application {
         myStage.setScene(myScene);
         myStage.show();
     }
+
+    public void testStartAgain(Stage stage) throws Exception {
+        myStage = stage;
+        myScene = setUpLevelScene(1);
+        myStage.setScene(myScene);
+        myStage.show();
+    }
+
+
 
     public void startGamePlay() {
         KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> { step(); });
@@ -113,7 +122,7 @@ public class Game extends Application {
 
     public void setUpLevelStage(int level) {
         myScene = setUpLevelScene(level);
-        myLevelActive = true;
+//        myLevelActive = true;
         myDetector.reset(myScene);
         myStage.setScene(myScene);
         myStage.setTitle(TITLE);
@@ -121,14 +130,13 @@ public class Game extends Application {
         myPowerUps.reset();
     }
 
-    public void reset(Scene scene) {
-        myBall.stop();
-        myBall.setInitialPosition();
-        myPaddle.freeze();
-        myPaddle.setInitialPosition();
-        scene.setOnMouseClicked(e -> myBall.start(myDetector.getLaunchAngle(e.getX(), e.getY()), myPaddle));
-
-    }
+//    public void reset(Scene scene) {
+//        myBall.stop();
+//        myBall.setInitialPosition();
+//        myPaddle.freeze();
+//        myPaddle.setInitialPosition();
+//        scene.setOnMouseClicked(e -> myBall.start(INITIAL_LAUNCH_ANGLE, myPaddle));
+//    }
 
     public LevelBuilder buildBrick(String filePath) {
         return new LevelBuilder(filePath);
@@ -136,9 +144,10 @@ public class Game extends Application {
 
     public Scene setUpLevelScene(int level) {
         myCurrentLevel = level;
+        myLevelActive = true;
         Group root = new Group();
         myBricks = buildBrick(LEVELS_DIR + LEVELS.get(level));
-        myPowerUps = new PowerUpHolder(root);
+        myPowerUps = new PowerUpHolder(root, myMenuBar);
 
         try {
             myBricks.init();
@@ -151,7 +160,8 @@ public class Game extends Application {
         displayLevelFeatures(root);
 
         Scene scene = new Scene(root, STAGE_WIDTH, STAGE_HEIGHT);
-        myDetector = new Detector(scene, myBricks, myBall, myPaddle, myMenuBar, myPowerUps);
+        myDetector = new Detector(scene, myBricks, myBall, myPaddle, myMenuBar,myPowerUps);
+//        scene.setOnKeyPressed(e -> myPaddle.handleHorizontalMovement(e.getCode(), SECOND_DELAY)); //TODO
         myRoot = root;
         scene.setOnKeyPressed(e -> myPaddle.handleHorizontalMovement(e.getCode(), SECOND_DELAY)); //TODO
         return scene;
@@ -198,8 +208,22 @@ public class Game extends Application {
         return myBricks;
     }
 
-
-
+    /**
+     * TODO: Get it working :|
+     */
+//    private void handleLaunch (double x, double y) {
+//        double angle;
+//        double deltaX = x/myBall.getCenterX();
+//        double deltaY = y/myBall.getCenterY();
+//        if(deltaY < 0){ deltaY = 1; }
+//        if(deltaX == 0) {
+//            angle = 90;
+//
+//        }
+//        if(deltaX > 0) {
+//            angle = Math.toDegrees(Math.atan((y - myBall.getCenterY()) / (x - myBall.getCenterX())));
+//        }
+//    }
     public void testStep() throws IOException {
         step();
     }
@@ -267,14 +291,11 @@ public class Game extends Application {
         root.getChildren().add(sp);
     }
 
-
-
     public Ball getMyBall() {
         return myBall;
     }
 
     public MenuBar getMyMenuBar() {
-
         return myMenuBar;
     }
 

@@ -56,6 +56,8 @@ public class MenuBar {
         myLives --;
     }
 
+    public void addLife() {myLives++;}
+
     public void addPoints() {
         myPoints += POINTS_PER_BRICK;
     }
