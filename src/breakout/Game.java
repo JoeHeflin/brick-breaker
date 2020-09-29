@@ -53,9 +53,6 @@ public class Game extends Application {
     private Scene myScene;
     private Ball myBall;
     private Paddle myPaddle;
-    private int total = 0;
-    private boolean activeRound = false;
-    private int paddleSpeed;
     private LevelBuilder myBricks;
     private Detector myDetector;
     private Group myRoot;
@@ -68,13 +65,24 @@ public class Game extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        startAgain(stage);
+        startGamePlay();
+    }
+
+    public void startAgain(Stage stage) throws Exception {
         myStage = stage;
         myScene = setUpIntroScreen();
         myStage.setScene(myScene);
         myStage.show();
     }
 
-
+    public void startGamePlay() {
+        KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> { step(); });
+        Timeline animation = new Timeline();
+        animation.setCycleCount(Timeline.INDEFINITE);
+        animation.getKeyFrames().add(frame);
+        animation.play();
+    }
 
     private Scene setUpIntroScreen() {
         FlowPane root = new FlowPane();
@@ -91,22 +99,6 @@ public class Game extends Application {
         return scene;
     }
 
-    public void startGamePlay() {
-        myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
-        KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> {
-            try {
-                step(SECOND_DELAY);
-            } catch (IOException ioException) {
-                ioException.printStackTrace();
-            }
-        });
-        Timeline animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(frame);
-        myLevelActive = true;
-        animation.play();
-    }
-
     private void handleKeyInput(KeyCode code) {
         switch (code) {
             case P -> pause();
@@ -121,12 +113,12 @@ public class Game extends Application {
 
     public void setUpLevelStage(int level) {
         myScene = setUpLevelScene(level);
+        myLevelActive = true;
         myDetector.reset(myScene);
         myStage.setScene(myScene);
         myStage.setTitle(TITLE);
         myStage.show();
         myPowerUps.reset();
-        startGamePlay();
     }
 
     public void reset(Scene scene) {
@@ -208,19 +200,21 @@ public class Game extends Application {
 
 
     public void testStep() throws IOException {
-        step(SECOND_DELAY);
+        step();
     }
 
-    private void step(double elapsedTime) throws IOException {
+    private void step() {
+        myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
         if (myLevelActive) {
+            testBallSpeed = myBall.getXVel();
             myDetector.detectCollisions(myBricks, myBall, myMenuBar);
             myPowerUps.checkPowerUps();
             myMenuBar.updateText();
             if (myBall.isBallInMotion()) {
-                myBall.updatePosition(elapsedTime);
+                myBall.updatePosition(Game.SECOND_DELAY);
             }
             if(myPowerUps.getActivePowerUps().size() > 0){
-                myPowerUps.movePowerUps(elapsedTime);
+                myPowerUps.movePowerUps(Game.SECOND_DELAY);
             }
             if (myBricks.noMoreBricks()) {
                 nextLevel();
@@ -247,7 +241,7 @@ public class Game extends Application {
 
     public void restartGame() {
         try {
-            start(myStage);
+            startAgain(myStage);
         } catch (Exception e) {
             e.printStackTrace();
         }
