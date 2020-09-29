@@ -81,6 +81,15 @@ public class Game extends Application {
         myStage.show();
     }
 
+    public void testStartAgain(Stage stage) throws Exception {
+        myStage = stage;
+        myScene = setUpLevelScene(1);
+        myStage.setScene(myScene);
+        myStage.show();
+    }
+
+
+
     public void startGamePlay() {
         KeyFrame frame = new KeyFrame(Duration.seconds(SECOND_DELAY), e -> { step(); });
         Timeline animation = new Timeline();
@@ -118,7 +127,7 @@ public class Game extends Application {
 
     public void setUpLevelStage(int level) {
         myScene = setUpLevelScene(level);
-        myLevelActive = true;
+//        myLevelActive = true;
         myDetector.reset(myScene);
         myStage.setScene(myScene);
         myStage.setTitle(TITLE);
@@ -126,13 +135,13 @@ public class Game extends Application {
         myPowerUps.reset();
     }
 
-    public void reset(Scene scene) {
-        myBall.stop();
-        myBall.setInitialPosition();
-        myPaddle.freeze();
-        myPaddle.setInitialPosition();
-        scene.setOnMouseClicked(e -> myBall.start(INITIAL_LAUNCH_ANGLE, myPaddle));
-    }
+//    public void reset(Scene scene) {
+//        myBall.stop();
+//        myBall.setInitialPosition();
+//        myPaddle.freeze();
+//        myPaddle.setInitialPosition();
+//        scene.setOnMouseClicked(e -> myBall.start(INITIAL_LAUNCH_ANGLE, myPaddle));
+//    }
 
     public LevelBuilder buildBrick(String filePath) {
         return new LevelBuilder(filePath);
@@ -140,6 +149,7 @@ public class Game extends Application {
 
     public Scene setUpLevelScene(int level) {
         myCurrentLevel = level;
+        myLevelActive = true;
         Group root = new Group();
         myBricks = buildBrick(LEVELS_DIR + LEVELS.get(level));
         myPowerUps = new PowerUpHolder(root);
