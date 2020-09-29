@@ -40,7 +40,6 @@ public class Game extends Application {
     public static final int POWERUP_RADIUS = 5;
     public static final Color BACKGROUND_COLOR = Color.WHITE;
     public static final double INITIAL_PADDLE_SPEED = 15;
-    public static final double INITIAL_LAUNCH_ANGLE = 60;
     public static final int INITIAL_LIVES_COUNT = 2;
     private static final String LOSER_MESSAGE = "YOU\nLOSE";
     private static final String WINNER_MESSAGE = "YOU\nWIN";
@@ -125,7 +124,7 @@ public class Game extends Application {
         myBall.setInitialPosition();
         myPaddle.freeze();
         myPaddle.setInitialPosition();
-        scene.setOnMouseClicked(e -> myBall.start(INITIAL_LAUNCH_ANGLE, myPaddle));
+        scene.setOnMouseClicked(e -> myBall.start(myDetector.getLaunchAngle(e.getX(), e.getY()), myPaddle));
     }
 
     public LevelBuilder buildBrick(String filePath) {
@@ -196,22 +195,8 @@ public class Game extends Application {
         return myBricks;
     }
 
-    /**
-     * TODO: Get it working :|
-     */
-//    private void handleLaunch (double x, double y) {
-//        double angle;
-//        double deltaX = x/myBall.getCenterX();
-//        double deltaY = y/myBall.getCenterY();
-//        if(deltaY < 0){ deltaY = 1; }
-//        if(deltaX == 0) {
-//            angle = 90;
-//
-//        }
-//        if(deltaX > 0) {
-//            angle = Math.toDegrees(Math.atan((y - myBall.getCenterY()) / (x - myBall.getCenterX())));
-//        }
-//    }
+
+
     public void testStep() throws IOException {
         step(SECOND_DELAY);
     }
