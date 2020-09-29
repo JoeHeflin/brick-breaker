@@ -74,6 +74,7 @@ public class Game extends Application {
         myScene = setUpIntroScreen();
         myStage.setScene(myScene);
         myStage.show();
+        myMenuBar = new MenuBar();
     }
 
     public void testStartAgain(Stage stage) throws Exception {
@@ -147,6 +148,9 @@ public class Game extends Application {
         myLevelActive = true;
         Group root = new Group();
         myBricks = buildBrick(LEVELS_DIR + LEVELS.get(level));
+        myMenuBar = new MenuBar();
+        root.getChildren().add(myMenuBar.getMenuBar());
+        myMenuBar.init();
         myPowerUps = new PowerUpHolder(root, myMenuBar);
 
         try {
@@ -199,9 +203,6 @@ public class Game extends Application {
         root.getChildren().add(myPaddle);
         myPaddle.setId("Paddle");
 
-        myMenuBar = new MenuBar();
-        root.getChildren().add(myMenuBar.getMenuBar());
-        myMenuBar.init();
     }
 
     public LevelBuilder getBricks() {
