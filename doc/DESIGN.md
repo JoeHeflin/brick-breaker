@@ -4,10 +4,10 @@
 ## Team Roles and Responsibilities
 
  * Joseph Heflin
- -- Game flow
- - Cut screen features
- - Cheat Keys
- - Level Formatting
+   - Game flow
+   - Cut screen features
+   - Cheat Keys
+   - Level Formatting
 
  * Team Member #2
 
