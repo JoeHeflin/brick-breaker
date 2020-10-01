@@ -37,12 +37,14 @@ It is assumed that the formats of the level files are all valid.
 #### Easy to Add Features
 - Level Formats
 1. Copy the file levelFormats/template.txt and replace a zero in the location you'd like to place a brick with one of the following characters:
+
 |Character|Description|
-|:-------:|:---------:|
+|:-------:|:---------|
 |0        |Empty space|
 |1        |Single hit to destroy|
 |2        |Two hits to destroy|
 |3        |Bomb brick|
+
 2. Add the filename to the LEVELS list in the constants in the Game class.
 NOTE: make sure to maintain single space gaps between characters.
 
